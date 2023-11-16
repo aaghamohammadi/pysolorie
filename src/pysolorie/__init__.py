@@ -12,6 +12,6 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-from .pysolorie import HottelModel
+from .model import HottelModel
 
 __all__ = ["HottelModel"]
