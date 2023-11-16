@@ -25,7 +25,7 @@ hottel_model = pysolorie.HottelModel()
         ("MIDLATITUDE SUMMER", 1200, (0.228, 0.666, 0.309)),  # Tehran Summer
         ("MIDLATITUDE WINTER", 1200, (0.242, 0.679, 0.303)),  # Tehran Winter
         ("TROPICAL", 63, (0.128, 0.737, 0.389)),  # Medan
-        ("TROPICAL", 136, (0.134, 0.732, 0.382)),  # Fairbanks
+        ("SUBARCTIC SUMMER", 136, (0.140, 0.739, 0.379)),  # Fairbanks
     ],
 )
 def test_calculate_transmittance_components(climate_type, observer_altitude, expected_result):
