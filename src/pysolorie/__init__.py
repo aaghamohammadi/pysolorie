@@ -13,5 +13,6 @@
 #    limitations under the License.
 
 from .model import HottelModel
+from .sun_position import SunPosition
 
-__all__ = ["HottelModel"]
+__all__ = ["HottelModel", "SunPosition"]

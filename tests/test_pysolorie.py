@@ -12,11 +12,12 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+
 import pytest
 
-import pysolorie
+from pysolorie import HottelModel, SunPosition
 
-hottel_model = pysolorie.HottelModel()
+hottel_model = HottelModel()
 
 
 @pytest.mark.parametrize(
@@ -36,3 +37,20 @@ def test_calculate_transmittance_components(climate_type, observer_altitude, exp
 def test_invalid_climate_type():
     with pytest.raises(ValueError, match="Invalid climate type"):
         hottel_model.calculate_transmittance_components("INVALID", 1000)
+
+
+@pytest.mark.parametrize(
+    "day_of_year, solar_time, expected_declination, expected_hour_angle",
+    [
+        (1, 12, -0.4014257279586958, 0),  # January 1st at noon
+        (81, 10, 0, -30),  # March 22nd at 2pm (equinox)
+        (81, 12, 0, 0),  # March 22nd at noon (equinox)
+        (1, 13, -0.4014257279586958, 15),  # January 1st at 1pm
+    ],
+)
+def test_sun_position(day_of_year, solar_time, expected_declination, expected_hour_angle):
+    sun_position = SunPosition(day_of_year, solar_time)
+    declination = sun_position.solar_declination
+    hour_angle = sun_position.hour_angle
+    assert declination == pytest.approx(expected_declination, abs=1e-3)
+    assert hour_angle == expected_hour_angle
