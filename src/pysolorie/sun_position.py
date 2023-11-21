@@ -16,20 +16,7 @@ import math
 
 
 class SunPosition:
-    def __init__(self, day_of_year: int, solar_time: float):
-        """
-        Initialize the SunPosition class.
-
-        :param day_of_year: The day of the year.
-        :type day_of_year: int
-        :param solar_time: The solar time in hours.
-        :type solar_time: float
-        """
-        self.day_of_year = day_of_year
-        self.solar_time = solar_time
-
-    @property
-    def solar_declination(self) -> float:
+    def solar_declination(self, day_of_year: int) -> float:
         r"""
         Calculate the solar declination angle in radians.
 
@@ -37,30 +24,29 @@ class SunPosition:
 
         Formula:
         \[
-        \delta = 23.45 * \sin \left( \frac{2 \pi}{365} * (284 + n) \right)
+        \delta = \sin \left( \frac{2 \pi}{365} * (284 + day_of_year) \right) * \left(\frac{23.45 \pi}{180}\right)
         \]
 
+        :param day_of_year: The day of the year.
+        :type day_of_year: int
         :return: The solar declination angle in radians.
         :rtype: float
         """
-        # Maximum tilt of the Earth's axis (in degrees)
-        max_earth_tilt_degrees = 23.45
+        # tilt of the Earth's axis (in degrees)
+        earth_tilt_degrees = 23.45
 
         # Convert the tilt to radians
-        max_earth_tilt_radians = math.radians(max_earth_tilt_degrees)
+        earth_tilt_radians = math.radians(earth_tilt_degrees)
 
         # Offset to ensure declination angle is zero at the March equinox
         equinox_offset_days = 284
 
         # Calculate the solar declination angle
-        solar_declination = max_earth_tilt_radians * math.sin(
-            (2 * math.pi) * (equinox_offset_days + self.day_of_year) / 365
-        )
+        solar_declination = math.sin((2 * math.pi) * (equinox_offset_days + day_of_year) / 365) * earth_tilt_radians
 
         return solar_declination
 
-    @property
-    def hour_angle(self) -> float:
+    def hour_angle(self, solar_time: float) -> float:
         r"""
         Calculate the hour angle based on the solar time.
 
@@ -68,16 +54,21 @@ class SunPosition:
 
         Formula:
         \[
-        \omega = (t - 12) * 15
+        \omega = (t - seconds_in_half_day) * \frac{\pi}{seconds_in_half_day}
         \]
 
-        :return: The hour angle in degrees.
+        :param solar_time: The solar time in seconds.
+        :type solar_time: float
+        :return: The hour angle in radians.
         :rtype: float
         """
-        # The Earth rotates by 15 degrees per hour
-        earth_rotation_rate = 15
+        # The number of seconds in half a day (12 hours)
+        seconds_in_half_day = 12 * 60 * 60
+
+        # The Earth rotates by pi/seconds_in_half_day radians per second
+        earth_rotation_rate = math.pi / seconds_in_half_day
 
         # Calculate the hour angle
-        hour_angle = (self.solar_time - 12) * earth_rotation_rate
+        hour_angle = (solar_time - seconds_in_half_day) * earth_rotation_rate
 
         return hour_angle
