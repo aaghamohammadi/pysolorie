@@ -13,6 +13,7 @@
 #    limitations under the License.
 
 import math
+from typing import Tuple
 
 import pytest
 
@@ -30,12 +31,17 @@ hottel_model = HottelModel()
         ("SUBARCTIC SUMMER", 136, (0.140, 0.739, 0.379)),  # Fairbanks
     ],
 )
-def test_calculate_transmittance_components(climate_type, observer_altitude, expected_result):
-    result = hottel_model.calculate_transmittance_components(climate_type, observer_altitude)
+def test_calculate_transmittance_components(
+    climate_type: str, observer_altitude: int, expected_result: Tuple[float, float, float]
+) -> None:
+    hottel_model: HottelModel = HottelModel()
+    result: Tuple[float, float, float] = hottel_model.calculate_transmittance_components(
+        climate_type, observer_altitude
+    )
     assert pytest.approx(result, abs=1e-3) == expected_result
 
 
-def test_invalid_climate_type():
+def test_invalid_climate_type() -> None:
     with pytest.raises(ValueError, match="Invalid climate type"):
         hottel_model.calculate_transmittance_components("INVALID", 1000)
 
