@@ -12,7 +12,8 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+from .irradiance import SolarIrradiance
 from .model import HottelModel
 from .sun_position import SunPosition
 
-__all__ = ["HottelModel", "SunPosition"]
+__all__ = ["HottelModel", "SunPosition", "SolarIrradiance"]
