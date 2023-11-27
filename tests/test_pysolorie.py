@@ -17,9 +17,7 @@ from typing import Tuple
 
 import pytest
 
-from pysolorie import HottelModel, SunPosition
-
-hottel_model = HottelModel()
+from pysolorie import HottelModel, SolarIrradiance, SunPosition
 
 
 @pytest.mark.parametrize(
@@ -43,6 +41,7 @@ def test_calculate_transmittance_components(
 
 def test_invalid_climate_type() -> None:
     with pytest.raises(ValueError, match="Invalid climate type"):
+        hottel_model: HottelModel = HottelModel()
         hottel_model.calculate_transmittance_components("INVALID", 1000)
 
 
@@ -63,3 +62,20 @@ def test_sun_position(
     hour_angle: float = sun_position.hour_angle(solar_time)
     assert declination == pytest.approx(expected_declination, abs=1e-3)
     assert hour_angle == pytest.approx(expected_hour_angle, abs=1e-3)
+
+
+@pytest.mark.parametrize(
+    "day_of_year, expected_irradiance",
+    [
+        (1, 1412.104),  # January 1st
+        (81, 1374.918),  # March 22nd (equinox)
+        (172, 1322.623),  # June 21st (summer solstice)
+        (264, 1359.464),  # September 23rd (equinox)
+        (355, 1411.444),  # December 21st (winter solstice)
+    ],
+)
+def test_calculate_extraterrestrial_irradiance(day_of_year: int, expected_irradiance: float) -> None:
+    sun_position = SunPosition()
+    solar_irradiance = SolarIrradiance(sun_position)
+    irradiance: float = solar_irradiance.calculate_extraterrestrial_irradiance(day_of_year)
+    assert irradiance == pytest.approx(expected_irradiance, abs=1e-3)
