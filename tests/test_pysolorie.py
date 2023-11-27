@@ -55,9 +55,11 @@ def test_invalid_climate_type() -> None:
         (1, 13 * 60 * 60, -0.4014257279586958, math.pi / 12),  # January 1st at 1pm
     ],
 )
-def test_sun_position(day_of_year, solar_time, expected_declination, expected_hour_angle):
-    sun_position = SunPosition()
-    declination = sun_position.solar_declination(day_of_year)
-    hour_angle = sun_position.hour_angle(solar_time)
+def test_sun_position(
+    day_of_year: int, solar_time: int, expected_declination: float, expected_hour_angle: float
+) -> None:
+    sun_position: SunPosition = SunPosition()
+    declination: float = sun_position.solar_declination(day_of_year)
+    hour_angle: float = sun_position.hour_angle(solar_time)
     assert declination == pytest.approx(expected_declination, abs=1e-3)
     assert hour_angle == pytest.approx(expected_hour_angle, abs=1e-3)
