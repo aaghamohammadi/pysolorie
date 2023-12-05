@@ -11,7 +11,6 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-
 import math
 
 
@@ -22,10 +21,10 @@ class SunPosition:
 
         The solar declination angle is the angle between the rays of the sun and the plane of the Earth's equator.
 
-        Formula:
-        \[
-        \delta = \sin \left( \frac{2 \pi}{365} * (284 + day_of_year) \right) * \left(\frac{23.45 \pi}{180}\right)
-        \]
+        The formula used to calculate the solar declination angle is:
+
+        .. math::
+            \delta = \sin \left( \frac{2 \pi}{365} \times (284 + \text{{day\_of\_year}}) \right) \times \left(\frac{23.45 \pi}{180}\right)
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
@@ -42,7 +41,10 @@ class SunPosition:
         equinox_offset_days = 284
 
         # Calculate the solar declination angle
-        solar_declination = math.sin((2 * math.pi) * (equinox_offset_days + day_of_year) / 365) * earth_tilt_radians
+        solar_declination = (
+            math.sin((2 * math.pi) * (equinox_offset_days + day_of_year) / 365)
+            * earth_tilt_radians
+        )
 
         return solar_declination
 
@@ -52,10 +54,10 @@ class SunPosition:
 
         The hour angle is a measure of time, expressed in angular terms, from solar noon.
 
-        Formula:
-        \[
-        \omega = (t - seconds_in_half_day) * \frac{\pi}{seconds_in_half_day}
-        \]
+        The formula used to calculate the hour angle is:
+
+        .. math::
+            \omega = (t - \text{{seconds\_in\_half\_day}}) \times \frac{\pi}{\text{{seconds\_in\_half\_day}}}
 
         :param solar_time: The solar time in seconds.
         :type solar_time: float

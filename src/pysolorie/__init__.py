@@ -14,6 +14,7 @@
 
 from .irradiance import SolarIrradiance
 from .model import HottelModel
+from .observer import Observer
 from .sun_position import SunPosition
 
-__all__ = ["HottelModel", "SunPosition", "SolarIrradiance"]
+__all__ = ["HottelModel", "SunPosition", "SolarIrradiance", "Observer"]
