@@ -17,7 +17,7 @@ from typing import Tuple
 
 import pytest
 
-from pysolorie import HottelModel, SolarIrradiance, SunPosition
+from pysolorie import HottelModel, Observer, SolarIrradiance, SunPosition
 
 
 @pytest.mark.parametrize(
@@ -30,12 +30,14 @@ from pysolorie import HottelModel, SolarIrradiance, SunPosition
     ],
 )
 def test_calculate_transmittance_components(
-    climate_type: str, observer_altitude: int, expected_result: Tuple[float, float, float]
+    climate_type: str,
+    observer_altitude: int,
+    expected_result: Tuple[float, float, float],
 ) -> None:
     hottel_model: HottelModel = HottelModel()
-    result: Tuple[float, float, float] = hottel_model.calculate_transmittance_components(
-        climate_type, observer_altitude
-    )
+    result: Tuple[
+        float, float, float
+    ] = hottel_model.calculate_transmittance_components(climate_type, observer_altitude)
     assert pytest.approx(result, abs=1e-3) == expected_result
 
 
@@ -55,7 +57,10 @@ def test_invalid_climate_type() -> None:
     ],
 )
 def test_sun_position(
-    day_of_year: int, solar_time: int, expected_declination: float, expected_hour_angle: float
+    day_of_year: int,
+    solar_time: int,
+    expected_declination: float,
+    expected_hour_angle: float,
 ) -> None:
     sun_position: SunPosition = SunPosition()
     declination: float = sun_position.solar_declination(day_of_year)
@@ -74,8 +79,60 @@ def test_sun_position(
         (355, 1411.444),  # December 21st (winter solstice)
     ],
 )
-def test_calculate_extraterrestrial_irradiance(day_of_year: int, expected_irradiance: float) -> None:
+def test_calculate_extraterrestrial_irradiance(
+    day_of_year: int, expected_irradiance: float
+) -> None:
     sun_position = SunPosition()
     solar_irradiance = SolarIrradiance(sun_position)
-    irradiance: float = solar_irradiance.calculate_extraterrestrial_irradiance(day_of_year)
+    irradiance: float = solar_irradiance.calculate_extraterrestrial_irradiance(
+        day_of_year
+    )
     assert irradiance == pytest.approx(expected_irradiance, abs=1e-3)
+
+
+@pytest.mark.parametrize(
+    "observer_latitude, observer_longitude, day_of_year, solar_time, expected_zenith_angle",
+    [
+        (
+            35.69,
+            51.39,
+            81,
+            12 * 60 * 60,
+            0.623,
+        ),  # Test at Tehran on the 81st day of the year at noon
+        (
+            3.59,
+            98.67,
+            81,
+            10 * 60 * 60,
+            0.527,
+        ),  # Test at Medan on the 81st day of the year at 10am
+        (
+            64.84,
+            -147.72,
+            1,
+            13 * 60 * 60,
+            1.547,
+        ),  # Test at Fairbanks on the 1st day of the year at 1pm
+        (90, 0, 1, 13 * 60 * 60, 1.972),  # Test at North Pole on January 1st at 1pm
+    ],
+)
+def test_calculate_zenith_angle(
+    observer_latitude: float,
+    observer_longitude: float,
+    day_of_year: int,
+    solar_time: int,
+    expected_zenith_angle: float,
+) -> None:
+    observer: Observer = Observer(observer_latitude, observer_longitude)
+    zenith_angle: float = observer.calculate_zenith_angle(day_of_year, solar_time)
+    assert zenith_angle == pytest.approx(expected_zenith_angle, abs=1e-3)
+
+
+def test_calculate_zenith_angle_without_latitude():
+    observer = Observer(None, 0)
+    with pytest.raises(
+        ValueError,
+        match="Observer latitude must be provided to calculate zenith angle.",
+    ):
+        observer.calculate_zenith_angle(1, 12 * 60 * 60)
