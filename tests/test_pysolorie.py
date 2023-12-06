@@ -17,7 +17,13 @@ from typing import Tuple
 
 import pytest
 
-from pysolorie import HottelModel, Observer, SolarIrradiance, SunPosition
+from pysolorie import (
+    AtmosphericTransmission,
+    HottelModel,
+    Observer,
+    SolarIrradiance,
+    SunPosition,
+)
 
 
 @pytest.mark.parametrize(
@@ -136,3 +142,29 @@ def test_calculate_zenith_angle_without_latitude():
         match="Observer latitude must be provided to calculate zenith angle.",
     ):
         observer.calculate_zenith_angle(1, 12 * 60 * 60)
+
+
+@pytest.mark.parametrize(
+    "climate_type, observer_altitude, observer_latitude, day_of_year, solar_time, expected_transmittance",
+    [
+        ("MIDLATITUDE SUMMER", 1200, 35.69, 81, 12 * 60 * 60, 0.683),  # Tehran Summer
+        ("MIDLATITUDE WINTER", 1200, 35.69, 355, 12 * 60 * 60, 0.618),  # Tehran Winter
+        ("TROPICAL", 63, 3.59, 81, 10 * 60 * 60, 0.597),  # Medan
+        ("SUBARCTIC SUMMER", 136, 64.84, 1, 13 * 60 * 60, 0.140),  # Fairbanks
+    ],
+)
+def test_calculate_transmittance(
+    climate_type: str,
+    observer_altitude: int,
+    observer_latitude: float,
+    day_of_year: int,
+    solar_time: float,
+    expected_transmittance: float,
+) -> None:
+    atmospheric_transmission: AtmosphericTransmission = AtmosphericTransmission(
+        climate_type, observer_altitude, observer_latitude
+    )
+    result: float = atmospheric_transmission.calculate_transmittance(
+        day_of_year, solar_time
+    )
+    assert pytest.approx(result, abs=1e-3) == expected_transmittance

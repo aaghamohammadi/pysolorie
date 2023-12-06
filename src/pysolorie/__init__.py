@@ -12,9 +12,16 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+from .atmospheric_transmission import AtmosphericTransmission
 from .irradiance import SolarIrradiance
 from .model import HottelModel
 from .observer import Observer
 from .sun_position import SunPosition
 
-__all__ = ["HottelModel", "SunPosition", "SolarIrradiance", "Observer"]
+__all__ = [
+    "HottelModel",
+    "SunPosition",
+    "SolarIrradiance",
+    "Observer",
+    "AtmosphericTransmission",
+]
