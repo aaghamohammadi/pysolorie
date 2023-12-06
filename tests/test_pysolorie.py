@@ -107,6 +107,13 @@ def test_calculate_extraterrestrial_irradiance(
             0.623,
         ),  # Test at Tehran on the 81st day of the year at noon
         (
+            35.69,
+            51.39,
+            355,
+            12 * 60 * 60,
+            1.032,
+        ),  # Test at Tehran on the 355th day of the year at noon
+        (
             3.59,
             98.67,
             81,
