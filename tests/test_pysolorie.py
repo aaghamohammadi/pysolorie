@@ -76,6 +76,23 @@ def test_sun_position(
 
 
 @pytest.mark.parametrize(
+    "hour_angle, expected_solar_time",
+    [
+        (0, 12 * 60 * 60),  # solar noon
+        (-math.pi / 6, 10 * 60 * 60),  # 10am
+        (math.pi / 12, 13 * 60 * 60),  # 1pm
+    ],
+)
+def test_solar_time(
+    hour_angle: float,
+    expected_solar_time: int,
+) -> None:
+    sun_position: SunPosition = SunPosition()
+    solar_time: float = sun_position.solar_time(hour_angle)
+    assert solar_time == pytest.approx(expected_solar_time, abs=1e-3)
+
+
+@pytest.mark.parametrize(
     "day_of_year, expected_irradiance",
     [
         (1, 1412.104),  # January 1st

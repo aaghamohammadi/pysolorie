@@ -74,3 +74,30 @@ class SunPosition:
         hour_angle = (solar_time - seconds_in_half_day) * earth_rotation_rate
 
         return hour_angle
+
+    def solar_time(self, hour_angle: float) -> float:
+        r"""
+        Calculate the solar time based on the hour angle.
+
+        The solar time is a measure of time, expressed in seconds, from solar noon.
+
+        The formula used to calculate the solar time is:
+
+        .. math::
+            t = \omega \times \frac{\text{{seconds\_in\_half\_day}}}{\pi} + \text{{seconds\_in\_half\_day}}
+
+        :param hour_angle: The hour angle in radians.
+        :type hour_angle: float
+        :return: The solar time in seconds.
+        :rtype: float
+        """
+        # The number of seconds in half a day (12 hours)
+        seconds_in_half_day = 12 * 60 * 60
+
+        # The Earth rotates by pi/seconds_in_half_day radians per second
+        earth_rotation_rate = math.pi / seconds_in_half_day
+
+        # Calculate the solar time
+        solar_time = hour_angle / earth_rotation_rate + seconds_in_half_day
+
+        return solar_time
