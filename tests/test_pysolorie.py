@@ -163,7 +163,7 @@ def test_calculate_zenith_angle_without_latitude():
     observer = Observer(None, 0)
     with pytest.raises(
         ValueError,
-        match="Observer latitude must be provided to calculate zenith angle.",
+        match="Observer latitude must be provided.",
     ):
         observer.calculate_zenith_angle(1, 12 * 60 * 60)
 
@@ -192,3 +192,24 @@ def test_calculate_transmittance(
         day_of_year, solar_time
     )
     assert pytest.approx(result, abs=1e-3) == expected_transmittance
+
+
+@pytest.mark.parametrize(
+    "day_of_year, expected_sunrise_hour_angle, expected_sunset_hour_angle",
+    [
+        (1, -1.261, 1.261),  # January 1st
+        (81, -math.pi / 2, math.pi / 2),  # March 22nd (equinox)
+        (172, -1.888, 1.888),  # June 21st (solstice)
+    ],
+)
+def test_calculate_sunrise_sunset(
+    day_of_year: int,
+    expected_sunrise_hour_angle: float,
+    expected_sunset_hour_angle: float,
+) -> None:
+    observer: Observer = Observer(observer_latitude=35.69)  # Tehran
+    sunrise_hour_angle, sunset_hour_angle = observer.calculate_sunrise_sunset(
+        day_of_year
+    )
+    assert sunrise_hour_angle == pytest.approx(expected_sunrise_hour_angle, abs=1e-3)
+    assert sunset_hour_angle == pytest.approx(expected_sunset_hour_angle, abs=1e-3)

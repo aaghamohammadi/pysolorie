@@ -62,16 +62,49 @@ class Observer:
         :return: The zenith angle in radians.
         :rtype: float
         """
-        if self.observer_latitude is None:
-            raise ValueError(
-                "Observer latitude must be provided to calculate zenith angle."
-            )
+        observer_latitude = self._validate_latitude()
 
         solar_declination = self.sun_position.solar_declination(day_of_year)
         hour_angle = self.sun_position.hour_angle(solar_time)
         return math.acos(
-            math.sin(self.observer_latitude) * math.sin(solar_declination)
-            + math.cos(self.observer_latitude)
+            math.sin(observer_latitude) * math.sin(solar_declination)
+            + math.cos(observer_latitude)
             * math.cos(solar_declination)
             * math.cos(hour_angle)
         )
+
+    def calculate_sunrise_sunset(self, day_of_year: int) -> tuple:
+        """
+        Calculate the hour angle at sunrise and sunset.
+
+        The hour angle at sunrise and sunset is calculated using the formula:
+
+        .. math::
+            \cos(\omega) = -\tan(\phi) \cdot \tan(\delta)
+
+        where:
+        \(\omega\) is the hour angle,
+        \(\phi\) is the latitude of the observer, and
+        \(\delta\) is the solar declination.
+
+        :param day_of_year: The day of the year.
+        :type day_of_year: int
+        :return: The hour angle at sunrise and sunset in radians.
+        :rtype: tuple
+        """
+        observer_latitude = self._validate_latitude()
+
+        solar_declination = self.sun_position.solar_declination(day_of_year)
+        hour_angle = math.acos(
+            -math.tan(observer_latitude) * math.tan(solar_declination)
+        )
+
+        sunrise = -hour_angle
+        sunset = hour_angle
+
+        return sunrise, sunset
+
+    def _validate_latitude(self) -> float:
+        if self.observer_latitude is None:
+            raise ValueError("Observer latitude must be provided.")
+        return self.observer_latitude
