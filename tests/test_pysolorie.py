@@ -20,6 +20,7 @@ import pytest
 from pysolorie import (
     AtmosphericTransmission,
     HottelModel,
+    IrradiationCalculator,
     Observer,
     SolarIrradiance,
     SunPosition,
@@ -31,7 +32,7 @@ from pysolorie import (
     [
         ("MIDLATITUDE SUMMER", 1200, (0.228, 0.666, 0.309)),  # Tehran Summer
         ("MIDLATITUDE WINTER", 1200, (0.242, 0.679, 0.303)),  # Tehran Winter
-        ("TROPICAL", 63, (0.128, 0.737, 0.389)),  # Medan
+        ("TROPICAL", 26, (0.124, 0.739, 0.392)),  # Medan
         ("SUBARCTIC SUMMER", 136, (0.140, 0.739, 0.379)),  # Fairbanks
     ],
 )
@@ -213,3 +214,50 @@ def test_calculate_sunrise_sunset(
     )
     assert sunrise_hour_angle == pytest.approx(expected_sunrise_hour_angle, abs=1e-3)
     assert sunset_hour_angle == pytest.approx(expected_sunset_hour_angle, abs=1e-3)
+
+
+@pytest.mark.parametrize(
+    "climate_type, observer_altitude, observer_latitude, day_of_year, expected_result",
+    [
+        (
+            "MIDLATITUDE SUMMER",
+            1200,
+            35.6892,
+            172,
+            0.004,
+        ),  # Tehran Summer, day_of_year=172 (June 21)
+        (
+            "MIDLATITUDE WINTER",
+            1200,
+            35.6892,
+            355,
+            1.114,
+        ),  # Tehran Winter, day_of_year=355 (Dec 21)
+        (
+            "TROPICAL",
+            26,
+            3.5952,
+            100,
+            -0.116,
+        ),  # Medan, day_of_year=100 (April 10)
+        (
+            "SUBARCTIC SUMMER",
+            132,
+            64.84361,
+            200,
+            0.569,
+        ),  # Fairbanks Summer, day_of_year=200 (July 19)
+    ],
+)
+def test_find_optimal_orientation(
+    climate_type: str,
+    observer_altitude: int,
+    observer_latitude: float,
+    day_of_year: int,
+    expected_result: float,
+) -> None:
+    irradiation_calculator = IrradiationCalculator(
+        climate_type, observer_altitude, observer_latitude
+    )
+    result = irradiation_calculator.find_optimal_orientation(day_of_year)
+    assert pytest.approx(result, abs=1e-3) == expected_result

@@ -19,7 +19,7 @@ from .sun_position import SunPosition
 
 class SolarIrradiance:
     def __init__(self, sun_position: SunPosition):
-        """
+        r"""
         Initialize the SolarIrradiance class.
 
         :param sun_position: An instance of the SunPosition class.
@@ -31,25 +31,27 @@ class SolarIrradiance:
         r"""
         Calculate the extraterrestrial solar irradiance for a given day of the year.
 
-        The extraterrestrial solar irradiance, E, is the amount of solar energy received
+        The extraterrestrial solar irradiance, \(E\), is the amount of solar energy received
         per unit area on a surface perpendicular to the Sun's rays outside Earth's atmosphere.
 
         The formula used is:
-        \[
-        E = SOLAR_CONSTANT * (1 + 0.33 * cos (2 * pi * day_of_year / 365))
-        \]
+
+        .. math::
+
+            E = \text{{SOLAR\_CONSTANT}} \times (1 + 0.33 \times \cos (2 \times \pi \times \frac{{\text{{day\_of\_year}}}}{365}))
 
         where:
-        - SOLAR_CONSTANT is the average solar radiation arriving outside of the Earth's atmosphere,
-          which is approximately 1367 Watts per square meter. This is also known as the solar constant.
+        - \(\text{{SOLAR\_CONSTANT}}\) is the average solar radiation arriving outside of the Earth's atmosphere,
+        which is approximately 1367 Watts per square meter. This is also known as the solar constant.
         - The factor 0.033 accounts for the variation in the Earth-Sun distance due to the Earth's elliptical orbit.
 
-        :param day_of_year: The day of the year, ranging from 1 to 365.
-        :type day_of_year: int
+        :param day\_of\_year: The day of the year, ranging from 1 to 365.
+        :type day\_of\_year: int
 
         :return: The extraterrestrial solar irradiance in Watts per square meter.
         :rtype: float
         """
+
         # Solar constant (W/m^2)
         SOLAR_CONSTANT = 1367
 
