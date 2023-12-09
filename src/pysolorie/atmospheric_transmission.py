@@ -19,7 +19,8 @@ from .observer import Observer
 
 class AtmosphericTransmission:
     """
-    This class calculates the effective atmospheric transmission coefficient of the direct beam.
+    This class calculates the effective atmospheric transmission coefficient
+    of the direct beam.
     """
 
     def __init__(
@@ -49,17 +50,19 @@ class AtmosphericTransmission:
         self.observer = Observer(observer_latitude)
 
     def calculate_transmittance(self, day_of_year: int, solar_time: float) -> float:
-        """
+        r"""
         Calculate the effective atmospheric transmission coefficient of the direct beam.
 
-        The effective atmospheric transmission coefficient of the direct beam is calculated using the formula:
+        The effective atmospheric transmission coefficient of the direct beam
+        is calculated using the formula:
 
         .. math::
             \tau_b = a_0 + a_1 \cdot \exp\left(-\frac{k}{\cos(\theta_z)}\right)
 
         where:
-        \(\tau_b\) is the effective atmospheric transmission coefficient of the direct beam,
-        \(a_0\), \(a_1\), and \(k\) are the components of clear-sky beam radiation transmittance,
+        \(\tau_b\) is the effective atmospheric transmission coefficient
+        of the direct beam, \(a_0\), \(a_1\), and \(k\)
+        are the components of clear-sky beam radiation transmittance,
         and \(\theta_z\) is the zenith angle.
 
         :param day_of_year: The day of the year.

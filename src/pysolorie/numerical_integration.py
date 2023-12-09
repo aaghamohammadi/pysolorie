@@ -13,10 +13,9 @@
 # limitations under the License.
 
 import math
-from typing import Tuple
 
 import numpy as np
-from scipy import integrate, optimize  # type: ignore
+from scipy import integrate  # type: ignore
 
 from .atmospheric_transmission import AtmosphericTransmission
 from .irradiance import SolarIrradiance
@@ -99,12 +98,14 @@ class IrradiationCalculator:
         self, panel_orientation: float, day_of_year: int
     ) -> float:
         r"""
-        Calculate the total direct irradiation for a given solar panel orientation (beta).
+        Calculate the total direct irradiation
+        for a given solar panel orientation (beta).
 
         The total direct irradiation is calculated using the formula:
 
         .. math::
-            E_b(n,\phi) = \frac{E}{\Omega} \int_{\omega_s}^{\omega_t} \cos(θ) H(\cos(θ)) \times \tau_b  d\omega
+            E_b(n,\phi) = \frac{E}{\Omega} \int_{\omega_s}^{\omega_t}
+            \cos(θ) H(\cos(θ)) \times \tau_b  d\omega
 
 
         where:

@@ -20,7 +20,8 @@ class HottelModel:
     Hottel Model for estimating clear-sky beam radiation transmittance
     based on climate type, and observer altitude.
 
-    :ivar CLIMATE_CONSTANTS: Correction factors for different climate types (\(r_0\), \(r_1\), and \(r_k\)).
+    :ivar CLIMATE_CONSTANTS: Correction factors for different climate types
+    (\(r_0\), \(r_1\), and \(r_k\)).
     """
 
     CLIMATE_CONSTANTS: Dict[str, Tuple[float, float, float]] = {
@@ -99,8 +100,8 @@ class HottelModel:
         self, climate_type: str, observer_altitude: int
     ) -> Tuple[float, float, float]:
         r"""
-        Calculate the components of clear-sky beam radiation transmittance (\(a_0\), \(a_1\), and \(k\))
-        based on climate type and observer altitude.
+        Calculate the components of clear-sky beam radiation transmittance
+        (\(a_0\), \(a_1\), and \(k\)) based on climate type and observer altitude.
 
         Correction factors adjust the clear-sky beam radiation transmittance components.
 
@@ -115,7 +116,8 @@ class HottelModel:
         :type climate_type: str
         :param observer_altitude: Altitude of the observer in meters.
         :type observer_altitude: float
-        :return: Components of clear-sky beam radiation transmittance (\(a_0\), \(a_1\), \(k\)).
+        :return: Components of clear-sky beam radiation transmittance
+        (\(a_0\), \(a_1\), \(k\)).
         :rtype: tuple of floats
         :raises ValueError: If an invalid climate type is provided.
         """

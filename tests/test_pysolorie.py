@@ -115,7 +115,11 @@ def test_calculate_extraterrestrial_irradiance(
 
 
 @pytest.mark.parametrize(
-    "observer_latitude, observer_longitude, day_of_year, solar_time, expected_zenith_angle",
+    "observer_latitude,"
+    + "observer_longitude,"
+    + "day_of_year,"
+    + "solar_time,"
+    + "expected_zenith_angle",
     [
         (
             35.69,
@@ -170,7 +174,12 @@ def test_calculate_zenith_angle_without_latitude():
 
 
 @pytest.mark.parametrize(
-    "climate_type, observer_altitude, observer_latitude, day_of_year, solar_time, expected_transmittance",
+    "climate_type,"
+    + "observer_altitude,"
+    + "observer_latitude,"
+    + "day_of_year,"
+    + "solar_time,"
+    + "expected_transmittance",
     [
         ("MIDLATITUDE SUMMER", 1200, 35.69, 81, 12 * 60 * 60, 0.683),  # Tehran Summer
         ("MIDLATITUDE WINTER", 1200, 35.69, 355, 12 * 60 * 60, 0.618),  # Tehran Winter

@@ -19,12 +19,15 @@ class SunPosition:
         r"""
         Calculate the solar declination angle in radians.
 
-        The solar declination angle is the angle between the rays of the sun and the plane of the Earth's equator.
+        The solar declination angle is the angle between the rays of the sun
+        and the plane of the Earth's equator.
 
         The formula used to calculate the solar declination angle is:
 
         .. math::
-            \delta = \sin \left( \frac{2 \pi}{365} \times (284 + \text{{day\_of\_year}}) \right) \times \left(\frac{23.45 \pi}{180}\right)
+            \delta = \sin \left( \frac{2 \pi}{365}
+            \times (284 + \text{{day\_of\_year}}) \right)
+            \times \left(\frac{23.45 \pi}{180}\right)
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
@@ -52,12 +55,14 @@ class SunPosition:
         r"""
         Calculate the hour angle based on the solar time.
 
-        The hour angle is a measure of time, expressed in angular terms, from solar noon.
+        The hour angle is a measure of time, expressed in angular terms,
+        from solar noon.
 
         The formula used to calculate the hour angle is:
 
         .. math::
-            \omega = (t - \text{{seconds\_in\_half\_day}}) \times \frac{\pi}{\text{{seconds\_in\_half\_day}}}
+            \omega = (t - \text{{seconds\_in\_half\_day}})
+            \times \frac{\pi}{\text{{seconds\_in\_half\_day}}}
 
         :param solar_time: The solar time in seconds.
         :type solar_time: float
@@ -84,7 +89,8 @@ class SunPosition:
         The formula used to calculate the solar time is:
 
         .. math::
-            t = \omega \times \frac{\text{{seconds\_in\_half\_day}}}{\pi} + \text{{seconds\_in\_half\_day}}
+            t = \omega \times \frac{\text{{seconds\_in\_half\_day}}}{\pi}
+            + \text{{seconds\_in\_half\_day}}
 
         :param hour_angle: The hour angle in radians.
         :type hour_angle: float

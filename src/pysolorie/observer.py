@@ -41,13 +41,14 @@ class Observer:
         self.sun_position = SunPosition()
 
     def calculate_zenith_angle(self, day_of_year: int, solar_time: float) -> float:
-        """
+        r"""
         Calculate the zenith angle.
 
         The zenith angle is calculated using the formula:
 
         .. math::
-            \cos(\theta_z) = \sin(\phi) \cdot \sin(\delta) + \cos(\phi) \cdot \cos(\delta) \cdot \cos(\omega)
+            \cos(\theta_z) = \sin(\phi) \cdot \sin(\delta)
+            + \cos(\phi) \cdot \cos(\delta) \cdot \cos(\omega)
 
         where:
         \(\theta_z\) is the zenith angle,
@@ -74,7 +75,7 @@ class Observer:
         )
 
     def calculate_sunrise_sunset(self, day_of_year: int) -> tuple:
-        """
+        r"""
         Calculate the hour angle at sunrise and sunset.
 
         The hour angle at sunrise and sunset is calculated using the formula:
