@@ -123,7 +123,7 @@ class IrradiationCalculator:
         :type panel_orientation: float
         :param day_of_year: The day of the year.
         :type day_of_year: int
-        :return: The total direct irradiation (negative because we want to maximize).
+        :return: The total direct irradiation.
         :rtype: float
         """
         sunrise_hour_angle, sunset_hour_angle = self._observer.calculate_sunrise_sunset(
@@ -143,7 +143,7 @@ class IrradiationCalculator:
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
-        :return: The optimal orientation (beta) in radians.
+        :return: The optimal orientation (beta) in degrees.
         :rtype: float
         """
         betas = np.arange(-math.pi / 2, math.pi / 2, 0.005)  # Discretize beta
@@ -153,4 +153,4 @@ class IrradiationCalculator:
         optimal_beta = betas[
             np.argmax(irradiations)
         ]  # Find beta that gives max irradiation
-        return optimal_beta
+        return math.degrees(optimal_beta)
