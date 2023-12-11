@@ -18,11 +18,6 @@ from .observer import Observer
 
 
 class AtmosphericTransmission:
-    """
-    This class calculates the effective atmospheric transmission coefficient
-    of the direct beam.
-    """
-
     def __init__(
         self,
         climate_type: str,
@@ -30,7 +25,9 @@ class AtmosphericTransmission:
         observer_latitude: float,
     ):
         r"""
-        Initialize the AtmosphericTransmission class.
+        To instantiate the ``AtmosphericTransmission`` class,
+        provide the following three parameters.
+
 
         :param climate_type: The type of climate.
         :type climate_type: str
@@ -57,13 +54,14 @@ class AtmosphericTransmission:
         is calculated using the formula:
 
         .. math::
-            \tau_b = a_0 + a_1 \cdot \exp\left(-\frac{k}{\cos(\theta_z)}\right)
+            \tau_b = a_0 + a_1 \times \exp\left(-\frac{k}{\cos(\theta_z)}\right)
 
-        where:
-        \(\tau_b\) is the effective atmospheric transmission coefficient
-        of the direct beam, \(a_0\), \(a_1\), and \(k\)
-        are the components of clear-sky beam radiation transmittance,
-        and \(\theta_z\) is the zenith angle.
+
+        | - :math:`\tau_b` is the effective atmospheric transmission
+            coefficient of the direct beam
+        | - :math:`a_0`, :math:`a_1`, and :math:`k` are the components
+            of clear-sky beam radiation transmittance
+        | - :math:`\theta_z` is the zenith angle
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
@@ -72,6 +70,7 @@ class AtmosphericTransmission:
         :return: The effective atmospheric transmission coefficient of the direct beam.
         :rtype: float
         """
+
         zenith_angle = self.observer.calculate_zenith_angle(day_of_year, solar_time)
         cos_zenith_angle = math.cos(zenith_angle)
         EPSILON = 1e-8  # Small constant to prevent division by zero

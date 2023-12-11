@@ -25,7 +25,7 @@ class Observer:
         observer_longitude: Optional[float] = None,
     ):
         """
-        Initialize the Observer class.
+        To instantiate the ``Observer`` class, provide the following parameter.
 
         :param observer_latitude: The latitude of the observer in degrees (optional).
         :type observer_latitude: Optional[float]
@@ -47,14 +47,14 @@ class Observer:
         The zenith angle is calculated using the formula:
 
         .. math::
-            \cos(\theta_z) = \sin(\phi) \cdot \sin(\delta)
-            + \cos(\phi) \cdot \cos(\delta) \cdot \cos(\omega)
+            \cos(\theta_z) = \sin(\phi) \times \sin(\delta)
+            + \cos(\phi) \times \cos(\delta) \times \cos(\omega)
 
-        where:
-        \(\theta_z\) is the zenith angle,
-        \(\phi\) is the latitude of the observer,
-        \(\delta\) is the solar declination, and
-        \(\omega\) is the hour angle.
+
+        | - :math:`\theta_z` is the zenith angle
+        | - :math:`\phi` is the latitude of the observer
+        | - :math:`\delta` is the solar declination
+        | - :math:`\omega` is the hour angle.
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
@@ -81,12 +81,12 @@ class Observer:
         The hour angle at sunrise and sunset is calculated using the formula:
 
         .. math::
-            \cos(\omega) = -\tan(\phi) \cdot \tan(\delta)
+            \cos(\omega) = -\tan(\phi) \times \tan(\delta)
 
-        where:
-        \(\omega\) is the hour angle,
-        \(\phi\) is the latitude of the observer, and
-        \(\delta\) is the solar declination.
+
+        | - :math:`\omega` is the hour angle
+        | - :math:`\phi` is the latitude of the observer
+        | - :math:`\delta` is the solar declination.
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
