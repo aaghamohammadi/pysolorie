@@ -32,7 +32,7 @@ class SolarIrradiance:
         r"""
         Calculate the extraterrestrial solar irradiance for a given day of the year.
 
-        The extraterrestrial solar irradiance, \(E\),
+        The extraterrestrial solar irradiance, :math:`E`,
         is the amount of solar energy received per unit area on
         a surface perpendicular to the Sun's rays outside Earth's atmosphere.
 

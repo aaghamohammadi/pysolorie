@@ -44,16 +44,16 @@ class HottelModel:
 
     def _calculate_a0_star(self, observer_altitude: int) -> float:
         r"""
-        Calculate \(a_0^*\) based on observer altitude.
+        Calculate :math:`a_0^*` based on observer altitude.
 
-        The formula used to calculate \(a_0^*\) is:
+        The formula used to calculate :math:`a_0^*` is:
 
         .. math::
-            a_0^* = 0.4237 - 0.00821 \cdot (6 - A)^2
+            a_0^* = 0.4237 - 0.00821 \times (6 - A)^2
 
         :param observer_altitude: Altitude of the observer in meters.
         :type observer_altitude: float
-        :return: \(a_0^*\) value.
+        :return: :math:`a_0^*` value.
         :rtype: float
         """
         observer_altitude_km = self._convert_to_km(observer_altitude)
@@ -62,16 +62,16 @@ class HottelModel:
 
     def _calculate_a1_star(self, observer_altitude: int) -> float:
         r"""
-        Calculate \(a_1^*\) based on observer altitude.
+        Calculate :math:`a_1^*` based on observer altitude.
 
-        The formula used to calculate \(a_1^*\) is:
+        The formula used to calculate :math:`a_1^*` is:
 
         .. math::
-            a_1^* = 0.5055 + 0.00595 \cdot (6.5 - A)^2
+            a_1^* = 0.5055 + 0.00595 \times (6.5 - A)^2
 
         :param observer_altitude: Altitude of the observer in meters.
         :type observer_altitude: float
-        :return: \(a_1^*\) value.
+        :return: :math:`a_1^*` value.
         :rtype: float
         """
         observer_altitude_km = self._convert_to_km(observer_altitude)
@@ -80,16 +80,16 @@ class HottelModel:
 
     def _calculate_k_star(self, observer_altitude: int) -> float:
         r"""
-        Calculate \(k^*\) based on observer altitude.
+        Calculate :math:`k^*` based on observer altitude.
 
-        The formula used to calculate \(k^*\) is:
+        The formula used to calculate :math:`k^*` is:
 
         .. math::
-            k^* = 0.2711 + 0.01858 \cdot (2.5 - A)^2
+            k^* = 0.2711 + 0.01858 \times (2.5 - A)^2
 
         :param observer_altitude: Altitude of the observer in meters.
         :type observer_altitude: float
-        :return: \(k^*\) value.
+        :return: :math:`k^*` value.
         :rtype: float
         """
         observer_altitude_km = self._convert_to_km(observer_altitude)
