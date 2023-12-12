@@ -20,10 +20,11 @@ from .sun_position import SunPosition
 class SolarIrradiance:
     def __init__(self, sun_position: SunPosition):
         r"""
-        Initialize the SolarIrradiance class.
+        To instantiate the ``SolarIrradiance`` class, provide the following parameter.
+
 
         :param sun_position: An instance of the SunPosition class.
-        :type sun_position: SunPosition
+        :type sun_position: pysolorie.SunPosition
         """
         self.sun_position = sun_position
 
@@ -31,24 +32,25 @@ class SolarIrradiance:
         r"""
         Calculate the extraterrestrial solar irradiance for a given day of the year.
 
-        The extraterrestrial solar irradiance, \(E\),
+        The extraterrestrial solar irradiance, :math:`E`,
         is the amount of solar energy received per unit area on
         a surface perpendicular to the Sun's rays outside Earth's atmosphere.
 
         The formula used is:
 
         .. math::
+            E = SC
+            \times (1 + 0.33 \times \cos (\frac{2\pi~n}{365}))
 
-            E = \text{{SOLAR\_CONSTANT}}
-            \times (1 + 0.33 \times \cos (2
-            \times \pi \times \frac{{\text{{day\_of\_year}}}}{365}))
 
-        where:
-        \(\text{{SOLAR\_CONSTANT}}\) is the average solar radiation arriving outside
-        of the Earth's atmosphere, which is approximately 1367 Watts per square meter.
-        This is also known as the solar constant.The factor 0.033 accounts
-        for the variation in the Earth-Sun distance
-        due to the Earth's elliptical orbit.
+        | - :math:`SC` is the average solar radiation arriving outside
+           of the Earth's atmosphere,
+           which is approximately ``1367`` Watts per square meter.
+           This is also known as the solar constant.
+        | - The factor ``0.033`` accounts
+          for the variation in the Earth-Sun distance
+          due to the Earth's elliptical orbit.
+        | - :math:`n` is the day of the year (i.e., ``day_of_year``)
 
         :param day\_of\_year: The day of the year, ranging from 1 to 365.
         :type day\_of\_year: int

@@ -30,7 +30,8 @@ class IrradiationCalculator:
         self, climate_type: str, observer_altitude: int, observer_latitude: float
     ):
         """
-        Initialize the IrradiationCalculator class.
+        To instantiate the ``IrradiationCalculator`` class,
+        provide the following three parameters.
 
         :param climate_type: The type of climate.
         :type climate_type: str
@@ -99,24 +100,30 @@ class IrradiationCalculator:
     ) -> float:
         r"""
         Calculate the total direct irradiation
-        for a given solar panel orientation (beta).
+        for a given solar panel orientation (i.e., :math:`\beta`).
 
-        The total direct irradiation is calculated using the formula:
+        | The total direct irradiation is calculated using the formula:
 
         .. math::
-            E_b(n,\phi) = \frac{E}{\Omega} \int_{\omega_s}^{\omega_t}
-            \cos(θ) H(\cos(θ)) \times \tau_b  d\omega
+            E(n,\phi) = \frac{E}{\Omega} \int_{\omega_s}^{\omega_t}
+            \cos(\theta) \times H(\cos(\theta)) \times \tau_b~d\omega
 
 
-        where:
-         n is the day of year
-         \(\phi\) is the latitude of the observer, and
-         \(E\) is the amount of solar energy received
-         \Omega is a constant equal to 7.15 * 1e-5
-         theta is incidence angle
-         \omega_s is the sunrise hour angle
-         \omega_t is the sunset hour angle
-         H is the heaviside step function
+        | - :math:`n` is the day of year (i.e., ``day_of_year``)
+
+        | - :math:`\phi` is the latitude of the observer
+
+        | - :math:`E` is the amount of solar energy received
+
+        | - :math:`\Omega` is a constant equal to ``7.15 * 1e-5``
+
+        | - :math:`\theta` is incidence angle
+
+        | - :math:`\omega_s` is the sunrise hour angle
+
+        | - :math:`\omega_t` is the sunset hour angle
+
+        | - :math:`H` is the heaviside step function
 
 
         :param panel_orientation: The orientation of the solar panel in radians.
@@ -139,11 +146,12 @@ class IrradiationCalculator:
 
     def find_optimal_orientation(self, day_of_year: int) -> float:
         """
-        Find the optimal orientation (beta) that maximizes the total direct irradiation.
+        Find the optimal orientation :math:`beta` that maximizes
+        the total direct irradiation.
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
-        :return: The optimal orientation (beta) in degrees.
+        :return: The optimal orientation (i.e., :math:`beta`) in degrees.
         :rtype: float
         """
         betas = np.arange(-math.pi / 2, math.pi / 2, 0.005)  # Discretize beta

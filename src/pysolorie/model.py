@@ -20,8 +20,8 @@ class HottelModel:
     Hottel Model for estimating clear-sky beam radiation transmittance
     based on climate type, and observer altitude.
 
-    :ivar CLIMATE_CONSTANTS: Correction factors for different climate types
-    (\(r_0\), \(r_1\), and \(r_k\)).
+    ``CLIMATE_CONSTANTS``: Correction factors for different climate types
+    :math:`r_0`, :math:`r_1`, and :math:`r_k`.
     """
 
     CLIMATE_CONSTANTS: Dict[str, Tuple[float, float, float]] = {
@@ -44,16 +44,16 @@ class HottelModel:
 
     def _calculate_a0_star(self, observer_altitude: int) -> float:
         r"""
-        Calculate \(a_0^*\) based on observer altitude.
+        Calculate :math:`a_0^*` based on observer altitude.
 
-        The formula used to calculate \(a_0^*\) is:
+        The formula used to calculate :math:`a_0^*` is:
 
         .. math::
-            a_0^* = 0.4237 - 0.00821 \cdot (6 - A)^2
+            a_0^* = 0.4237 - 0.00821 \times (6 - A)^2
 
         :param observer_altitude: Altitude of the observer in meters.
         :type observer_altitude: float
-        :return: \(a_0^*\) value.
+        :return: :math:`a_0^*` value.
         :rtype: float
         """
         observer_altitude_km = self._convert_to_km(observer_altitude)
@@ -62,16 +62,16 @@ class HottelModel:
 
     def _calculate_a1_star(self, observer_altitude: int) -> float:
         r"""
-        Calculate \(a_1^*\) based on observer altitude.
+        Calculate :math:`a_1^*` based on observer altitude.
 
-        The formula used to calculate \(a_1^*\) is:
+        The formula used to calculate :math:`a_1^*` is:
 
         .. math::
-            a_1^* = 0.5055 + 0.00595 \cdot (6.5 - A)^2
+            a_1^* = 0.5055 + 0.00595 \times (6.5 - A)^2
 
         :param observer_altitude: Altitude of the observer in meters.
         :type observer_altitude: float
-        :return: \(a_1^*\) value.
+        :return: :math:`a_1^*` value.
         :rtype: float
         """
         observer_altitude_km = self._convert_to_km(observer_altitude)
@@ -80,16 +80,16 @@ class HottelModel:
 
     def _calculate_k_star(self, observer_altitude: int) -> float:
         r"""
-        Calculate \(k^*\) based on observer altitude.
+        Calculate :math:`k^*` based on observer altitude.
 
-        The formula used to calculate \(k^*\) is:
+        The formula used to calculate :math:`k^*` is:
 
         .. math::
-            k^* = 0.2711 + 0.01858 \cdot (2.5 - A)^2
+            k^* = 0.2711 + 0.01858 \times (2.5 - A)^2
 
         :param observer_altitude: Altitude of the observer in meters.
         :type observer_altitude: float
-        :return: \(k^*\) value.
+        :return: :math:`k^*` value.
         :rtype: float
         """
         observer_altitude_km = self._convert_to_km(observer_altitude)
@@ -101,23 +101,29 @@ class HottelModel:
     ) -> Tuple[float, float, float]:
         r"""
         Calculate the components of clear-sky beam radiation transmittance
-        (\(a_0\), \(a_1\), and \(k\)) based on climate type and observer altitude.
+        :math:`a_0`, :math:`a_1`, and :math:`k`
+        based on climate type and observer altitude.
 
-        Correction factors adjust the clear-sky beam radiation transmittance components.
 
-        The formulas used to calculate the components are:
+        Correction factors adjust the clear-sky beam
+        radiation transmittance components. According
+        to the following formulas:
 
         .. math::
-            a_0 = r_0 \cdot a_0^*
-            a_1 = r_1 \cdot a_1^*
-            k = r_k \cdot k^*
+            a_0 = r_0 \times a_0^*
 
-        :param climate_type: Climate type (e.g., "TROPICAL").
+            a_1 = r_1 \times a_1^*
+
+            k = r_k \times k^*
+
+        :param climate_type: Climate type
+               (i.e., ``TROPICAL``, ``MIDLATITUDE SUMMER``,
+               ``SUBARCTIC SUMMER``, or ``MIDLATITUDE WINTER``).
         :type climate_type: str
         :param observer_altitude: Altitude of the observer in meters.
         :type observer_altitude: float
         :return: Components of clear-sky beam radiation transmittance
-        (\(a_0\), \(a_1\), \(k\)).
+                (:math:`a_0`, :math:`a_1`, :math:`k`).
         :rtype: tuple of floats
         :raises ValueError: If an invalid climate type is provided.
         """

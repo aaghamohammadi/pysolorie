@@ -25,9 +25,10 @@ class SunPosition:
         The formula used to calculate the solar declination angle is:
 
         .. math::
-            \delta = \sin \left( \frac{2 \pi}{365}
-            \times (284 + \text{{day\_of\_year}}) \right)
-            \times \left(\frac{23.45 \pi}{180}\right)
+            \delta = \frac{23.45 \pi}{180} \times
+            \sin \left(\frac{2\pi~(284 + n)}{365}\right)
+
+        | :math:`n` is the day of the year (i.e., ``day_of_year``)
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
@@ -61,8 +62,8 @@ class SunPosition:
         The formula used to calculate the hour angle is:
 
         .. math::
-            \omega = (t - \text{{seconds\_in\_half\_day}})
-            \times \frac{\pi}{\text{{seconds\_in\_half\_day}}}
+            \omega = (t - 12\times 60 \times 60)
+            \times \frac{\pi}{12\times 60 \times 60}
 
         :param solar_time: The solar time in seconds.
         :type solar_time: float
@@ -89,8 +90,8 @@ class SunPosition:
         The formula used to calculate the solar time is:
 
         .. math::
-            t = \omega \times \frac{\text{{seconds\_in\_half\_day}}}{\pi}
-            + \text{{seconds\_in\_half\_day}}
+            t = \omega \times \frac{12 \times 60 \times 60}{\pi}
+            + 12 \times 60 \times 60
 
         :param hour_angle: The hour angle in radians.
         :type hour_angle: float
