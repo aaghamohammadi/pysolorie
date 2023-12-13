@@ -11,8 +11,9 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-
+import csv
 import math
+from pathlib import Path
 from typing import Tuple
 
 import pytest
@@ -22,6 +23,7 @@ from pysolorie import (
     HottelModel,
     IrradiationCalculator,
     Observer,
+    ReportGenerator,
     SolarIrradiance,
     SunPosition,
 )
@@ -270,3 +272,34 @@ def test_find_optimal_orientation(
     )
     result = irradiation_calculator.find_optimal_orientation(day_of_year)
     assert pytest.approx(result, abs=1e-3) == expected_result
+
+
+def test_generate_optimal_orientation_csv_report(tmpdir):
+    # Create a temporary directory for the test
+    temp_dir = Path(tmpdir)
+
+    # Initialize the ReportGenerator
+    report_generator = ReportGenerator()
+
+    # Initialize the IrradiationCalculator for Tehran
+    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+
+    # Define the path for the CSV file
+    csv_path = temp_dir / "report.csv"
+    from_day = 60
+    to_day = 70
+    # Call the method to generate the report
+    report_generator.generate_optimal_orientation_csv_report(
+        csv_path, irradiation_calculator, from_day, to_day
+    )
+
+    # Check the CSV file
+    with open(csv_path, "r") as file:
+        reader = csv.reader(file)
+        header = next(reader)
+        assert header == ["Day", "Beta (degrees)"]
+        for i, row in enumerate(reader, start=from_day):
+            day, beta = row
+            assert int(day) == i
+            expected_beta = irradiation_calculator.find_optimal_orientation(i)
+            assert pytest.approx(float(beta), abs=1e-3) == expected_beta
