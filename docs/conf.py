@@ -1,5 +1,9 @@
 import os
-from pathlib import metadata
+
+try:
+    from importlib import metadata
+except ImportError:
+    import importlib_metadata as metadata
 
 project = "pysolorie"
 copyright = "2023, Alireza Aghamohammadi"
