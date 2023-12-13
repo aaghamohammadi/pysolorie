@@ -12,20 +12,19 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-from .atmospheric_transmission import AtmosphericTransmission
-from .irradiance import SolarIrradiance
-from .model import HottelModel
-from .numerical_integration import IrradiationCalculator
-from .observer import Observer
-from .report import ReportGenerator
-from .sun_position import SunPosition
+import logging
 
-__all__ = [
-    "HottelModel",
-    "SunPosition",
-    "SolarIrradiance",
-    "Observer",
-    "AtmosphericTransmission",
-    "IrradiationCalculator",
-    "ReportGenerator",
-]
+
+def logger_decorator(cls):
+    class WithLogging(cls):  # type: ignore
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.logger = logging.getLogger(cls.__name__)
+            self.logger.setLevel(logging.INFO)
+            self.logger.propagate = False
+            logging.basicConfig(
+                level=logging.INFO,
+                format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            )
+
+    return WithLogging
