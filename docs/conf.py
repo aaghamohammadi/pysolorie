@@ -1,7 +1,12 @@
+import os
+from pathlib import metadata
+
 project = "pysolorie"
 copyright = "2023, Alireza Aghamohammadi"
 author = "Alireza Aghamohammadi"
-
+PACKAGE_VERSION = metadata.version("pysolorie")
+version = PACKAGE_VERSION
+release = PACKAGE_VERSION
 
 extensions = [
     "sphinx.ext.autodoc",
