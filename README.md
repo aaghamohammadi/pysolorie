@@ -8,7 +8,7 @@
 ![PyPI - Version](https://img.shields.io/pypi/v/pysolorie)
 ![PyPI - Format](https://img.shields.io/pypi/format/pysolorie)
 ![PyPI - Status](https://img.shields.io/pypi/status/pysolorie)
-
+[![codecov](https://codecov.io/gh/aaghamohammadi/pysolorie/graph/badge.svg?token=TF9E8Y3Q67)](https://codecov.io/gh/aaghamohammadi/pysolorie)
 
 
 
