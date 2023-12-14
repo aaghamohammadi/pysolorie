@@ -12,19 +12,22 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+import functools
 import logging
 
 
-def logger_decorator(cls):
-    class WithLogging(cls):  # type: ignore
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.logger = logging.getLogger(cls.__name__)
-            self.logger.setLevel(logging.INFO)
-            self.logger.propagate = False
-            logging.basicConfig(
-                level=logging.INFO,
-                format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            )
+def logger_decorator(func):
+    @functools.wraps(func)
+    def wrapper(self, *args, **kwargs):
+        logger = logging.getLogger(func.__name__)
+        logger.setLevel(logging.INFO)
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        )
+        logger.info(f"Running '{func.__name__}'")
+        result = func(self, *args, **kwargs)
+        logger.info(f"Finished '{func.__name__}'")
+        return result
 
-    return WithLogging
+    return wrapper

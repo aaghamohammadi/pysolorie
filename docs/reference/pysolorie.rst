@@ -14,7 +14,9 @@ Submodules
 
    pysolorie.atmospheric_transmission
    pysolorie.irradiance
+   pysolorie.logger
    pysolorie.model
    pysolorie.numerical_integration
    pysolorie.observer
+   pysolorie.report
    pysolorie.sun_position
