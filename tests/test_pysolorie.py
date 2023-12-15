@@ -14,9 +14,11 @@
 import csv
 import math
 from pathlib import Path
-from typing import Tuple
+from typing import Any, Dict, List, Tuple
+from unittest.mock import MagicMock
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pytest
 
 from pysolorie import (
@@ -276,20 +278,22 @@ def test_find_optimal_orientation(
     assert pytest.approx(result, abs=1e-3) == expected_result
 
 
-def test_generate_optimal_orientation_csv_report(tmpdir):
+def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
     # Create a temporary directory for the test
-    temp_dir = Path(tmpdir)
+    temp_dir: Path = Path(tmpdir)
 
     # Initialize the ReportGenerator
-    report_generator = ReportGenerator()
+    report_generator: ReportGenerator = ReportGenerator()
 
     # Initialize the IrradiationCalculator for Tehran
-    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+    irradiation_calculator: IrradiationCalculator = IrradiationCalculator(
+        "MIDLATITUDE SUMMER", 1200, 35.6892
+    )
 
     # Define the path for the CSV file
-    csv_path = temp_dir / "report.csv"
-    from_day = 60
-    to_day = 70
+    csv_path: Path = temp_dir / "report.csv"
+    from_day: int = 60
+    to_day: int = 70
     # Call the method to generate the report
     report_generator.generate_optimal_orientation_csv_report(
         csv_path, irradiation_calculator, from_day, to_day
@@ -307,20 +311,22 @@ def test_generate_optimal_orientation_csv_report(tmpdir):
             assert pytest.approx(float(beta), abs=1e-3) == expected_beta
 
 
-def test_plot_optimal_orientation(tmpdir):
+def test_plot_optimal_orientation(tmpdir) -> None:
     # Create a temporary directory for the test
-    temp_dir = Path(tmpdir)
+    temp_dir: Path = Path(tmpdir)
 
     # Initialize the Plotter
-    plotter = Plotter()
+    plotter: Plotter = Plotter()
 
     # Initialize the IrradiationCalculator for Tehran
-    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+    irradiation_calculator: IrradiationCalculator = IrradiationCalculator(
+        "MIDLATITUDE SUMMER", 1200, 35.6892
+    )
 
     # Define the path for the plot
-    plot_path = temp_dir / "plot.png"
-    from_day = 60
-    to_day = 70
+    plot_path: Path = temp_dir / "plot.png"
+    from_day: int = 60
+    to_day: int = 70
     # Call the method to generate the plot
     plotter.plot_optimal_orientation(
         irradiation_calculator, from_day, to_day, plot_path
@@ -329,6 +335,23 @@ def test_plot_optimal_orientation(tmpdir):
     # Check the plot file
     assert plot_path.exists(), "The plot file was not created."
 
-    img = plt.imread(plot_path)
+    img: np.ndarray = plt.imread(plot_path)
     assert img.shape[0] > 0, "The plot image has no content."
     assert img.shape[1] > 0, "The plot image has no content."
+
+
+def test_plot_method() -> None:
+    # Set up the necessary variables
+    plotter: Plotter = Plotter()
+    days: List[int] = [1, 2, 3]
+    betas: List[float] = [10.0, 20.0, 30.0]
+    path: None = None
+    plot_kwargs: Dict[str, Any] = {}
+    savefig_kwargs: Dict[str, Any] = {}
+
+    # Replace plt.show with a mock
+    plt.show = MagicMock()
+
+    # Call the method
+    plotter._plot(days, betas, path, plot_kwargs, savefig_kwargs)
+    plt.show.assert_called_once()
