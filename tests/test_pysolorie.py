@@ -16,6 +16,7 @@ import math
 from pathlib import Path
 from typing import Tuple
 
+import matplotlib.pyplot as plt
 import pytest
 
 from pysolorie import (
@@ -23,6 +24,7 @@ from pysolorie import (
     HottelModel,
     IrradiationCalculator,
     Observer,
+    Plotter,
     ReportGenerator,
     SolarIrradiance,
     SunPosition,
@@ -303,3 +305,30 @@ def test_generate_optimal_orientation_csv_report(tmpdir):
             assert int(day) == i
             expected_beta = irradiation_calculator.find_optimal_orientation(i)
             assert pytest.approx(float(beta), abs=1e-3) == expected_beta
+
+
+def test_plot_optimal_orientation(tmpdir):
+    # Create a temporary directory for the test
+    temp_dir = Path(tmpdir)
+
+    # Initialize the Plotter
+    plotter = Plotter()
+
+    # Initialize the IrradiationCalculator for Tehran
+    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+
+    # Define the path for the plot
+    plot_path = temp_dir / "plot.png"
+    from_day = 60
+    to_day = 70
+    # Call the method to generate the plot
+    plotter.plot_optimal_orientation(
+        irradiation_calculator, from_day, to_day, plot_path
+    )
+
+    # Check the plot file
+    assert plot_path.exists(), "The plot file was not created."
+
+    img = plt.imread(plot_path)
+    assert img.shape[0] > 0, "The plot image has no content."
+    assert img.shape[1] > 0, "The plot image has no content."

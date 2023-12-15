@@ -18,5 +18,6 @@ Submodules
    pysolorie.model
    pysolorie.numerical_integration
    pysolorie.observer
+   pysolorie.plotter
    pysolorie.report
    pysolorie.sun_position

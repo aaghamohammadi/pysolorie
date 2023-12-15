@@ -17,6 +17,7 @@ from .irradiance import SolarIrradiance
 from .model import HottelModel
 from .numerical_integration import IrradiationCalculator
 from .observer import Observer
+from .plotter import Plotter
 from .report import ReportGenerator
 from .sun_position import SunPosition
 
@@ -28,4 +29,5 @@ __all__ = [
     "AtmosphericTransmission",
     "IrradiationCalculator",
     "ReportGenerator",
+    "Plotter",
 ]
