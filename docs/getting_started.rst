@@ -42,6 +42,50 @@ The ``climate_type`` can be one of the following:
 
     print(f"Optimal orientation: {result}")
 
+
+Generating a CSV Report
+-----------------------
+
+The ``generate_optimal_orientation_csv_report`` method generates a CSV report of
+the optimal orientation for a range of days.
+
+.. code-block:: python
+
+    from pysolorie import ReportGenerator, IrradiationCalculator
+    from pathlib import Path
+
+    # Create a report generator and an irradiation calculator
+    report_generator = ReportGenerator()
+    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+
+    # Generate a CSV report for days 60 to 70
+    report_generator.generate_optimal_orientation_csv_report(Path('results.csv'), irradiation_calculator, 60, 70)
+
+The CSV file will be saved to the specified path.
+
+
+Plotting the Optimal Orientation
+--------------------------------
+
+The ``plot_optimal_orientation`` method plots the optimal orientation for a range of days.
+
+.. code-block:: python
+
+    from pysolorie import Plotter, IrradiationCalculator
+    from pathlib import Path
+
+    # Create a plotter and an irradiation calculator
+    plotter = Plotter()
+    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+
+    # Plot the optimal orientation for days 60 to 70
+    plotter.plot_optimal_orientation(irradiation_calculator, 60, 70, Path('results.png'), plot_kwargs={'xlabel': 'Day', 'ylabel': 'Beta (degrees)', 'title': 'Optimal Solar Panel Orientation', "figsize": (16,9)}, savefig_kwargs={'dpi': 300})
+
+The plot will be saved to the specified path. The ``plot_kwargs`` and ``savefig_kwargs``
+parameters can be used to customize the plot and the savefig function, respectively. If no path is provided, the plot will be displayed but not saved.
+If the path is provided, the plot will be saved to the specified path and not displayed. If you want to both display and save the plot, you should call ``plt.show()`` after this function.
+
+
 Calculating Sunrise and Sunset
 ------------------------------
 

@@ -13,14 +13,15 @@
 #    limitations under the License.
 
 import csv
+import logging
 from pathlib import Path
 
 from .logger import logger_decorator
 from .numerical_integration import IrradiationCalculator
 
 
-@logger_decorator
 class ReportGenerator:
+    @logger_decorator
     def generate_optimal_orientation_csv_report(
         self,
         path: Path,
@@ -48,10 +49,12 @@ class ReportGenerator:
 
             for day in range(from_day, to_day):
                 beta = irradiation_calculator.find_optimal_orientation(day)
-                logger_name = "logger"
-                getattr(self, logger_name).info(
+                logger = logging.getLogger(
+                    self.generate_optimal_orientation_csv_report.__name__
+                )
+                logger.info(
                     f"On day {day},"
-                    + "the solar panel's optimal orientation is {beta} degrees."
+                    + f"the solar panel's optimal orientation is {beta} degrees."
                 )
 
                 # Write the result to the CSV file

@@ -84,11 +84,17 @@ To run unit tests for the python, e.g., python 3.10, you can run this command:
 
 Submitting Your Contributions
 -----------------------------
+We welcome and appreciate your contributions to the pysolorie project! Here are some ways you can contribute:
 
-Contributions to the pysolorie project can start with writing test cases. This is a great way to understand the project and ensure its robustness. Once you've made your changes and all tests are passing, you can submit your contributions by creating a pull request on GitHub.
+- **Writing Test Cases**: This not only helps in ensuring the robustness of the project but also provides a deeper understanding of the project's workings.
+- **Improving Documentation**: Enhance the project's documentation by providing more comprehensive descriptions and adding illustrative examples.
+- **Bug Fixes**: Help us improve the project by identifying and fixing bugs.
+- **Adding New Features**: Contribute by introducing new features that can enhance the functionality of the project.
 
-**We are also looking to add plotting support to the project.** If you're interested, you could start by looking into libraries like matplotlib or other similar tools. However, it's important to note that we aim to keep our dependencies minimal. Any new dependency should be clearly justified and absolutely necessary.
+After making your changes and ensuring all tests pass, you can submit your contributions by creating a pull request on GitHub.
 
-When submitting your contributions, please make sure to include a clear and detailed description of your changes. Before submitting new ones, please check the existing issues and pull requests to avoid duplication.
+Please note, we strive to keep our dependencies to a minimum. Any addition of a new dependency should be well justified and absolutely necessary.
 
-Thank you for contributing to pysolorie!
+When submitting your contributions, kindly include a clear and detailed description of the changes you've made. To avoid duplication, please check existing issues and pull requests before submitting new ones.
+
+Thank you for your interest and contributions to pysolorie! We look forward to building a better project with your help.
