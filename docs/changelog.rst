@@ -1,6 +1,39 @@
 Changelog
 =========
 
+Version 1.3.1
+-------------
+
+Release date: 2023-12-16
+
+Added
+^^^^^
+- An image has been added to the README file, with the solar panel's picture and width specified as 600. (``docs/_static/images/solar_panel.svg``)
+
+Changed
+^^^^^^^
+- Correction of typographical error in the README.md, changing “Solar Orie” to “Sol Orie” in the abbreviation of “pysolorie”.
+- Updated the utilization description from “the Hottel Model” to “Hottel's Model” in the README.md.
+
+Documentation
+^^^^^^^^^^^^^
+- A detailed explanation of the factors affecting solar irradiation energy received by a solar panel. It includes time of irradiation, latitude and climate of the location, and the solar panel's shape and orientation.
+- Mention of how solar collectors can be positioned and adjusted for fixed periods or optimal annual performance.
+- Description of the components of solar irradiation: direct beam, sky diffusion, and ground reflection.
+- Clarification that the library is now considering flat solar panels and focusing on direct beam irradiation.
+- Usage of Hottel's model to estimate the transmittance of direct solar radiation through clear atmospheres.
+- A new “References” section with three references to support the text added to the Introduction.
+- In the introduction, the leading question has been rephrased for clarity.
+- Updated the feature listing of “Calculating the zenith angle” to “Calculating the solar zenith angle”.
+
+Testing
+^^^^^^^
+- New test case: ``test_generate_optimal_orientation_csv_report`` has been added to verify the functionality of generating CSV reports for the optimal orientation of solar panels over a specified range of days. This test ensures that the CSV file is created correctly and contains the expected data.
+- New test case: ``test_plot_optimal_orientation`` is introduced to test the generation of plots for the optimal orientation. It checks if the plot file is created and has content, ensuring that the visual representation of the data is correctly generated.
+- New test case: ``test_plot_method`` to verify internal plotting functionality. This test covers the private method ``_plot``, which underlies the plotting functionality. It checks whether the matplotlib library's ``show`` method is called when plotting data without a specified path (used for displaying plots directly).
+- The existing test cases have been supplemented with type annotations, providing clearer code documentation and potentially preventing type-related errors. Types such as ``Path``, ``ReportGenerator``, ``IrradiationCalculator``, ``List``, ``Dict``, ``Any``, and several others are now explicitly declared, making the codebase more robust and static type checker friendly.
+
+
 Version 1.3.0
 -------------
 
