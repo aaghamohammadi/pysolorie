@@ -10,9 +10,12 @@
 ![PyPI - Status](https://img.shields.io/pypi/status/pysolorie)
 [![codecov](https://codecov.io/gh/aaghamohammadi/pysolorie/graph/badge.svg?token=TF9E8Y3Q67)](https://codecov.io/gh/aaghamohammadi/pysolorie)
 
-**pysolorie** stands for **Py**thon **So**lar **Orie**ntation Analysis of Solar Panel. It is a Python library designed to help you analyze the orientation of solar panels.
+**pysolorie** stands for **Py**thon **Sol**ar **Orie**ntation Analysis of Solar Panel. It is a Python library designed to help you analyze the orientation of solar panels.
 
-How can one find the optimal orientation of a solar panel to maximize the total energy received from the sun?
+<img src="docs/_static/images/solar_panel.svg" width="600">
+
+How can one maximize the solar irradiation energy received by a solar panel?
+
 
 ## Features
 
@@ -22,8 +25,8 @@ How can one find the optimal orientation of a solar panel to maximize the total 
 - Plotting the Optimal Orientation for a range of days.
 - Generating a CSV Report of the optimal orientation for a range of days.
 - Calculating the sunrise and sunset hour angles for a given day.
-- Utilizing the Hottel Model to estimate clear-sky beam radiation transmittance.
-- Calculating the zenith angle.
+- Utilizing the Hottel's Model to estimate clear-sky beam radiation transmittance.
+- Calculating the solar zenith angle.
 - Calculating the solar time.
 - Calculating Solar Declination and Hour Angle.
 
