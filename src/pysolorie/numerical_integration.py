@@ -15,7 +15,7 @@
 import math
 
 import numpy as np
-from scipy import integrate  # type: ignore
+from scipy import integrate, optimize  # type: ignore
 
 from .atmospheric_transmission import AtmosphericTransmission
 from .irradiance import SolarIrradiance
@@ -154,11 +154,13 @@ class IrradiationCalculator:
         :return: The optimal orientation (i.e., :math:`beta`) in degrees.
         :rtype: float
         """
-        betas = np.arange(-math.pi / 2, math.pi / 2, 0.005)  # Discretize beta
-        irradiations = [
-            self.calculate_direct_irradiation(beta, day_of_year) for beta in betas
-        ]
-        optimal_beta = betas[
-            np.argmax(irradiations)
-        ]  # Find beta that gives max irradiation
+
+        def neg_irradiation(beta: float):
+            # We negate the irradiation because we're minimizing
+            return -self.calculate_direct_irradiation(beta, day_of_year)
+
+        result = optimize.minimize_scalar(
+            neg_irradiation, bounds=(-math.pi / 2, math.pi / 2), method="bounded"
+        )
+        optimal_beta = result.x
         return math.degrees(optimal_beta)

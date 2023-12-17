@@ -239,28 +239,28 @@ def test_calculate_sunrise_sunset(
             1200,
             35.6892,
             172,
-            0.241,
+            0.170,
         ),  # Tehran Summer, day_of_year=172 (June 21)
         (
             "MIDLATITUDE WINTER",
             1200,
             35.6892,
             355,
-            63.839,
+            63.791,
         ),  # Tehran Winter, day_of_year=355 (Dec 21)
         (
             "TROPICAL",
             26,
             3.5952,
             100,
-            -6.635,
+            -6.610,
         ),  # Medan, day_of_year=100 (April 10)
         (
             "SUBARCTIC SUMMER",
             132,
             64.84361,
             200,
-            32.613,
+            32.614,
         ),  # Fairbanks Summer, day_of_year=200 (July 19)
     ],
 )

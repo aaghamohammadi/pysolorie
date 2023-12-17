@@ -161,6 +161,14 @@ class HottelModel:
         :rtype: tuple of floats
         :raises ValueError: If an invalid climate type is provided.
         """
+
+        self.CLIMATE_CONSTANTS: Dict[str, Tuple[float, float, float]] = {
+            "TROPICAL": (0.95, 0.98, 1.02),
+            "MIDLATITUDE SUMMER": (0.97, 0.99, 1.02),
+            "SUBARCTIC SUMMER": (0.99, 0.99, 1.01),
+            "MIDLATITUDE WINTER": (1.03, 1.01, 1.00),
+        }
+
         if climate_type.upper() not in self.CLIMATE_CONSTANTS:
             raise ValueError("Invalid climate type")
 
