@@ -47,7 +47,7 @@ class SolarIrradiance:
 
         | - :math:`SC` is the average solar radiation arriving outside
            of the Earth's atmosphere,
-           which is approximately ``1367`` Watts per square meter.
+           which is approximately ``1367`` Megawatts per square meter.
            This is also known as the solar constant.
         | - The factor 0.033, which is two times the eccentricity of
             the Earth's orbit around the Sun, accounts for the variation
@@ -57,12 +57,12 @@ class SolarIrradiance:
         :param day\_of\_year: The day of the year, ranging from 1 to 365.
         :type day\_of\_year: int
 
-        :return: The extraterrestrial solar irradiance in Watts per square meter.
+        :return: The extraterrestrial solar irradiance in Megawatts per square meter.
         :rtype: float
         """
 
-        # Solar constant (W/m^2)
-        SOLAR_CONSTANT = 1367
+        # Solar constant (MW/m^2)
+        SOLAR_CONSTANT = 1367 * 1e-6
 
         # Factor to account for the Earth's orbital eccentricity
         earth_orbital_eccentricity = 0.033

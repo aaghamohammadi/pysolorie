@@ -128,7 +128,7 @@ class IrradiationCalculator:
         | - :math:`H` is the Heaviside step function
 
 
-        :param panel_orientation: The orientation of the solar panel in radians.
+        :param panel_orientation: The orientation of the solar panel in degrees.
         :type panel_orientation: float
         :param day_of_year: The day of the year.
         :type day_of_year: int
@@ -138,6 +138,7 @@ class IrradiationCalculator:
         sunrise_hour_angle, sunset_hour_angle = self._observer.calculate_sunrise_sunset(
             day_of_year
         )
+        panel_orientation = math.radians(panel_orientation)
         irradiance_components = [
             self._calculate_irradiance_component(
                 hour_angle, panel_orientation, day_of_year
@@ -159,7 +160,7 @@ class IrradiationCalculator:
 
         def neg_irradiation(beta: float):
             # We negate the irradiation because we're minimizing
-            return -self.calculate_direct_irradiation(beta, day_of_year)
+            return -self.calculate_direct_irradiation(math.degrees(beta), day_of_year)
 
         result = optimize.minimize_scalar(
             neg_irradiation, bounds=(-math.pi / 2, math.pi / 2), method="bounded"

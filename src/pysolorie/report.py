@@ -45,17 +45,23 @@ class ReportGenerator:
         """
         with open(path, "w", newline="") as file:
             writer = csv.writer(file)
-            writer.writerow(["Day", "Beta (degrees)"])
+            writer.writerow(
+                ["Day", "Beta (degrees)", "Total Direct Irradiation (MW/m²)"]
+            )
 
             for day in range(from_day, to_day):
                 beta = irradiation_calculator.find_optimal_orientation(day)
+                total_direct_irradiation = (
+                    irradiation_calculator.calculate_direct_irradiation(beta, day)
+                )
                 logger = logging.getLogger(
                     self.generate_optimal_orientation_csv_report.__name__
                 )
                 logger.info(
-                    f"On day {day},"
-                    + f"the solar panel's optimal orientation is {beta} degrees."
+                    f"On day {day}, the solar panel's optimal orientation is "
+                    f"{beta} degrees, and the total direct irradiation is "
+                    f"{total_direct_irradiation} MW/m²."
                 )
 
                 # Write the result to the CSV file
-                writer.writerow([day, beta])
+                writer.writerow([day, beta, total_direct_irradiation])

@@ -102,11 +102,11 @@ def test_solar_time(
 @pytest.mark.parametrize(
     "day_of_year, expected_irradiance",
     [
-        (1, 1412.104),  # January 1st
-        (81, 1374.918),  # March 22nd (equinox)
-        (172, 1322.623),  # June 21st (summer solstice)
-        (264, 1359.464),  # September 23rd (equinox)
-        (355, 1411.444),  # December 21st (winter solstice)
+        (1, 0.001411444),  # January 1st
+        (81, 0.001374918),  # March 22nd (equinox)
+        (172, 0.00132262),  # June 21st (summer solstice)
+        (264, 0.001359464),  # September 23rd (equinox)
+        (355, 0.001412104),  # December 21st (winter solstice)
     ],
 )
 def test_calculate_extraterrestrial_irradiance(
@@ -117,7 +117,7 @@ def test_calculate_extraterrestrial_irradiance(
     irradiance: float = solar_irradiance.calculate_extraterrestrial_irradiance(
         day_of_year
     )
-    assert irradiance == pytest.approx(expected_irradiance, abs=1e-3)
+    assert irradiance == pytest.approx(expected_irradiance, abs=1e-5)
 
 
 @pytest.mark.parametrize(
@@ -232,6 +232,65 @@ def test_calculate_sunrise_sunset(
 
 
 @pytest.mark.parametrize(
+    "climate_type,"
+    + "observer_altitude,"
+    + "observer_latitude,"
+    + "day_of_year,"
+    + "panel_orientation,"
+    + "expected_result",
+    [
+        (
+            "MIDLATITUDE SUMMER",
+            1200,
+            35.6892,
+            172,
+            45.0,
+            20.3026,  # Tehran Summer, day_of_year=172 (June 21)
+        ),
+        (
+            "MIDLATITUDE WINTER",
+            1200,
+            35.6892,
+            355,
+            45.0,
+            19.436,  # Tehran Winter, day_of_year=355 (Dec 21)
+        ),
+        (
+            "TROPICAL",
+            26,
+            3.5952,
+            100,
+            45.0,
+            13.224,  # Medan, day_of_year=100 (April 10)
+        ),
+        (
+            "SUBARCTIC SUMMER",
+            132,
+            64.84361,
+            200,
+            45.0,
+            21.371,  # Fairbanks Summer, day_of_year=200 (July 19)
+        ),
+    ],
+)
+def test_calculate_direct_irradiation(
+    climate_type: str,
+    observer_altitude: int,
+    observer_latitude: float,
+    day_of_year: int,
+    panel_orientation: float,
+    expected_result: float,
+) -> None:
+    irradiation_calculator = IrradiationCalculator(
+        climate_type, observer_altitude, observer_latitude
+    )
+    result = irradiation_calculator.calculate_direct_irradiation(
+        panel_orientation, day_of_year
+    )
+    assert pytest.approx(result, abs=1e-3) == expected_result
+
+
+@pytest.mark.parametrize(
     "climate_type, observer_altitude, observer_latitude, day_of_year, expected_result",
     [
         (
@@ -303,12 +362,25 @@ def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
     with open(csv_path, "r") as file:
         reader = csv.reader(file)
         header = next(reader)
-        assert header == ["Day", "Beta (degrees)"]
+        assert header == ["Day", "Beta (degrees)", "Total Direct Irradiation (MW/m²)"]
         for i, row in enumerate(reader, start=from_day):
-            day, beta = row
-            assert int(day) == i
+            day, beta, total_direct_irradiation = (
+                int(row[0]),
+                float(row[1]),
+                float(row[2]),
+            )
+
+            assert day == i
             expected_beta = irradiation_calculator.find_optimal_orientation(i)
-            assert pytest.approx(float(beta), abs=1e-3) == expected_beta
+
+            expected_total_direct_irradiation = (
+                irradiation_calculator.calculate_direct_irradiation(beta, i)
+            )
+            assert pytest.approx(beta, abs=1e-3) == expected_beta
+            assert (
+                pytest.approx(total_direct_irradiation, abs=1e-3)
+                == expected_total_direct_irradiation
+            )
 
 
 def test_plot_optimal_orientation(tmpdir) -> None:
@@ -329,6 +401,35 @@ def test_plot_optimal_orientation(tmpdir) -> None:
     to_day: int = 70
     # Call the method to generate the plot
     plotter.plot_optimal_orientation(
+        irradiation_calculator, from_day, to_day, plot_path
+    )
+
+    # Check the plot file
+    assert plot_path.exists(), "The plot file was not created."
+
+    img: np.ndarray = plt.imread(plot_path)
+    assert img.shape[0] > 0, "The plot image has no content."
+    assert img.shape[1] > 0, "The plot image has no content."
+
+
+def test_plot_total_direct_irradiation(tmpdir) -> None:
+    # Create a temporary directory for the test
+    temp_dir: Path = Path(tmpdir)
+
+    # Initialize the Plotter
+    plotter: Plotter = Plotter()
+
+    # Initialize the IrradiationCalculator for Tehran
+    irradiation_calculator: IrradiationCalculator = IrradiationCalculator(
+        "MIDLATITUDE SUMMER", 1200, 35.6892
+    )
+
+    # Define the path for the plot
+    plot_path: Path = temp_dir / "plot.png"
+    from_day: int = 60
+    to_day: int = 70
+    # Call the method to generate the plot
+    plotter.plot_total_direct_irradiation(
         irradiation_calculator, from_day, to_day, plot_path
     )
 
