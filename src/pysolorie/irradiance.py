@@ -32,14 +32,16 @@ class SolarIrradiance:
         r"""
         Calculate the extraterrestrial solar irradiance for a given day of the year.
 
-        The extraterrestrial solar irradiance, :math:`E`,
-        is the amount of solar energy received per unit area on
-        a surface perpendicular to the Sun's rays outside Earth's atmosphere.
+        The extraterrestrial solar irradiance, :math:`I`,
+        is the annual average of the Sun's irradiation intensity.
+        This refers to the amount of solar energy received per unit
+        area per unit time on a surface perpendicular to the Sun's rays,
+        outside Earth's atmosphere.
 
         The formula used is:
 
         .. math::
-            E = SC
+            I = SC
             \times (1 + 0.33 \times \cos (\frac{2\pi~n}{365}))
 
 
@@ -47,9 +49,9 @@ class SolarIrradiance:
            of the Earth's atmosphere,
            which is approximately ``1367`` Watts per square meter.
            This is also known as the solar constant.
-        | - The factor ``0.033`` accounts
-          for the variation in the Earth-Sun distance
-          due to the Earth's elliptical orbit.
+        | - The factor 0.033, which is two times the eccentricity of
+            the Earth's orbit around the Sun, accounts for the variation
+            in the Earth-Sun distance due to the Earth's elliptical orbit.
         | - :math:`n` is the day of the year (i.e., ``day_of_year``)
 
         :param day\_of\_year: The day of the year, ranging from 1 to 365.

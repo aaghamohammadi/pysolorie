@@ -23,7 +23,9 @@ A solar collector can be positioned at a fixed orientation to maximize energy re
 or it can be fixed for optimal performance throughout the year.
 The orientation can then be adjusted for the next time period. Solar irradiation is composed of three components: the direct beam, sky diffusion, and ground reflection.
 Now, we are considering flat solar panels and focusing on direct beam irradiation, which contributes the most to solar irradiation.
-There are various models available for different climate types. In our case, we are using Hottel's model to estimate the transmittance of direct solar radiation through clear atmospheres [3]_.
+There are various models available for different climate types.
+Moreover, a cloudy sky or polluted air affects the solar energy received on Earth.
+In our case, we are using Hottel's model to estimate the transmittance of direct solar radiation through clear atmospheres [3]_.
 
 ``pysolorie`` is a library designed to help you find this optimal orientation. Its features include, but are not limited to:
 

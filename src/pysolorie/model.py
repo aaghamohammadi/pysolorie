@@ -20,16 +20,34 @@ class HottelModel:
     Hottel Model for estimating clear-sky beam radiation transmittance
     based on climate type, and observer altitude.
 
-    ``CLIMATE_CONSTANTS``: Correction factors for different climate types
+    Climate Constants are Correction factors for different climate types
     :math:`r_0`, :math:`r_1`, and :math:`r_k`.
-    """
 
-    CLIMATE_CONSTANTS: Dict[str, Tuple[float, float, float]] = {
-        "TROPICAL": (0.95, 0.98, 1.02),
-        "MIDLATITUDE SUMMER": (0.97, 0.99, 1.02),
-        "SUBARCTIC SUMMER": (0.99, 0.99, 1.01),
-        "MIDLATITUDE WINTER": (1.03, 1.01, 1.00),
-    }
+    .. list-table:: Climate Constants
+       :widths: 25 25 25 25
+       :header-rows: 1
+
+       * - Climate Type
+         - :math:`r_0`
+         - :math:`r_1`
+         - :math:`r_k`
+       * - TROPICAL
+         - 0.95
+         - 0.98
+         - 1.02
+       * - MIDLATITUDE SUMMER
+         - 0.97
+         - 0.99
+         - 1.02
+       * - SUBARCTIC SUMMER
+         - 0.99
+         - 0.99
+         - 1.01
+       * - MIDLATITUDE WINTER
+         - 1.03
+         - 1.01
+         - 1.00
+    """
 
     def _convert_to_km(self, observer_altitude: int) -> float:
         r"""
@@ -104,10 +122,8 @@ class HottelModel:
         :math:`a_0`, :math:`a_1`, and :math:`k`
         based on climate type and observer altitude.
 
-
         Correction factors adjust the clear-sky beam
-        radiation transmittance components. According
-        to the following formulas:
+        radiation transmittance components according to the following formulas:
 
         .. math::
             a_0 = r_0 \times a_0^*
@@ -116,11 +132,29 @@ class HottelModel:
 
             k = r_k \times k^*
 
-        :param climate_type: Climate type
-               (i.e., ``TROPICAL``, ``MIDLATITUDE SUMMER``,
-               ``SUBARCTIC SUMMER``, or ``MIDLATITUDE WINTER``).
+        The formula used to calculate :math:`a_0^*` is:
+
+        .. math::
+            a_0^* = 0.4237 - 0.00821 \times (6 - A)^2
+
+        The formula used to calculate :math:`a_1^*` is:
+
+        .. math::
+            a_1^* = 0.5055 + 0.00595 \times (6.5 - A)^2
+
+        The formula used to calculate :math:`k^*` is:
+
+        .. math::
+            k^* = 0.2711 + 0.01858 \times (2.5 - A)^2
+
+        Where `A` is the observer altitude in kilometers.
+
+        :param climate_type: Climate type (i.e., one of the keys in
+                            `Climate Constants`: ``TROPICAL``, ``MIDLATITUDE SUMMER``,
+                            ``SUBARCTIC SUMMER``, or ``MIDLATITUDE WINTER``).
         :type climate_type: str
         :param observer_altitude: Altitude of the observer in meters.
+                                It is converted to kilometers in the calculations.
         :type observer_altitude: float
         :return: Components of clear-sky beam radiation transmittance
                 (:math:`a_0`, :math:`a_1`, :math:`k`).

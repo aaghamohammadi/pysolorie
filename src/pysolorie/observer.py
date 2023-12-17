@@ -42,16 +42,16 @@ class Observer:
 
     def calculate_zenith_angle(self, day_of_year: int, solar_time: float) -> float:
         r"""
-        Calculate the zenith angle.
+        Calculate the solar zenith angle.
 
-        The zenith angle is calculated using the formula:
+        The solar zenith angle is calculated using the formula:
 
         .. math::
             \cos(\theta_z) = \sin(\phi) \times \sin(\delta)
             + \cos(\phi) \times \cos(\delta) \times \cos(\omega)
 
 
-        | - :math:`\theta_z` is the zenith angle
+        | - :math:`\theta_z` is the solar zenith angle
         | - :math:`\phi` is the latitude of the observer
         | - :math:`\delta` is the solar declination
         | - :math:`\omega` is the hour angle.
