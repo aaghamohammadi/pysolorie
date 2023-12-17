@@ -105,7 +105,7 @@ class IrradiationCalculator:
         | The total direct irradiation is calculated using the formula:
 
         .. math::
-            E(n,\phi) = \frac{E}{\Omega} \int_{\omega_s}^{\omega_t}
+            E(n,\phi) = \frac{I}{\Omega} \int_{\omega_s}^{\omega_t}
             \cos(\theta) \times H(\cos(\theta)) \times \tau_b~d\omega
 
 
@@ -113,17 +113,19 @@ class IrradiationCalculator:
 
         | - :math:`\phi` is the latitude of the observer
 
-        | - :math:`E` is the amount of solar energy received
+        | - :math:`I`  is the amount of
+                solar energy received per unit area per second.
 
-        | - :math:`\Omega` is a constant equal to ``7.15 * 1e-5``
+        | - :math:`\Omega` = ``7.15 * 1e-5``
 
-        | - :math:`\theta` is incidence angle
+        | - :math:`\theta` is incidence angle, the angle between the position vector
+                of the sun and the normal vector to the solar panel.
 
         | - :math:`\omega_s` is the sunrise hour angle
 
         | - :math:`\omega_t` is the sunset hour angle
 
-        | - :math:`H` is the heaviside step function
+        | - :math:`H` is the Heaviside step function
 
 
         :param panel_orientation: The orientation of the solar panel in radians.
