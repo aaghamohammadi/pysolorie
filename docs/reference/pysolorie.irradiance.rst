@@ -1,7 +1,5 @@
-pysolorie.irradiance module
-===========================
+Solar Irradiance
+================
 
 .. automodule:: pysolorie.irradiance
    :members:
-   :undoc-members:
-   :show-inheritance:

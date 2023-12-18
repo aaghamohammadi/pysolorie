@@ -24,6 +24,18 @@ from .sun_position import SunPosition
 
 
 class IrradiationCalculator:
+    r"""
+    A class to find the optimal orientation and
+    calculate the total direct irradiation for a solar panel [1]_.
+
+    References
+    ----------
+    .. [1] Aghamohammadi, A., & Foulaadvand, M. (2023).
+            Efficiency comparison between tracking and
+            optimally fixed flat solar collectors. Scientific Reports, 13(1).
+
+
+    """
     OMEGA = 7.15 * 1e-5
 
     def __init__(

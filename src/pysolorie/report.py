@@ -21,6 +21,11 @@ from .numerical_integration import IrradiationCalculator
 
 
 class ReportGenerator:
+    r"""
+    A class to generate reports for the optimal orientation
+    of solar panels and the total direct irradiation.
+    """
+
     @logger_decorator
     def generate_optimal_orientation_csv_report(
         self,

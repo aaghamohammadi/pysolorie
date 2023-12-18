@@ -18,6 +18,10 @@ from .sun_position import SunPosition
 
 
 class SolarIrradiance:
+    r"""
+    A class to model the solar irradiance.
+    """
+
     def __init__(self, sun_position: SunPosition):
         r"""
         To instantiate the ``SolarIrradiance`` class, provide the following parameter.
@@ -47,9 +51,9 @@ class SolarIrradiance:
 
         | - :math:`SC` is the average solar radiation arriving outside
            of the Earth's atmosphere,
-           which is approximately ``1367`` Megawatts per square meter.
+           which is approximately ``1367`` Megawatts per square meter [1]_.
            This is also known as the solar constant.
-        | - The factor 0.033, which is two times the eccentricity of
+        | - The factor ``0.033``, which is two times the eccentricity of
             the Earth's orbit around the Sun, accounts for the variation
             in the Earth-Sun distance due to the Earth's elliptical orbit.
         | - :math:`n` is the day of the year (i.e., ``day_of_year``)
@@ -59,6 +63,11 @@ class SolarIrradiance:
 
         :return: The extraterrestrial solar irradiance in Megawatts per square meter.
         :rtype: float
+
+        References
+        ----------
+        .. [1] Duffie (Deceased), J., Beckman, W., & Blair, N. (2020).
+                Solar Engineering of Thermal Processes, Photovoltaics and Wind. Wiley.
         """
 
         # Solar constant (MW/m^2)

@@ -1,7 +1,5 @@
-pysolorie.plotter module
-========================
+Plotter
+=======
 
 .. automodule:: pysolorie.plotter
    :members:
-   :undoc-members:
-   :show-inheritance:

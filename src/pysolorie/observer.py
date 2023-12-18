@@ -19,6 +19,11 @@ from .sun_position import SunPosition
 
 
 class Observer:
+    r"""
+    A class to model an observer based on horizontal and equatorial pictures
+    of the sun-earth geometry.
+    """
+
     def __init__(
         self,
         observer_latitude: Optional[float] = None,

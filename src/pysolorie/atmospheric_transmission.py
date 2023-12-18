@@ -18,6 +18,10 @@ from .observer import Observer
 
 
 class AtmosphericTransmission:
+    r"""
+    A class to model the atmospheric transmission.
+    """
+
     def __init__(
         self,
         climate_type: str,

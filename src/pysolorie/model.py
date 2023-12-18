@@ -18,7 +18,7 @@ from typing import Dict, Tuple
 class HottelModel:
     r"""
     Hottel Model for estimating clear-sky beam radiation transmittance
-    based on climate type, and observer altitude.
+    based on climate type, and observer altitude [1]_.
 
     Climate Constants are Correction factors for different climate types
     :math:`r_0`, :math:`r_1`, and :math:`r_k`.
@@ -47,6 +47,12 @@ class HottelModel:
          - 1.03
          - 1.01
          - 1.00
+
+    References
+    ----------
+    .. [1] Hottel, H. (1976). A simple model for estimating the transmittance of
+            direct solar radiation through clear atmospheres.
+            Solar Energy, 18(2), 129-134.
     """
 
     def _convert_to_km(self, observer_altitude: int) -> float:
