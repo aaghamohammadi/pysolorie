@@ -1,6 +1,38 @@
 Changelog
 =========
 
+
+Version 1.4.0
+-------------
+
+Release date: 2023-12-18
+
+Added
+^^^^^
+- Added ``plot_total_direct_irradiation`` method in the Plotter class for plotting total direct irradiation over a specified range of days with an example included in getting_started.rst.
+
+Changed
+^^^^^^^
+- Streamlined ``setup.cfg`` to remove unnecessary sphinx-apidoc commands.
+- Optimized numerical integration methods to use radians and improved precision settings.
+- Updated CSV report generation in ``ReportGenerator`` to include total direct irradiation in output.
+
+Documentation
+^^^^^^^^^^^^^
+- Implemented significant restructuring and simplifying of the reStructuredText (rst) documentation across many files (modules.rst and individual module documentation).
+- Updated module titles to match functionality more accurately, such as "Atmospheric Transmission" and "Hottel Model" for improved clarity in the table of contents.
+- Standardized and enhanced docstrings in all module scripts to include detailed descriptions and references where applicable.
+
+
+Testing
+^^^^^^^
+- Extended tests in ``test_pysolorie.py`` for additional coverage of new features.
+
+Bug Fixes
+^^^^^^^^^
+- Corrected the value and unit of the solar constant in ``SolarIrradiance`` from Watts to Megawatts per square meter.
+
+
 Version 1.3.1
 -------------
 

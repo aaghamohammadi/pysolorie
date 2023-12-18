@@ -1,7 +1,5 @@
-pysolorie.report module
-=======================
+Report
+======
 
 .. automodule:: pysolorie.report
    :members:
-   :undoc-members:
-   :show-inheritance:

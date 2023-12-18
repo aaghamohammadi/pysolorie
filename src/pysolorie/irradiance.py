@@ -18,6 +18,10 @@ from .sun_position import SunPosition
 
 
 class SolarIrradiance:
+    r"""
+    A class to model the solar irradiance.
+    """
+
     def __init__(self, sun_position: SunPosition):
         r"""
         To instantiate the ``SolarIrradiance`` class, provide the following parameter.
@@ -32,35 +36,42 @@ class SolarIrradiance:
         r"""
         Calculate the extraterrestrial solar irradiance for a given day of the year.
 
-        The extraterrestrial solar irradiance, :math:`E`,
-        is the amount of solar energy received per unit area on
-        a surface perpendicular to the Sun's rays outside Earth's atmosphere.
+        The extraterrestrial solar irradiance, :math:`I`,
+        is the annual average of the Sun's irradiation intensity.
+        This refers to the amount of solar energy received per unit
+        area per unit time on a surface perpendicular to the Sun's rays,
+        outside Earth's atmosphere.
 
         The formula used is:
 
         .. math::
-            E = SC
+            I = SC
             \times (1 + 0.33 \times \cos (\frac{2\pi~n}{365}))
 
 
         | - :math:`SC` is the average solar radiation arriving outside
            of the Earth's atmosphere,
-           which is approximately ``1367`` Watts per square meter.
+           which is approximately ``1367`` Megawatts per square meter [1]_.
            This is also known as the solar constant.
-        | - The factor ``0.033`` accounts
-          for the variation in the Earth-Sun distance
-          due to the Earth's elliptical orbit.
+        | - The factor ``0.033``, which is two times the eccentricity of
+            the Earth's orbit around the Sun, accounts for the variation
+            in the Earth-Sun distance due to the Earth's elliptical orbit.
         | - :math:`n` is the day of the year (i.e., ``day_of_year``)
 
         :param day\_of\_year: The day of the year, ranging from 1 to 365.
         :type day\_of\_year: int
 
-        :return: The extraterrestrial solar irradiance in Watts per square meter.
+        :return: The extraterrestrial solar irradiance in Megawatts per square meter.
         :rtype: float
+
+        References
+        ----------
+        .. [1] Duffie (Deceased), J., Beckman, W., & Blair, N. (2020).
+                Solar Engineering of Thermal Processes, Photovoltaics and Wind. Wiley.
         """
 
-        # Solar constant (W/m^2)
-        SOLAR_CONSTANT = 1367
+        # Solar constant (MW/m^2)
+        SOLAR_CONSTANT = 1367 * 1e-6
 
         # Factor to account for the Earth's orbital eccentricity
         earth_orbital_eccentricity = 0.033

@@ -66,6 +66,52 @@ class Plotter:
 
         self._plot(days, betas, path, plot_kwargs, savefig_kwargs)
 
+    @logger_decorator
+    def plot_total_direct_irradiation(
+        self,
+        irradiation_calculator: IrradiationCalculator,
+        from_day: int,
+        to_day: int,
+        path: Optional[Path] = None,
+        plot_kwargs: Optional[Dict[str, str]] = None,
+        savefig_kwargs: Optional[Dict[str, str]] = None,
+    ) -> None:
+        r"""
+        Plots the total direct irradiation for a range of days.
+
+        :param irradiation_calculator: An instance of the IrradiationCalculator class.
+        :type irradiation_calculator: pysolorie.IrradiationCalculator
+        :param from_day: The starting day for the range of days.
+        :type from_day: int
+        :param to_day: The ending day for the range of days.
+        :type to_day: int
+        :param path: The path where the plot will be saved (default is None,
+                    which means the plot will be shown but not saved).
+        :type path: Path, optional
+        :param plot_kwargs: A dictionary of keyword arguments
+                            to be passed to the plot (default is None).
+        :type plot_kwargs: dict, optional
+        :param savefig_kwargs: A dictionary of keyword arguments
+                            to be passed to the savefig function (default is None).
+        :type savefig_kwargs: dict, optional
+        """
+
+        days = []
+        total_direct_irradiations = []
+
+        for day in range(from_day, to_day):
+            optimal_beta = irradiation_calculator.find_optimal_orientation(day)
+            total_direct_irradiation = (
+                irradiation_calculator.calculate_direct_irradiation(optimal_beta, day)
+            )
+            days.append(day)
+            total_direct_irradiations.append(total_direct_irradiation)
+
+        plot_kwargs = plot_kwargs if plot_kwargs else {}
+        savefig_kwargs = savefig_kwargs if savefig_kwargs else {}
+
+        self._plot(days, total_direct_irradiations, path, plot_kwargs, savefig_kwargs)
+
     def _calculate_optimal_orientations(
         self, irradiation_calculator: IrradiationCalculator, from_day: int, to_day: int
     ) -> Tuple[List[int], List[float]]:

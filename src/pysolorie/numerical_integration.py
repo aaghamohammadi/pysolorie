@@ -15,7 +15,7 @@
 import math
 
 import numpy as np
-from scipy import integrate  # type: ignore
+from scipy import integrate, optimize  # type: ignore
 
 from .atmospheric_transmission import AtmosphericTransmission
 from .irradiance import SolarIrradiance
@@ -24,6 +24,18 @@ from .sun_position import SunPosition
 
 
 class IrradiationCalculator:
+    r"""
+    A class to find the optimal orientation and
+    calculate the total direct irradiation for a solar panel [1]_.
+
+    References
+    ----------
+    .. [1] Aghamohammadi, A., & Foulaadvand, M. (2023).
+            Efficiency comparison between tracking and
+            optimally fixed flat solar collectors. Scientific Reports, 13(1).
+
+
+    """
     OMEGA = 7.15 * 1e-5
 
     def __init__(
@@ -105,7 +117,7 @@ class IrradiationCalculator:
         | The total direct irradiation is calculated using the formula:
 
         .. math::
-            E(n,\phi) = \frac{E}{\Omega} \int_{\omega_s}^{\omega_t}
+            E(n,\phi) = \frac{I}{\Omega} \int_{\omega_s}^{\omega_t}
             \cos(\theta) \times H(\cos(\theta)) \times \tau_b~d\omega
 
 
@@ -113,20 +125,22 @@ class IrradiationCalculator:
 
         | - :math:`\phi` is the latitude of the observer
 
-        | - :math:`E` is the amount of solar energy received
+        | - :math:`I`  is the amount of
+                solar energy received per unit area per second.
 
-        | - :math:`\Omega` is a constant equal to ``7.15 * 1e-5``
+        | - :math:`\Omega` = ``7.15 * 1e-5``
 
-        | - :math:`\theta` is incidence angle
+        | - :math:`\theta` is incidence angle, the angle between the position vector
+                of the sun and the normal vector to the solar panel.
 
         | - :math:`\omega_s` is the sunrise hour angle
 
         | - :math:`\omega_t` is the sunset hour angle
 
-        | - :math:`H` is the heaviside step function
+        | - :math:`H` is the Heaviside step function
 
 
-        :param panel_orientation: The orientation of the solar panel in radians.
+        :param panel_orientation: The orientation of the solar panel in degrees.
         :type panel_orientation: float
         :param day_of_year: The day of the year.
         :type day_of_year: int
@@ -136,6 +150,7 @@ class IrradiationCalculator:
         sunrise_hour_angle, sunset_hour_angle = self._observer.calculate_sunrise_sunset(
             day_of_year
         )
+        panel_orientation = math.radians(panel_orientation)
         irradiance_components = [
             self._calculate_irradiance_component(
                 hour_angle, panel_orientation, day_of_year
@@ -154,11 +169,13 @@ class IrradiationCalculator:
         :return: The optimal orientation (i.e., :math:`beta`) in degrees.
         :rtype: float
         """
-        betas = np.arange(-math.pi / 2, math.pi / 2, 0.005)  # Discretize beta
-        irradiations = [
-            self.calculate_direct_irradiation(beta, day_of_year) for beta in betas
-        ]
-        optimal_beta = betas[
-            np.argmax(irradiations)
-        ]  # Find beta that gives max irradiation
+
+        def neg_irradiation(beta: float):
+            # We negate the irradiation because we're minimizing
+            return -self.calculate_direct_irradiation(math.degrees(beta), day_of_year)
+
+        result = optimize.minimize_scalar(
+            neg_irradiation, bounds=(-math.pi / 2, math.pi / 2), method="bounded"
+        )
+        optimal_beta = result.x
         return math.degrees(optimal_beta)

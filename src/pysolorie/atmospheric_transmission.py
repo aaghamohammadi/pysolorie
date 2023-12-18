@@ -18,6 +18,10 @@ from .observer import Observer
 
 
 class AtmosphericTransmission:
+    r"""
+    A class to model the atmospheric transmission.
+    """
+
     def __init__(
         self,
         climate_type: str,
@@ -61,7 +65,7 @@ class AtmosphericTransmission:
             coefficient of the direct beam
         | - :math:`a_0`, :math:`a_1`, and :math:`k` are the components
             of clear-sky beam radiation transmittance
-        | - :math:`\theta_z` is the zenith angle
+        | - :math:`\theta_z` is the solar zenith angle
 
         :param day_of_year: The day of the year.
         :type day_of_year: int

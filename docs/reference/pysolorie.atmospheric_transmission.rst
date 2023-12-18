@@ -1,7 +1,5 @@
-pysolorie.atmospheric\_transmission module
-==========================================
+Atmospheric Transmission
+========================
 
 .. automodule:: pysolorie.atmospheric_transmission
    :members:
-   :undoc-members:
-   :show-inheritance:

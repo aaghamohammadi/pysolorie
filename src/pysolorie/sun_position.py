@@ -15,9 +15,13 @@ import math
 
 
 class SunPosition:
+    r"""
+    A class to model sun position.
+    """
+
     def solar_declination(self, day_of_year: int) -> float:
         r"""
-        Calculate the solar declination angle in radians.
+        Calculate the solar declination angle in radians [1]_.
 
         The solar declination angle is the angle between the rays of the sun
         and the plane of the Earth's equator.
@@ -34,6 +38,11 @@ class SunPosition:
         :type day_of_year: int
         :return: The solar declination angle in radians.
         :rtype: float
+
+        References
+        ----------
+        .. [1] Cooper, P. (1969). The absorption of radiation in solar stills.
+                Solar Energy, 12(3), 333-346.
         """
         # tilt of the Earth's axis (in degrees)
         earth_tilt_degrees = 23.45

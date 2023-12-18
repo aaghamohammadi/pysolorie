@@ -1,7 +1,5 @@
-pysolorie.sun\_position module
-==============================
+Sun Position
+============
 
 .. automodule:: pysolorie.sun_position
    :members:
-   :undoc-members:
-   :show-inheritance:

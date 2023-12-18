@@ -1,7 +1,5 @@
-pysolorie.numerical\_integration module
-=======================================
+Total Direct Irradiation
+========================
 
 .. automodule:: pysolorie.numerical_integration
    :members:
-   :undoc-members:
-   :show-inheritance:

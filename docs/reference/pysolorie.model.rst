@@ -1,7 +1,5 @@
-pysolorie.model module
-======================
+Hottel Model
+============
 
 .. automodule:: pysolorie.model
    :members:
-   :undoc-members:
-   :show-inheritance:
