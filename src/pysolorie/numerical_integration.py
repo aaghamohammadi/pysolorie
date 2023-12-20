@@ -86,7 +86,7 @@ class IrradiationCalculator:
         :return: A component of the irradiance integral.
         :rtype: float
         """
-        observer_latitude = self._observer._validate_latitude()
+        observer_latitude = self._observer._ensure_latitude_provided()
         solar_declination = self._sun_position.solar_declination(day_of_year)
         cos_theta = math.sin(solar_declination) * math.sin(
             observer_latitude - panel_orientation

@@ -50,3 +50,34 @@ class InvalidClimateTypeError(ValueError):
         :rtype: str
         """
         return f"{self.message}"
+
+
+class MissingObserverLatitudeError(ValueError):
+    r"""
+    Exception raised when the observer's latitude is not provided.
+
+    :param message: explanation of the error, defaults to "Missing required data:
+                    Observer latitude. Please ensure to provide the latitude of
+                    the observer."
+    :type message: str, optional
+    """
+
+    def __init__(
+        self,
+        message: str = (
+            "Missing required data: Observer latitude. "
+            "Please ensure to provide the latitude of the observer."
+        ),
+    ):
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self) -> str:
+        r"""
+        String representation of the exception.
+
+        :return: formatted string indicating the invalid
+                 climate type and the error message
+        :rtype: str
+        """
+        return f"{self.message}"

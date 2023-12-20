@@ -175,6 +175,16 @@ def test_calculate_zenith_angle(
     expected_zenith_angle: float,
 ) -> None:
     observer: Observer = Observer(observer_latitude, observer_longitude)
+    expected_observer_latitude = math.radians(observer_latitude)
+    expected_observer_longitude = math.radians(observer_longitude)
+
+    assert observer.observer_latitude == pytest.approx(
+        expected_observer_latitude, abs=1e-3
+    )
+    assert observer.observer_longitude == pytest.approx(
+        expected_observer_longitude, abs=1e-3
+    )
+
     zenith_angle: float = observer.calculate_zenith_angle(day_of_year, solar_time)
     assert zenith_angle == pytest.approx(expected_zenith_angle, abs=1e-3)
 
@@ -183,7 +193,7 @@ def test_calculate_zenith_angle_without_latitude():
     observer = Observer(None, 0)
     with pytest.raises(
         ValueError,
-        match="Observer latitude must be provided.",
+        match="Missing required data: Observer latitude",
     ):
         observer.calculate_zenith_angle(1, 12 * 60 * 60)
 
