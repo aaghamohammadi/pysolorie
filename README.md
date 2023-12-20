@@ -1,5 +1,6 @@
 # pysolorie
 
+[![CodeQL](https://github.com/aaghamohammadi/pysolorie/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/aaghamohammadi/pysolorie/actions/workflows/github-code-scanning/codeql)
 [![Quality Checks](https://github.com/aaghamohammadi/pysolorie/actions/workflows/quality_checks.yml/badge.svg?branch=main)](https://github.com/aaghamohammadi/pysolorie/actions/workflows/quality_checks.yml)
 [![Publish](https://github.com/aaghamohammadi/pysolorie/actions/workflows/publish.yml/badge.svg?branch=main)](https://github.com/aaghamohammadi/pysolorie/actions/workflows/publish.yml)
 ![GitHub License](https://img.shields.io/github/license/aaghamohammadi/pysolorie)
@@ -9,6 +10,9 @@
 ![PyPI - Format](https://img.shields.io/pypi/format/pysolorie)
 ![PyPI - Status](https://img.shields.io/pypi/status/pysolorie)
 [![codecov](https://codecov.io/gh/aaghamohammadi/pysolorie/graph/badge.svg?token=TF9E8Y3Q67)](https://codecov.io/gh/aaghamohammadi/pysolorie)
+![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)
+![code style: black](https://img.shields.io/badge/code%20style-black-black)
+
 
 **pysolorie** stands for **Py**thon **Sol**ar **Orie**ntation Analysis of Solar Panel. It is a Python library designed to help you analyze the orientation of solar panels.
 
