@@ -92,6 +92,49 @@ the optimal orientation for a range of days.
 
 The CSV file will be saved to the specified path.
 
+Generating a JSON Report
+------------------------
+
+The ``generate_optimal_orientation_json_report`` method generates a JSON report of
+the optimal orientation for a range of days.
+
+.. code-block:: python
+
+    from pysolorie import ReportGenerator, IrradiationCalculator
+    from pathlib import Path
+
+    # Create a report generator and an irradiation calculator
+    report_generator = ReportGenerator()
+    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+
+    # Generate a JSON report for days 60 to 70
+    report_generator.generate_optimal_orientation_json_report(Path('results.json'), irradiation_calculator, 60, 70)
+
+The JSON file will be saved to the specified path.
+
+
+Generating an XML Report
+------------------------
+
+The ``generate_optimal_orientation_xml_report`` method generates an XML report of
+the optimal orientation for a range of days.
+
+.. code-block:: python
+
+    from pysolorie import ReportGenerator, IrradiationCalculator
+    from pathlib import Path
+
+    # Create a report generator and an irradiation calculator
+    report_generator = ReportGenerator()
+    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+
+    # Generate an XML report for days 60 to 70
+    report_generator.generate_optimal_orientation_xml_report(Path('results.xml'), irradiation_calculator, 60, 70)
+
+The XML file will be saved to the specified path.
+
+
+
 
 Plotting the Optimal Orientation
 --------------------------------
