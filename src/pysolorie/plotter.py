@@ -117,7 +117,7 @@ class Plotter:
 
         for day in range(from_day, to_day):
             beta = irradiation_calculator.find_optimal_orientation(day)
-            logger = logging.getLogger(self.plot_optimal_orientation.__name__)
+            logger = logging.getLogger(self._calculate_optimal_orientations.__name__)
             logger.info(
                 f"On day {day},"
                 + f"the solar panel's optimal orientation is {beta} degrees."

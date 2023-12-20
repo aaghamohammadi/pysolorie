@@ -13,6 +13,7 @@
 #    limitations under the License.
 import csv
 import json
+import logging
 import math
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -97,6 +98,7 @@ def test_sun_position(
         (0, 12 * 60 * 60),  # solar noon
         (-math.pi / 6, 10 * 60 * 60),  # 10am
         (math.pi / 12, 13 * 60 * 60),  # 1pm
+        (math.pi, 24 * 60 * 60),  # solar night
     ],
 )
 def test_solar_time(
@@ -356,7 +358,9 @@ def test_find_optimal_orientation(
     assert pytest.approx(result, abs=1e-3) == expected_result
 
 
-def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
+def test_generate_optimal_orientation_csv_report(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -404,9 +408,16 @@ def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
                 pytest.approx(total_direct_irradiation, abs=1e-3)
                 == expected_total_direct_irradiation
             )
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
 
-def test_generate_optimal_orientation_json_report(tmpdir) -> None:
+def test_generate_optimal_orientation_json_report(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -447,9 +458,16 @@ def test_generate_optimal_orientation_json_report(tmpdir) -> None:
                 pytest.approx(total_direct_irradiation, abs=1e-3)
                 == expected_total_direct_irradiation
             )
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
 
-def test_generate_optimal_orientation_xml_report(tmpdir) -> None:
+def test_generate_optimal_orientation_xml_report(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -491,9 +509,16 @@ def test_generate_optimal_orientation_xml_report(tmpdir) -> None:
             pytest.approx(total_direct_irradiation, abs=1e-3)
             == expected_total_direct_irradiation
         )
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
 
-def test_plot_optimal_orientation(tmpdir) -> None:
+def test_plot_optimal_orientation(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -521,8 +546,16 @@ def test_plot_optimal_orientation(tmpdir) -> None:
     assert img.shape[0] > 0, "The plot image has no content."
     assert img.shape[1] > 0, "The plot image has no content."
 
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
-def test_plot_total_direct_irradiation(tmpdir) -> None:
+
+def test_plot_total_direct_irradiation(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -549,6 +582,12 @@ def test_plot_total_direct_irradiation(tmpdir) -> None:
     img: np.ndarray = plt.imread(plot_path)
     assert img.shape[0] > 0, "The plot image has no content."
     assert img.shape[1] > 0, "The plot image has no content."
+
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
 
 def test_plot_method() -> None:

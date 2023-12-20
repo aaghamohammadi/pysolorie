@@ -15,16 +15,17 @@
 import functools
 import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+
 
 def logger_decorator(func):
     @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
         logger = logging.getLogger(func.__name__)
         logger.setLevel(logging.INFO)
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        )
         logger.info(f"Running '{func.__name__}'")
         result = func(self, *args, **kwargs)
         logger.info(f"Finished '{func.__name__}'")
