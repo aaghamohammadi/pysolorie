@@ -158,7 +158,7 @@ for a given day of the year.
     print(f"Sunset hour angle: {sunset_hour_angle}")
 
 
-Calculating the Zenith Angle
+Calculating the Solar Zenith Angle
 ----------------------------
 
 The ``calculate_zenith_angle`` method calculates the zenith angle given the day of the year
