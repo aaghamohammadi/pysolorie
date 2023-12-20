@@ -13,6 +13,7 @@
 #    limitations under the License.
 
 from .atmospheric_transmission import AtmosphericTransmission
+from .exceptions import InvalidClimateTypeError
 from .irradiance import SolarIrradiance
 from .model import HottelModel
 from .numerical_integration import IrradiationCalculator
@@ -22,12 +23,13 @@ from .report import ReportGenerator
 from .sun_position import SunPosition
 
 __all__ = [
-    "HottelModel",
-    "SunPosition",
-    "SolarIrradiance",
-    "Observer",
     "AtmosphericTransmission",
+    "HottelModel",
+    "InvalidClimateTypeError",
     "IrradiationCalculator",
-    "ReportGenerator",
+    "Observer",
     "Plotter",
+    "ReportGenerator",
+    "SolarIrradiance",
+    "SunPosition",
 ]

@@ -13,6 +13,7 @@
 #    limitations under the License.
 import csv
 import json
+import logging
 import math
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -26,6 +27,7 @@ import pytest
 from pysolorie import (
     AtmosphericTransmission,
     HottelModel,
+    InvalidClimateTypeError,
     IrradiationCalculator,
     Observer,
     Plotter,
@@ -62,6 +64,12 @@ def test_invalid_climate_type() -> None:
         hottel_model.calculate_transmittance_components("INVALID", 1000)
 
 
+def test_invalid_climate_type_with_custom_message() -> None:
+    custom_message = "Custom error message"
+    with pytest.raises(InvalidClimateTypeError, match=custom_message):
+        raise InvalidClimateTypeError("INVALID", custom_message)
+
+
 @pytest.mark.parametrize(
     "day_of_year, solar_time, expected_declination, expected_hour_angle",
     [
@@ -90,6 +98,7 @@ def test_sun_position(
         (0, 12 * 60 * 60),  # solar noon
         (-math.pi / 6, 10 * 60 * 60),  # 10am
         (math.pi / 12, 13 * 60 * 60),  # 1pm
+        (math.pi, 24 * 60 * 60),  # solar night
     ],
 )
 def test_solar_time(
@@ -168,6 +177,16 @@ def test_calculate_zenith_angle(
     expected_zenith_angle: float,
 ) -> None:
     observer: Observer = Observer(observer_latitude, observer_longitude)
+    expected_observer_latitude = math.radians(observer_latitude)
+    expected_observer_longitude = math.radians(observer_longitude)
+
+    assert observer.observer_latitude == pytest.approx(
+        expected_observer_latitude, abs=1e-3
+    )
+    assert observer.observer_longitude == pytest.approx(
+        expected_observer_longitude, abs=1e-3
+    )
+
     zenith_angle: float = observer.calculate_zenith_angle(day_of_year, solar_time)
     assert zenith_angle == pytest.approx(expected_zenith_angle, abs=1e-3)
 
@@ -176,7 +195,7 @@ def test_calculate_zenith_angle_without_latitude():
     observer = Observer(None, 0)
     with pytest.raises(
         ValueError,
-        match="Observer latitude must be provided.",
+        match="Missing required data: Observer latitude",
     ):
         observer.calculate_zenith_angle(1, 12 * 60 * 60)
 
@@ -339,7 +358,9 @@ def test_find_optimal_orientation(
     assert pytest.approx(result, abs=1e-3) == expected_result
 
 
-def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
+def test_generate_optimal_orientation_csv_report(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -387,9 +408,16 @@ def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
                 pytest.approx(total_direct_irradiation, abs=1e-3)
                 == expected_total_direct_irradiation
             )
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
 
-def test_generate_optimal_orientation_json_report(tmpdir) -> None:
+def test_generate_optimal_orientation_json_report(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -430,9 +458,16 @@ def test_generate_optimal_orientation_json_report(tmpdir) -> None:
                 pytest.approx(total_direct_irradiation, abs=1e-3)
                 == expected_total_direct_irradiation
             )
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
 
-def test_generate_optimal_orientation_xml_report(tmpdir) -> None:
+def test_generate_optimal_orientation_xml_report(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -474,9 +509,16 @@ def test_generate_optimal_orientation_xml_report(tmpdir) -> None:
             pytest.approx(total_direct_irradiation, abs=1e-3)
             == expected_total_direct_irradiation
         )
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
 
-def test_plot_optimal_orientation(tmpdir) -> None:
+def test_plot_optimal_orientation(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -504,8 +546,16 @@ def test_plot_optimal_orientation(tmpdir) -> None:
     assert img.shape[0] > 0, "The plot image has no content."
     assert img.shape[1] > 0, "The plot image has no content."
 
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
-def test_plot_total_direct_irradiation(tmpdir) -> None:
+
+def test_plot_total_direct_irradiation(caplog, tmpdir) -> None:
+    caplog.set_level(logging.INFO)
+
     # Create a temporary directory for the test
     temp_dir: Path = Path(tmpdir)
 
@@ -532,6 +582,12 @@ def test_plot_total_direct_irradiation(tmpdir) -> None:
     img: np.ndarray = plt.imread(plot_path)
     assert img.shape[0] > 0, "The plot image has no content."
     assert img.shape[1] > 0, "The plot image has no content."
+
+    # Check the logs
+    for day in range(from_day, to_day):
+        assert any(
+            f"On day {day}," in record.message for record in caplog.records
+        ), f"No log message for day {day}"
 
 
 def test_plot_method() -> None:

@@ -15,6 +15,7 @@
 import math
 from typing import Optional
 
+from .exceptions import MissingObserverLatitudeError
 from .sun_position import SunPosition
 
 
@@ -37,12 +38,8 @@ class Observer:
         :param observer_longitude: The longitude of the observer in degrees (optional).
         :type observer_longitude: Optional[float]
         """
-        self.observer_latitude = (
-            math.radians(observer_latitude) if observer_latitude is not None else None
-        )
-        self.observer_longitude = (
-            math.radians(observer_longitude) if observer_longitude is not None else None
-        )
+        self.observer_latitude = observer_latitude
+        self.observer_longitude = observer_longitude
         self.sun_position = SunPosition()
 
     def calculate_zenith_angle(self, day_of_year: int, solar_time: float) -> float:
@@ -68,7 +65,7 @@ class Observer:
         :return: The zenith angle in radians.
         :rtype: float
         """
-        observer_latitude = self._validate_latitude()
+        observer_latitude = self._ensure_latitude_provided()
 
         solar_declination = self.sun_position.solar_declination(day_of_year)
         hour_angle = self.sun_position.hour_angle(solar_time)
@@ -98,7 +95,7 @@ class Observer:
         :return: The hour angle at sunrise and sunset in radians.
         :rtype: tuple
         """
-        observer_latitude = self._validate_latitude()
+        observer_latitude = self._ensure_latitude_provided()
 
         solar_declination = self.sun_position.solar_declination(day_of_year)
         hour_angle = math.acos(
@@ -110,7 +107,51 @@ class Observer:
 
         return sunrise, sunset
 
-    def _validate_latitude(self) -> float:
+    def _ensure_latitude_provided(self) -> float:
         if self.observer_latitude is None:
-            raise ValueError("Observer latitude must be provided.")
+            raise MissingObserverLatitudeError()
         return self.observer_latitude
+
+    _observer_latitude: Optional[float]
+
+    @property
+    def observer_latitude(self) -> Optional[float]:
+        """
+        Getter for the observer's latitude.
+
+        :return: The observer's latitude in radians.
+        :rtype: Optional[float]
+        """
+        return self._observer_latitude
+
+    @observer_latitude.setter
+    def observer_latitude(self, value: Optional[float]):
+        """
+        Setter for the observer's latitude. Converts the value to radians if not None.
+
+        :param value: The observer's latitude in degrees.
+        :type value: Optional[float]
+        """
+        self._observer_latitude = math.radians(value) if value is not None else None
+
+    _observer_longitude: Optional[float]
+
+    @property
+    def observer_longitude(self) -> Optional[float]:
+        """
+        Getter for the observer's longitude.
+
+        :return: The observer's longitude in radians.
+        :rtype: Optional[float]
+        """
+        return self._observer_longitude
+
+    @observer_longitude.setter
+    def observer_longitude(self, value: Optional[float]):
+        """
+        Setter for the observer's longitude. Converts the value to radians if not None.
+
+        :param value: The observer's longitude in degrees.
+        :type value: Optional[float]
+        """
+        self._observer_longitude = math.radians(value) if value is not None else None

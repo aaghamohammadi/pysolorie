@@ -14,6 +14,8 @@
 
 from typing import Dict, Tuple
 
+from .exceptions import InvalidClimateTypeError
+
 
 class HottelModel:
     r"""
@@ -54,6 +56,13 @@ class HottelModel:
             direct solar radiation through clear atmospheres.
             Solar Energy, 18(2), 129-134.
     """
+
+    CLIMATE_CONSTANTS: Dict[str, Tuple[float, float, float]] = {
+        "TROPICAL": (0.95, 0.98, 1.02),
+        "MIDLATITUDE SUMMER": (0.97, 0.99, 1.02),
+        "SUBARCTIC SUMMER": (0.99, 0.99, 1.01),
+        "MIDLATITUDE WINTER": (1.03, 1.01, 1.00),
+    }
 
     def _convert_to_km(self, observer_altitude: int) -> float:
         r"""
@@ -167,21 +176,33 @@ class HottelModel:
         :rtype: tuple of floats
         :raises ValueError: If an invalid climate type is provided.
         """
+        self.climate_type = climate_type
 
-        self.CLIMATE_CONSTANTS: Dict[str, Tuple[float, float, float]] = {
-            "TROPICAL": (0.95, 0.98, 1.02),
-            "MIDLATITUDE SUMMER": (0.97, 0.99, 1.02),
-            "SUBARCTIC SUMMER": (0.99, 0.99, 1.01),
-            "MIDLATITUDE WINTER": (1.03, 1.01, 1.00),
-        }
-
-        if climate_type.upper() not in self.CLIMATE_CONSTANTS:
-            raise ValueError("Invalid climate type")
-
-        r0, r1, rk = self.CLIMATE_CONSTANTS[climate_type.upper()]
+        r0, r1, rk = self.CLIMATE_CONSTANTS[self.climate_type]
 
         a0_star = self._calculate_a0_star(observer_altitude)
         a1_star = self._calculate_a1_star(observer_altitude)
         k_star = self._calculate_k_star(observer_altitude)
 
         return r0 * a0_star, r1 * a1_star, rk * k_star
+
+    _climate_type: str
+
+    @property
+    def climate_type(self) -> str:
+        """
+        Getter for climate_type property. Returns the climate type in uppercase.
+        """
+        return self._climate_type
+
+    @climate_type.setter
+    def climate_type(self, value: str):
+        """
+        Setter for climate_type property. Converts the value to
+        uppercase and checks if it's valid.
+        If it's not, raises an InvalidClimateTypeError.
+        """
+        upper_value = value.upper()
+        if upper_value not in self.CLIMATE_CONSTANTS:
+            raise InvalidClimateTypeError(value)
+        self._climate_type = upper_value
