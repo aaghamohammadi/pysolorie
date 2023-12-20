@@ -1,6 +1,41 @@
 Changelog
 =========
 
+Version 1.5.0
+-------------
+
+Release date: 2023-12-20
+
+Added
+^^^^^
+- Added badges for CodeQL, pre-commit, and code style (black) in README.md, enhancing the visibility of code quality and style adherence.
+- Implemented ``generate_optimal_orientation_json_report`` method for JSON report generation in ``ReportGenerator``.
+- Developed ``generate_optimal_orientation_xml_report`` method in ``ReportGenerator`` for producing XML formatted reports.
+- Expanded ``test_pysolorie.py`` with tests for JSON (``test_generate_optimal_orientation_json_report``) and XML (``test_generate_optimal_orientation_xml_report``) report generation.
+
+Changed
+^^^^^^^
+- Updated ``plot_total_direct_irradiation`` method's ``ylabel`` argument to use "Megajoules per square meter" instead of "MW/m²" for clarity and accuracy in ``plotter.py``.
+- Refactored ``plot_total_direct_irradiation`` in ``Plotter`` to use a private method for calculating optimal orientations, streamlining the plotting process.
+
+Fixed
+^^^^^
+- Altered the ``Plotter`` methods to handle axis labels and titles through dynamic ``plot_kwargs``, making the labeling more robust and customizable.
+- Harmonized and corrected unit values and labelings across the entire codebase and documentation for consistency and accuracy.
+- Refined the ``ReportGenerator`` generate methods' docstrings, clearly specifying the return value unit as "Megajoules per square meter".
+- Changed the calculation of the solar irradiance formula in ``SolarIrradiance`` from ``0.33`` to ``0.033`` to correct the eccentricity correction factor according to established astronomical equations.
+
+
+Documentation
+^^^^^^^^^^^^^
+- Enhanced documentation in ``getting_started.rst`` with examples and instructions for the new JSON and XML report generation methods.
+- Altered the representation of solar irradiance units in documentation to match the codebase changes.
+
+Testing
+^^^^^^^
+- Enriched ``test_pysolorie.py`` with further assertions for newly added JSON and XML report functionalities, ensuring correct report file creation and data integrity.
+
+
 
 Version 1.4.0
 -------------
