@@ -96,16 +96,13 @@ class Plotter:
         :type savefig_kwargs: dict, optional
         """
 
-        days = []
-        total_direct_irradiations = []
-
-        for day in range(from_day, to_day):
-            optimal_beta = irradiation_calculator.find_optimal_orientation(day)
-            total_direct_irradiation = (
-                irradiation_calculator.calculate_direct_irradiation(optimal_beta, day)
-            )
-            days.append(day)
-            total_direct_irradiations.append(total_direct_irradiation)
+        days, betas = self._calculate_optimal_orientations(
+            irradiation_calculator, from_day, to_day
+        )
+        total_direct_irradiations = [
+            irradiation_calculator.calculate_direct_irradiation(beta, day)
+            for day, beta in zip(days, betas)
+        ]
 
         plot_kwargs = plot_kwargs if plot_kwargs else {}
         savefig_kwargs = savefig_kwargs if savefig_kwargs else {}
