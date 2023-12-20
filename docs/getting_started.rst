@@ -159,7 +159,7 @@ for a given day of the year.
 
 
 Calculating the Solar Zenith Angle
-----------------------------
+----------------------------------
 
 The ``calculate_zenith_angle`` method calculates the zenith angle given the day of the year
 and solar time.

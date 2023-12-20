@@ -12,6 +12,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 import csv
+import json
 import math
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
@@ -377,6 +378,49 @@ def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
             assert day == i
             expected_beta = irradiation_calculator.find_optimal_orientation(i)
 
+            expected_total_direct_irradiation = (
+                irradiation_calculator.calculate_direct_irradiation(beta, i)
+            )
+            assert pytest.approx(beta, abs=1e-3) == expected_beta
+            assert (
+                pytest.approx(total_direct_irradiation, abs=1e-3)
+                == expected_total_direct_irradiation
+            )
+
+
+def test_generate_optimal_orientation_json_report(tmpdir) -> None:
+    # Create a temporary directory for the test
+    temp_dir: Path = Path(tmpdir)
+
+    # Initialize the ReportGenerator
+    report_generator: ReportGenerator = ReportGenerator()
+
+    # Initialize the IrradiationCalculator for Tehran
+    irradiation_calculator: IrradiationCalculator = IrradiationCalculator(
+        "MIDLATITUDE SUMMER", 1200, 35.6892
+    )
+
+    # Define the path for the JSON file
+    json_path: Path = temp_dir / "report.json"
+    from_day: int = 60
+    to_day: int = 70
+    # Call the method to generate the report
+    report_generator.generate_optimal_orientation_json_report(
+        json_path, irradiation_calculator, from_day, to_day
+    )
+
+    # Check the JSON file
+    with open(json_path, "r") as file:
+        data = json.load(file)
+        for i, row in enumerate(data, start=from_day):
+            day, beta, total_direct_irradiation = (
+                row["Day"],
+                row["Beta (degrees)"],
+                row["Total Direct Irradiation (Megajoules per square meter)"],
+            )
+
+            assert day == i
+            expected_beta = irradiation_calculator.find_optimal_orientation(i)
             expected_total_direct_irradiation = (
                 irradiation_calculator.calculate_direct_irradiation(beta, i)
             )

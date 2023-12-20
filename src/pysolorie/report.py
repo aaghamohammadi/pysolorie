@@ -13,8 +13,10 @@
 #    limitations under the License.
 
 import csv
+import json
 import logging
 from pathlib import Path
+from typing import Dict, List, Union
 
 from .logger import logger_decorator
 from .numerical_integration import IrradiationCalculator
@@ -26,6 +28,55 @@ class ReportGenerator:
     of solar panels and the total direct irradiation.
     """
 
+    def _calculate_optimal_orientation_and_irradiation(
+        self,
+        irradiation_calculator: IrradiationCalculator,
+        from_day: int,
+        to_day: int,
+    ) -> List[Dict[str, Union[int, float]]]:
+        r"""
+        This private method calculates the optimal solar panel orientation and
+        total direct irradiation for a range of days.
+
+        :param irradiation_calculator: An instance of the IrradiationCalculator class.
+        :type irradiation_calculator: pysolorie.IrradiationCalculator
+        :param from_day: The starting day of the report.
+        :type from_day: int
+        :param to_day: The ending day of the report.
+        :type to_day: int
+        :return: A list of dictionaries, each containing the day,
+                 optimal orientation (beta),
+                 and total direct irradiation.
+        :rtype: List[Dict[str, Union[int, float]]]
+        """
+        data = []
+
+        for day in range(from_day, to_day):
+            beta = irradiation_calculator.find_optimal_orientation(day)
+            total_direct_irradiation = (
+                irradiation_calculator.calculate_direct_irradiation(beta, day)
+            )
+            logger = logging.getLogger(
+                self._calculate_optimal_orientation_and_irradiation.__name__
+            )
+            logger.info(
+                f"On day {day}, the solar panel's optimal orientation is "
+                f"{beta} degrees, and the total direct irradiation is "
+                f"{total_direct_irradiation} Megajoules per square meter."
+            )
+
+            # Append the result to the data list
+            data.append(
+                {
+                    "Day": day,
+                    "Beta (degrees)": beta,
+                    "Total Direct Irradiation "
+                    "(Megajoules per square meter)": total_direct_irradiation,
+                }
+            )
+
+        return data
+
     @logger_decorator
     def generate_optimal_orientation_csv_report(
         self,
@@ -35,11 +86,12 @@ class ReportGenerator:
         to_day: int,
     ) -> None:
         r"""
-        This method generates a report of
-        optimal solar panel orientation in CSV format.
+        This method generates a report of optimal solar panel orientation in CSV format.
+        It uses the ``_calculate_optimal_orientation_and_irradiation``
+        method to get the data.
 
         :param path: A Path object that points to the CSV file
-                     where the report will be written.
+                    where the report will be written.
         :type path: Path
         :param irradiation_calculator: An instance of the IrradiationCalculator class.
         :type irradiation_calculator: pysolorie.IrradiationCalculator
@@ -48,6 +100,10 @@ class ReportGenerator:
         :param to_day: The ending day of the report.
         :type to_day: int
         """
+        data = self._calculate_optimal_orientation_and_irradiation(
+            irradiation_calculator, from_day, to_day
+        )
+
         with open(path, "w", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(
@@ -58,19 +114,43 @@ class ReportGenerator:
                 ]
             )
 
-            for day in range(from_day, to_day):
-                beta = irradiation_calculator.find_optimal_orientation(day)
-                total_direct_irradiation = (
-                    irradiation_calculator.calculate_direct_irradiation(beta, day)
-                )
-                logger = logging.getLogger(
-                    self.generate_optimal_orientation_csv_report.__name__
-                )
-                logger.info(
-                    f"On day {day}, the solar panel's optimal orientation is "
-                    f"{beta} degrees, and the total direct irradiation is "
-                    f"{total_direct_irradiation} Megajoules per square meter."
+            for row in data:
+                writer.writerow(
+                    [
+                        row["Day"],
+                        row["Beta (degrees)"],
+                        row["Total Direct Irradiation (Megajoules per square meter)"],
+                    ]
                 )
 
-                # Write the result to the CSV file
-                writer.writerow([day, beta, total_direct_irradiation])
+    @logger_decorator
+    def generate_optimal_orientation_json_report(
+        self,
+        path: Path,
+        irradiation_calculator: IrradiationCalculator,
+        from_day: int,
+        to_day: int,
+    ) -> None:
+        r"""
+        This method generates a report of optimal
+        solar panel orientation in JSON format.
+        It uses the ``_calculate_optimal_orientation_and_irradiation``
+        method to get the data.
+
+        :param path: A Path object that points to the JSON file
+                    where the report will be written.
+        :type path: Path
+        :param irradiation_calculator: An instance of the IrradiationCalculator class.
+        :type irradiation_calculator: pysolorie.IrradiationCalculator
+        :param from_day: The starting day of the report.
+        :type from_day: int
+        :param to_day: The ending day of the report.
+        :type to_day: int
+        """
+        data = self._calculate_optimal_orientation_and_irradiation(
+            irradiation_calculator, from_day, to_day
+        )
+
+        # Write the data list to the JSON file
+        with open(path, "w") as file:
+            json.dump(data, file, indent=4)
