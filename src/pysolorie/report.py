@@ -51,7 +51,11 @@ class ReportGenerator:
         with open(path, "w", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(
-                ["Day", "Beta (degrees)", "Total Direct Irradiation (MW/m²)"]
+                [
+                    "Day",
+                    "Beta (degrees)",
+                    "Total Direct Irradiation (Megajoules per square meter)",
+                ]
             )
 
             for day in range(from_day, to_day):
@@ -65,7 +69,7 @@ class ReportGenerator:
                 logger.info(
                     f"On day {day}, the solar panel's optimal orientation is "
                     f"{beta} degrees, and the total direct irradiation is "
-                    f"{total_direct_irradiation} MW/m²."
+                    f"{total_direct_irradiation} Megajoules per square meter."
                 )
 
                 # Write the result to the CSV file

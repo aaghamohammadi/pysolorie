@@ -362,7 +362,11 @@ def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
     with open(csv_path, "r") as file:
         reader = csv.reader(file)
         header = next(reader)
-        assert header == ["Day", "Beta (degrees)", "Total Direct Irradiation (MW/m²)"]
+        assert header == [
+            "Day",
+            "Beta (degrees)",
+            "Total Direct Irradiation (Megajoules per square meter)",
+        ]
         for i, row in enumerate(reader, start=from_day):
             day, beta, total_direct_irradiation = (
                 int(row[0]),

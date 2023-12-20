@@ -129,7 +129,7 @@ The ``plot_total_direct_irradiation`` method plots the total direct irradiation 
     irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
 
     # Plot the total direct irradiation for days 60 to 70
-    plotter.plot_total_direct_irradiation(irradiation_calculator, 60, 70, Path('results.png'), plot_kwargs={'xlabel': 'Day', 'ylabel': 'Total Direct Irradiation (MW/m²)', 'title': 'Total Direct Irradiation', "figsize": (16,9)}, savefig_kwargs={'dpi': 300})
+    plotter.plot_total_direct_irradiation(irradiation_calculator, 60, 70, Path('results.png'), plot_kwargs={'xlabel': 'Day', 'ylabel': 'Total Direct Irradiation (Megajoules per square meter)', 'title': 'Total Direct Irradiation', "figsize": (16,9)}, savefig_kwargs={'dpi': 300})
 
 The plot will be saved to the specified path. The ``plot_kwargs`` and ``savefig_kwargs``
 parameters can be used to customize the plot and the savefig function, respectively. If no path is provided, the plot will be displayed but not saved.
