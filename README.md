@@ -25,14 +25,15 @@ How can one maximize the solar irradiation energy received by a solar panel?
 
 ``pysolorie`` is a library designed to help you find this optimal orientation. Its features include, but are not limited to:
 
-- Finding the optimal orientation for a fixed solar panel under the assumption of a clear-sky model.
-- Plotting the Optimal Orientation for a range of days.
-- Generating a CSV Report of the optimal orientation for a range of days.
-- Calculating the sunrise and sunset hour angles for a given day.
-- Utilizing the Hottel's Model to estimate clear-sky beam radiation transmittance.
+- Finding the optimal orientation for a fixed solar panel, assuming a clear-sky model.
+- Plotting the optimal orientation over a range of days.
+- Plotting the total direct irradiation over a range of days.
+- Generating a CSV report detailing the optimal orientation over a range of days.
+- Calculating the sunrise and sunset hour angles for a specific day.
+- Utilizing Hottel’s Model to estimate the transmittance of clear-sky beam radiation.
 - Calculating the solar zenith angle.
 - Calculating the solar time.
-- Calculating Solar Declination and Hour Angle.
+- Calculating solar declination and hour angle.
 
 
 
