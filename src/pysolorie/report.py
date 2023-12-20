@@ -15,6 +15,7 @@
 import csv
 import json
 import logging
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, List, Union
 
@@ -154,3 +155,50 @@ class ReportGenerator:
         # Write the data list to the JSON file
         with open(path, "w") as file:
             json.dump(data, file, indent=4)
+
+    @logger_decorator
+    def generate_optimal_orientation_xml_report(
+        self,
+        path: Path,
+        irradiation_calculator: IrradiationCalculator,
+        from_day: int,
+        to_day: int,
+    ) -> None:
+        r"""
+        This method generates a report of optimal solar panel orientation in XML format.
+        It uses the ``_calculate_optimal_orientation_and_irradiation``
+        method to get the data.
+
+        :param path: A Path object that points to the XML file
+                    where the report will be written.
+        :type path: Path
+        :param irradiation_calculator: An instance of the IrradiationCalculator class.
+        :type irradiation_calculator: pysolorie.IrradiationCalculator
+        :param from_day: The starting day of the report.
+        :type from_day: int
+        :param to_day: The ending day of the report.
+        :type to_day: int
+        """
+        data = self._calculate_optimal_orientation_and_irradiation(
+            irradiation_calculator, from_day, to_day
+        )
+
+        # Create the root element
+        root = ET.Element("Report")
+
+        for row in data:
+            # Create a 'Day' element for each day
+            day_element = ET.SubElement(root, "Day")
+            day_element.set("id", str(row["Day"]))
+
+            # Create 'Beta' and 'TotalDirectIrradiation' elements for each day
+            beta_element = ET.SubElement(day_element, "Beta")
+            beta_element.text = str(row["Beta (degrees)"])
+            tdi_element = ET.SubElement(day_element, "TotalDirectIrradiation")
+            tdi_element.text = str(
+                row["Total Direct Irradiation (Megajoules per square meter)"]
+            )
+
+        # Write the XML data to the file
+        tree = ET.ElementTree(root)
+        tree.write(path)
