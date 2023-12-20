@@ -46,7 +46,7 @@ class SolarIrradiance:
 
         .. math::
             I = SC
-            \times (1 + 0.33 \times \cos (\frac{2\pi~n}{365}))
+            \times (1 + 0.033 \times \cos (\frac{2\pi~n}{365}))
 
 
         | - :math:`SC` is the average solar radiation arriving outside

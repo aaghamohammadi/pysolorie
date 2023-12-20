@@ -144,7 +144,7 @@ class IrradiationCalculator:
         :type panel_orientation: float
         :param day_of_year: The day of the year.
         :type day_of_year: int
-        :return: The total direct irradiation.
+        :return: The total direct irradiation in Megajoules per square meter.
         :rtype: float
         """
         sunrise_hour_angle, sunset_hour_angle = self._observer.calculate_sunrise_sunset(

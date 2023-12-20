@@ -12,7 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 import csv
+import json
 import math
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 from unittest.mock import MagicMock
@@ -362,7 +364,11 @@ def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
     with open(csv_path, "r") as file:
         reader = csv.reader(file)
         header = next(reader)
-        assert header == ["Day", "Beta (degrees)", "Total Direct Irradiation (MW/m²)"]
+        assert header == [
+            "Day",
+            "Beta (degrees)",
+            "Total Direct Irradiation (Megajoules per square meter)",
+        ]
         for i, row in enumerate(reader, start=from_day):
             day, beta, total_direct_irradiation = (
                 int(row[0]),
@@ -381,6 +387,93 @@ def test_generate_optimal_orientation_csv_report(tmpdir) -> None:
                 pytest.approx(total_direct_irradiation, abs=1e-3)
                 == expected_total_direct_irradiation
             )
+
+
+def test_generate_optimal_orientation_json_report(tmpdir) -> None:
+    # Create a temporary directory for the test
+    temp_dir: Path = Path(tmpdir)
+
+    # Initialize the ReportGenerator
+    report_generator: ReportGenerator = ReportGenerator()
+
+    # Initialize the IrradiationCalculator for Tehran
+    irradiation_calculator: IrradiationCalculator = IrradiationCalculator(
+        "MIDLATITUDE SUMMER", 1200, 35.6892
+    )
+
+    # Define the path for the JSON file
+    json_path: Path = temp_dir / "report.json"
+    from_day: int = 60
+    to_day: int = 70
+    # Call the method to generate the report
+    report_generator.generate_optimal_orientation_json_report(
+        json_path, irradiation_calculator, from_day, to_day
+    )
+
+    # Check the JSON file
+    with open(json_path, "r") as file:
+        data = json.load(file)
+        for i, row in enumerate(data, start=from_day):
+            day, beta, total_direct_irradiation = (
+                row["Day"],
+                row["Beta (degrees)"],
+                row["Total Direct Irradiation (Megajoules per square meter)"],
+            )
+
+            assert day == i
+            expected_beta = irradiation_calculator.find_optimal_orientation(i)
+            expected_total_direct_irradiation = (
+                irradiation_calculator.calculate_direct_irradiation(beta, i)
+            )
+            assert pytest.approx(beta, abs=1e-3) == expected_beta
+            assert (
+                pytest.approx(total_direct_irradiation, abs=1e-3)
+                == expected_total_direct_irradiation
+            )
+
+
+def test_generate_optimal_orientation_xml_report(tmpdir) -> None:
+    # Create a temporary directory for the test
+    temp_dir: Path = Path(tmpdir)
+
+    # Initialize the ReportGenerator
+    report_generator: ReportGenerator = ReportGenerator()
+
+    # Initialize the IrradiationCalculator for Tehran
+    irradiation_calculator: IrradiationCalculator = IrradiationCalculator(
+        "MIDLATITUDE SUMMER", 1200, 35.6892
+    )
+
+    # Define the path for the XML file
+    xml_path: Path = temp_dir / "report.xml"
+    from_day: int = 60
+    to_day: int = 70
+    # Call the method to generate the report
+    report_generator.generate_optimal_orientation_xml_report(
+        xml_path, irradiation_calculator, from_day, to_day
+    )
+
+    # Check the XML file
+    tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    for i, day_element in enumerate(root.findall("Day"), start=from_day):
+        day = int(day_element.get("id"))
+        beta = float(day_element.find("Beta").text)
+        total_direct_irradiation = float(
+            day_element.find("TotalDirectIrradiation").text
+        )
+
+        assert day == i
+        expected_beta = irradiation_calculator.find_optimal_orientation(i)
+        expected_total_direct_irradiation = (
+            irradiation_calculator.calculate_direct_irradiation(beta, i)
+        )
+        assert pytest.approx(beta, abs=1e-3) == expected_beta
+        assert (
+            pytest.approx(total_direct_irradiation, abs=1e-3)
+            == expected_total_direct_irradiation
+        )
 
 
 def test_plot_optimal_orientation(tmpdir) -> None:

@@ -92,6 +92,49 @@ the optimal orientation for a range of days.
 
 The CSV file will be saved to the specified path.
 
+Generating a JSON Report
+------------------------
+
+The ``generate_optimal_orientation_json_report`` method generates a JSON report of
+the optimal orientation for a range of days.
+
+.. code-block:: python
+
+    from pysolorie import ReportGenerator, IrradiationCalculator
+    from pathlib import Path
+
+    # Create a report generator and an irradiation calculator
+    report_generator = ReportGenerator()
+    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+
+    # Generate a JSON report for days 60 to 70
+    report_generator.generate_optimal_orientation_json_report(Path('results.json'), irradiation_calculator, 60, 70)
+
+The JSON file will be saved to the specified path.
+
+
+Generating an XML Report
+------------------------
+
+The ``generate_optimal_orientation_xml_report`` method generates an XML report of
+the optimal orientation for a range of days.
+
+.. code-block:: python
+
+    from pysolorie import ReportGenerator, IrradiationCalculator
+    from pathlib import Path
+
+    # Create a report generator and an irradiation calculator
+    report_generator = ReportGenerator()
+    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+
+    # Generate an XML report for days 60 to 70
+    report_generator.generate_optimal_orientation_xml_report(Path('results.xml'), irradiation_calculator, 60, 70)
+
+The XML file will be saved to the specified path.
+
+
+
 
 Plotting the Optimal Orientation
 --------------------------------
@@ -129,7 +172,7 @@ The ``plot_total_direct_irradiation`` method plots the total direct irradiation 
     irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
 
     # Plot the total direct irradiation for days 60 to 70
-    plotter.plot_total_direct_irradiation(irradiation_calculator, 60, 70, Path('results.png'), plot_kwargs={'xlabel': 'Day', 'ylabel': 'Total Direct Irradiation (MW/m²)', 'title': 'Total Direct Irradiation', "figsize": (16,9)}, savefig_kwargs={'dpi': 300})
+    plotter.plot_total_direct_irradiation(irradiation_calculator, 60, 70, Path('results.png'), plot_kwargs={'xlabel': 'Day', 'ylabel': 'Total Direct Irradiation (Megajoules per square meter)', 'title': 'Total Direct Irradiation', "figsize": (16,9)}, savefig_kwargs={'dpi': 300})
 
 The plot will be saved to the specified path. The ``plot_kwargs`` and ``savefig_kwargs``
 parameters can be used to customize the plot and the savefig function, respectively. If no path is provided, the plot will be displayed but not saved.
@@ -158,8 +201,8 @@ for a given day of the year.
     print(f"Sunset hour angle: {sunset_hour_angle}")
 
 
-Calculating the Zenith Angle
-----------------------------
+Calculating the Solar Zenith Angle
+----------------------------------
 
 The ``calculate_zenith_angle`` method calculates the zenith angle given the day of the year
 and solar time.
