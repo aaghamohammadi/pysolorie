@@ -22,12 +22,12 @@ from .report import ReportGenerator
 from .sun_position import SunPosition
 
 __all__ = [
-    "HottelModel",
-    "SunPosition",
-    "SolarIrradiance",
-    "Observer",
     "AtmosphericTransmission",
+    "HottelModel",
     "IrradiationCalculator",
-    "ReportGenerator",
+    "Observer",
     "Plotter",
+    "ReportGenerator",
+    "SolarIrradiance",
+    "SunPosition",
 ]
