@@ -1,6 +1,39 @@
 Changelog
 =========
 
+Version 1.5.1
+-------------
+
+Release date: 2023-12-20
+
+Added
+^^^^^
+- Implemented class ``InvalidClimateTypeError`` in ``exceptions.py``, providing custom exception handling for when an invalid climate type is provided.
+- Implemented class ``MissingObserverLatitudeError`` in ``exceptions.py``, to manage the error when the observer's latitude is not provided.
+
+Changed
+^^^^^^^
+- Reorganized the ``__all__`` list in ``__init__.py`` within the ``pysolorie`` package for improved module import organization.
+- Refactored the ``HottelModel`` class in ``model.py`` to provide a climate type check and raise the newly implemented ``InvalidClimateTypeError`` if the climate type is not recognized.
+- Enhanced error handling across various modules by using the new custom exception classes defined in ``exceptions.py``.
+
+Fixed
+^^^^^
+- Addressed an issue where the wrong logger was referenced in the `plotter.py`, which now correctly references the logger set for ``_calculate_optimal_orientations``.
+- Updated logging setup in ``logger.py`` by shifting ``basicConfig`` setup outside the ``logger_decorator`` function for improved logging practices.
+- Updated the ``plotter.py`` to correct the logger name used in the ``plot_optimal_orientation`` method for consistency and correctness.
+
+Documentation
+^^^^^^^^^^^^^
+- Included changes in documentation to reflect the addition of new issue templates for bug reporting and feature requests.
+- Updated documentation to cover the new exception classes and their usage within the application.
+
+Testing
+^^^^^^^
+- Expanded ``test_pysolorie.py`` to include tests for newly introduced exceptions ``InvalidClimateTypeError`` and ``MissingObserverLatitudeError`` ensuring robust error handling.
+- Augmented logging tests in ``test_pysolorie.py``, verifying that appropriate messages are recorded at info level, indicating successful operation of the updated functionality.
+
+
 Version 1.5.0
 -------------
 
