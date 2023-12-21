@@ -43,11 +43,14 @@ How can one maximize the solar irradiation energy received by a solar panel [@Ag
 # Statement of need
 The amount of solar irradiation energy harvested by a solar collector depends on several factors. These include the time of irradiation (both the time of day and the day of the year), the latitude and climate of the location, and the shape and orientation of the solar panel [@Foulaadvand2023].
 A solar collector can be positioned at a fixed orientation to maximize energy reception for a specific time period, such as daily, weekly, monthly, or seasonally, or it can be fixed for optimal performance throughout the year. The orientation can then be adjusted for the next time period.
-Solar irradiation is composed of three components: the direct beam, sky diffusion, and ground reflection. For flat solar panels, we focus on direct beam irradiation, which contributes the most to solar irradiation. There are various models available for different climate types. Moreover, a cloudy sky or polluted air affects the solar energy received on Earth. In our case, we use Hottel’s model to estimate the transmittance of direct solar radiation through clear atmospheres [@Hottel1976].
+Solar irradiation is composed of three components: the direct beam, sky diffusion, and ground reflection. For flat solar panels, we focus on direct beam irradiation, which contributes the most to solar irradiation. There are various models available for different climate types. We assume a clear sky condition with no clouds in the sky and an atmosphere free of pollutants. However, a cloudy sky or polluted air may affect the amount of solar energy received on Earth. In this context, we focus on the overall received irradiation energy. There are some other issues which may require careful consideration and further investigation in future studies, such as panel efficiency, energy conversion, and the effects of air pollution.
+ In our case, we use Hottel’s model to estimate the transmittance of direct solar radiation through clear atmospheres [@Hottel1976].
+
+ With a well-defined, user-friendly, and extensible API, multiple audiences can benefit from `pysolorie`. These include solar energy researchers, solar panel manufacturers and installers, and instructors.
 
 `Astropy` is the most well-known Python package with comprehensive functionality for astronomy and astrophysics [@Astropy2022]. It provides astronomical coordinate systems, cosmological calculations, and many more features. However, it lacks the ability to determine the optimal orientation of a solar panel, a feature that `pysolarorie` provides.
 
-With a well-defined, user-friendly, and extensible API, multiple audiences can benefit from `pysolorie`. These include solar energy researchers, solar panel manufacturers and installers, and instructors.
+
 
 # Mathematics
 The energy collected by a solar panel can be calculated using the formula in Equation \ref{eq:totaldirect}, where:
