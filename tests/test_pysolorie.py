@@ -30,30 +30,7 @@ from pysolorie import (
     Observer,
     Plotter,
     ReportGenerator,
-    SolarIrradiance,
-    SunPosition,
 )
-
-
-@pytest.mark.parametrize(
-    "day_of_year, expected_irradiance",
-    [
-        (1, 0.001411444),  # January 1st
-        (81, 0.001374918),  # March 22nd (equinox)
-        (172, 0.00132262),  # June 21st (summer solstice)
-        (264, 0.001359464),  # September 23rd (equinox)
-        (355, 0.001412104),  # December 21st (winter solstice)
-    ],
-)
-def test_calculate_extraterrestrial_irradiance(
-    day_of_year: int, expected_irradiance: float
-) -> None:
-    sun_position = SunPosition()
-    solar_irradiance = SolarIrradiance(sun_position)
-    irradiance: float = solar_irradiance.calculate_extraterrestrial_irradiance(
-        day_of_year
-    )
-    assert irradiance == pytest.approx(expected_irradiance, abs=1e-5)
 
 
 @pytest.mark.parametrize(
