@@ -15,6 +15,7 @@ release = PACKAGE_VERSION
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autodoc.typehints",
+    "sphinx_copybutton",
     "sphinx.ext.viewcode",
 ]
 
