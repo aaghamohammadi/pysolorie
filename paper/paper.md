@@ -37,7 +37,7 @@ How can one maximize the solar irradiation energy received by a fixed flat solar
 - Plotting the optimal tilt angle over a range of days.
 - Plotting the total direct irradiation over a range of days.
 - Generating a CSV, JSON, or XML report detailing the optimal tilt angle over a range of days.
-- Utilizing Hottel’s model to quantify clear-sky conditions and estimate the atmospheric transmission of clear-sky beam radiation [@Hottel1976].
+- Utilizing Hottel's model to quantify clear-sky conditions and estimate the atmospheric transmission of clear-sky beam radiation [@Hottel1976].
 
 
 # Statement of need

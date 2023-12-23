@@ -11,13 +11,45 @@ The easiest way to install ``pysolorie``  is from PyPI.
 
 .. code-block:: bash
 
-    $ python3 -m pip install pysolorie
+    python3 -m pip install pysolorie
 
+Calculating Total Direct Irradiation for a Year
+-----------------------------------------------
+
+Suppose we aim to calculate the total direct irradiation for a specific location. The following code determines the total direct irradiation received by a solar panel, assuming an optimal tilt angle for each day of the year at a given location. In this scenario, the location is Tehran, Iran.
+
+.. code-block:: python
+
+   from pysolorie import IrradiationCalculator
+
+   # Instantiate an IrradiationCalculator object for the city of Tehran
+   calculator = IrradiationCalculator(
+       climate_type="MIDLATITUDE SUMMER",
+       observer_altitude=1200,
+       observer_latitude=35.6892
+   )
+
+   from_day = 1
+   to_day = 365
+   total_irradiation = 0
+
+   # Loop over each day of the year
+   for day in range(from_day, to_day + 1):
+       # Find the optimal tilt angle for the given day
+       optimal_tilt_angle = calculator.find_optimal_orientation(day)
+       # Calculate the direct irradiation for the given day and add it to the total
+       total_irradiation += calculator.calculate_direct_irradiation(
+           optimal_tilt_angle, day
+       )
+
+   # Print the total direct irradiation received by the solar panel over the year
+   print(total_irradiation)
 
 
 Finding the Optimal Orientation
 -------------------------------
-The ``find_optimal_orientation`` method finds the optimal orientation for a solar
+
+The ``find_optimal_orientation`` method finds the optimal tilt angle for a solar
 panel given the climate type, observer altitude, observer latitude, and day of the year.
 
 The ``climate_type`` can be one of the following:
@@ -32,9 +64,11 @@ The ``climate_type`` can be one of the following:
 
     from pysolorie import IrradiationCalculator
 
-    # Create an irradiation calculator for Tehran in the summer
-    irradiation_calculator = IrradiationCalculator(
-        "MIDLATITUDE SUMMER", 1200, 35.6892
+    # Instantiate an IrradiationCalculator object for the city of Tehran
+    calculator = IrradiationCalculator(
+        climate_type="MIDLATITUDE SUMMER",
+        observer_altitude=1200,
+        observer_latitude=35.6892
     )
 
     # Find the optimal orientation for June 21st
@@ -42,9 +76,11 @@ The ``climate_type`` can be one of the following:
 
     print(f"Optimal orientation: {result}")
 
+
+
 Calculating Direct Irradiation
 ------------------------------
-The ``calculate_direct_irradiation`` method calculates the total direct irradiation for a given solar panel orientation and day of the year.
+The ``calculate_direct_irradiation`` method calculates the total direct irradiation received by a solar panel for a specified tilt angle and day of the year.
 
 The ``climate_type`` can be one of the following:
 
@@ -57,9 +93,11 @@ The ``climate_type`` can be one of the following:
 
     from pysolorie import IrradiationCalculator
 
-    # Create an irradiation calculator for Tehran in the summer
-    irradiation_calculator = IrradiationCalculator(
-        "MIDLATITUDE SUMMER", 1200, 35.6892
+    # Instantiate an IrradiationCalculator object for the city of Tehran
+    calculator = IrradiationCalculator(
+        climate_type="MIDLATITUDE SUMMER",
+        observer_altitude=1200,
+        observer_latitude=35.6892
     )
 
     # Define the panel orientation and day of the year
@@ -71,87 +109,48 @@ The ``climate_type`` can be one of the following:
 
     print(f"Direct irradiation: {result}")
 
-
-Generating a CSV Report
------------------------
-
-The ``generate_optimal_orientation_csv_report`` method generates a CSV report of
-the optimal orientation for a range of days.
-
-.. code-block:: python
-
-    from pysolorie import ReportGenerator, IrradiationCalculator
-    from pathlib import Path
-
-    # Create a report generator and an irradiation calculator
-    report_generator = ReportGenerator()
-    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
-
-    # Generate a CSV report for days 60 to 70
-    report_generator.generate_optimal_orientation_csv_report(Path('results.csv'), irradiation_calculator, 60, 70)
-
-The CSV file will be saved to the specified path.
-
-Generating a JSON Report
-------------------------
-
-The ``generate_optimal_orientation_json_report`` method generates a JSON report of
-the optimal orientation for a range of days.
-
-.. code-block:: python
-
-    from pysolorie import ReportGenerator, IrradiationCalculator
-    from pathlib import Path
-
-    # Create a report generator and an irradiation calculator
-    report_generator = ReportGenerator()
-    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
-
-    # Generate a JSON report for days 60 to 70
-    report_generator.generate_optimal_orientation_json_report(Path('results.json'), irradiation_calculator, 60, 70)
-
-The JSON file will be saved to the specified path.
-
-
-Generating an XML Report
-------------------------
-
-The ``generate_optimal_orientation_xml_report`` method generates an XML report of
-the optimal orientation for a range of days.
-
-.. code-block:: python
-
-    from pysolorie import ReportGenerator, IrradiationCalculator
-    from pathlib import Path
-
-    # Create a report generator and an irradiation calculator
-    report_generator = ReportGenerator()
-    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
-
-    # Generate an XML report for days 60 to 70
-    report_generator.generate_optimal_orientation_xml_report(Path('results.xml'), irradiation_calculator, 60, 70)
-
-The XML file will be saved to the specified path.
-
-
-
-
 Plotting the Optimal Orientation
 --------------------------------
 
-The ``plot_optimal_orientation`` method plots the optimal orientation for a range of days.
+With the pysolorie package, you can plot the optimal orientation of a solar panel given the climate type, altitude, and latitude of the location. For instance, the following code plots the optimal orientation for each day of the year for the city of Tehran.
 
 .. code-block:: python
 
-    from pysolorie import Plotter, IrradiationCalculator
-    from pathlib import Path
+   from pathlib import Path
+   from pysolorie import IrradiationCalculator, Plotter
 
-    # Create a plotter and an irradiation calculator
-    plotter = Plotter()
-    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+   # Instantiate a Plotter object from the pysolorie library
+   plotter = Plotter()
 
-    # Plot the optimal orientation for days 60 to 70
-    plotter.plot_optimal_orientation(irradiation_calculator, 60, 70, Path('results.png'), plot_kwargs={'xlabel': 'Day', 'ylabel': 'Beta (degrees)', 'title': 'Optimal Solar Panel Orientation', "figsize": (16,9)}, savefig_kwargs={'dpi': 300})
+   # Instantiate an IrradiationCalculator object for the city of Tehran
+   irradiation_calculator = IrradiationCalculator(
+       climate_type="MIDLATITUDE SUMMER",
+       observer_altitude=1200,
+       observer_latitude=35.6892
+   )
+
+   # Use the plotter to plot the optimal tilt angle of a solar panel for each day of the year
+   plotter.plot_optimal_orientation(
+       irradiation_calculator,
+       from_day=1,
+       to_day=365,
+       path=Path("results.svg"),
+       plot_kwargs={
+           "xlabel": "Day",
+           "ylabel": "Beta (degrees)",
+           "title": "Optimal Solar Panel Orientation",
+       },
+       savefig_kwargs={"dpi": 300},
+   )
+
+This figure, generated by the example code, illustrates the optimal tilt angle of a solar panel for each day of the year in Tehran. The x-axis represents the day of the year, while the y-axis represents the optimal angle (Beta) in degrees. As can be seen, the optimal angle varies throughout the year, highlighting the importance of adjusting the tilt angle of the solar panel to maximize the energy received.
+
+.. image:: _static/images/example_usage.svg
+   :width: 600
+
+
+
+The ``plot_optimal_orientation`` method plots the optimal orientation for a range of days.
 
 The plot will be saved to the specified path. The ``plot_kwargs`` and ``savefig_kwargs``
 parameters can be used to customize the plot and the savefig function, respectively. If no path is provided, the plot will be displayed but not saved.
@@ -167,16 +166,77 @@ The ``plot_total_direct_irradiation`` method plots the total direct irradiation 
     from pysolorie import Plotter, IrradiationCalculator
     from pathlib import Path
 
-    # Create a plotter and an irradiation calculator
+    # Create a plotter
     plotter = Plotter()
-    irradiation_calculator = IrradiationCalculator("MIDLATITUDE SUMMER", 1200, 35.6892)
+    # Instantiate an IrradiationCalculator object for the city of Tehran
+    irradiation_calculator = IrradiationCalculator(
+        climate_type="MIDLATITUDE SUMMER",
+        observer_altitude=1200,
+        observer_latitude=35.6892
+    )
 
     # Plot the total direct irradiation for days 60 to 70
-    plotter.plot_total_direct_irradiation(irradiation_calculator, 60, 70, Path('results.png'), plot_kwargs={'xlabel': 'Day', 'ylabel': 'Total Direct Irradiation (Megajoules per square meter)', 'title': 'Total Direct Irradiation', "figsize": (16,9)}, savefig_kwargs={'dpi': 300})
+    plotter.plot_total_direct_irradiation(
+       irradiation_calculator,
+       from_day=60,
+       to_day=70,
+       path=Path("results.png"),
+       plot_kwargs={
+           "xlabel": "Day",
+           "ylabel": "Total Direct Irradiation (Megajoules per square meter)",
+           "title": "Total Direct Irradiation",
+       },
+       savefig_kwargs={"dpi": 300},
+    )
 
 The plot will be saved to the specified path. The ``plot_kwargs`` and ``savefig_kwargs``
 parameters can be used to customize the plot and the savefig function, respectively. If no path is provided, the plot will be displayed but not saved.
 If the path is provided, the plot will be saved to the specified path and not displayed. If you want to both display and save the plot, you should call ``plt.show()`` after this function.
+
+Generating Reports
+------------------
+
+The ``pysolorie`` package provides methods to generate reports of the optimal orientation for a range of days in different formats: CSV, JSON, and XML.
+
+.. code-block:: python
+
+   from pysolorie import ReportGenerator, IrradiationCalculator
+   from pathlib import Path
+
+   # Create a report generator and an irradiation calculator
+   report_generator = ReportGenerator()
+   irradiation_calculator = IrradiationCalculator(
+       climate_type="MIDLATITUDE SUMMER",
+       observer_altitude=1200,
+       observer_latitude=35.6892,
+   )
+
+   # Generate a CSV report for days 60 to 70
+   report_generator.generate_optimal_orientation_csv_report(
+       path=Path('results.csv'),
+       irradiation_calculator=irradiation_calculator,
+       from_day=60,
+       to_day=70,
+   )
+
+   # Generate a JSON report for days 60 to 70
+   report_generator.generate_optimal_orientation_json_report(
+       path=Path('results.json'),
+       irradiation_calculator=irradiation_calculator,
+       from_day=60,
+       to_day=70,
+   )
+
+   # Generate an XML report for days 60 to 70
+   report_generator.generate_optimal_orientation_xml_report(
+       path=Path('results.xml'),
+       irradiation_calculator=irradiation_calculator,
+       from_day=60,
+       to_day=70,
+   )
+
+The report files will be saved to the specified paths.
+
 
 
 
@@ -184,21 +244,23 @@ If the path is provided, the plot will be saved to the specified path and not di
 Calculating Sunrise and Sunset
 ------------------------------
 
-The ``calculate_sunrise_sunset`` method calculates the sunrise and sunset hour angles
-for a given day of the year.
+The ``calculate_sunrise_sunset`` method calculates the sunrise and sunset hour angles for a given day of the year.
 
 .. code-block:: python
 
-    from pysolorie import Observer
+   from pysolorie import Observer
 
-    # Create an observer located in Tehran
-    observer = Observer(observer_latitude=35.69)
+   # Create an observer located in Tehran
+   observer = Observer(observer_latitude=35.69)
 
-    # Calculate the sunrise and sunset hour angles for June 21st
-    sunrise_hour_angle, sunset_hour_angle = observer.calculate_sunrise_sunset(172)
+   # Calculate the sunrise and sunset hour angles for June 21st
+   sunrise_hour_angle, sunset_hour_angle = observer.calculate_sunrise_sunset(
+       day_of_year=172
+   )
 
-    print(f"Sunrise hour angle: {sunrise_hour_angle}")
-    print(f"Sunset hour angle: {sunset_hour_angle}")
+   print(f"Sunrise hour angle: {sunrise_hour_angle}")
+   print(f"Sunset hour angle: {sunset_hour_angle}")
+
 
 
 Calculating the Solar Zenith Angle
@@ -210,15 +272,18 @@ and solar time.
 
 .. code-block:: python
 
-    from pysolorie import Observer
+   from pysolorie import Observer
 
-    # Create an observer located in Tehran (latitude 35.69, longitude 51.39)
-    observer = Observer(35.69, 51.39)
+   # Create an observer located in Tehran (latitude 35.69, longitude 51.39)
+   observer = Observer(35.69, 51.39)
 
-    # Calculate the zenith angle for March 22nd (81st day of the year) at solar noon (12 * 60 * 60 seconds)
-    zenith_angle = observer.calculate_zenith_angle(81, 12 * 60 * 60)
+   # Calculate the zenith angle for March 22nd (81st day of the year)
+   # at solar noon (12 * 60 * 60 seconds)
+   zenith_angle = observer.calculate_zenith_angle(81, 12 * 60 * 60)
 
-    print(f"Zenith angle: {zenith_angle}")
+   print(f"Zenith angle: {zenith_angle}")
+
+
 
 Note that the observer's latitude must be provided when creating an ``Observer`` instance.
 If it's not provided, a ``ValueError`` will be raised:

@@ -25,15 +25,26 @@ How can one maximize the solar irradiation energy received by a solar panel?
 
 ``pysolorie`` is a library designed to help you find this optimal orientation. Its features include, but are not limited to:
 
-- Finding the optimal orientation for a fixed solar panel, assuming a clear-sky model.
-- Plotting the optimal orientation over a range of days.
+- Finding the optimal tilt angle for a fixed solar panel, assuming a clear-sky condition.
+- Plotting the optimal tilt angle over a range of days.
 - Plotting the total direct irradiation over a range of days.
-- Generating a CSV, JSON, or XML report detailing the optimal orientation over a range of days.
+- Generating a CSV, JSON, or XML report detailing the optimal tilt angle over a range of days.
 - Calculating the sunrise and sunset hour angles for a specific day.
-- Utilizing Hottel’s Model to estimate the transmittance of clear-sky beam radiation.
+- Utilizing Hottel's model to quantify clear-sky conditions and estimate the atmospheric transmission of clear-sky beam radiation.
 - Calculating the solar zenith angle.
 - Calculating the solar time.
 - Calculating solar declination and hour angle.
+
+# How to Install pysolorie
+
+``pysolorie`` requires Python 3.9 or higher.
+
+The easiest way to install ``pysolorie`` is from PyPI.
+
+```bash
+python3 -m pip install pysolorie
+```
+
 
 ## Example Usage
 With the pysolorie package, you can plot the optimal orientation of a solar panel given the climate type, altitude, and latitude of the location. For instance, the following code plots the optimal orientation for each day of the year for the city of Tehran. For more examples, please refer to the [Getting started](https://pysolorie.readthedocs.io/en/latest/getting_started.html) section of our documentation. The full [API Reference](https://pysolorie.readthedocs.io/en/latest/reference/modules.html) is also available on our website.
