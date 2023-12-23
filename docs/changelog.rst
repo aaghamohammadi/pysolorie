@@ -1,6 +1,45 @@
 Changelog
 =========
 
+Version 1.5.2
+-------------
+
+Release date: 2023-12-23
+
+Changed
+^^^^^^^
+
+- Refactoring in various modules (``plotter.py``, ``report.py``, ``tests/test_pysolorie.py``, etc.) to improve code clarity and reduce the complexity.
+- Renamed "optimal orientation" to "optimal tilt angle" in the README, documentation, and examples to more accurately reflect solar panel positioning.
+- Updated and clarified solar irradiance discussion in the paper draft, along with audience benefits, terminology, and code usage in the README and documentation.
+- Improved various code samples across the documentation for enhanced clarity and consistency.
+
+Fixed
+^^^^^
+
+- Fixed the incorrect setting of logger instances within several classes and refactored the decorating function to correctly set the logger attribute.
+- Resolved mypy type checking errors by adding type ignore comments where necessary.
+
+
+Testing
+^^^^^^^
+
+- Extensive refactoring of test cases, with tests being moved to newly named files according to their respective functionalities.
+- Addition of test cases for new refactorings and exception handling enhancements to ensure code reliability and correctness.
+
+Documentation
+^^^^^^^^^^^^^
+
+- Amended the Sphinx configuration with the ``sphinx-copybutton`` extension and updated the packages list to include the extension.
+- Corrected and improved the structure of documentation files to enhance user understanding and readability.
+
+Miscellaneous
+^^^^^^^^^^^^^
+
+- Simplified GitHub issue templates to make them more accessible and concise for users.
+- Refinement of content descriptions, departmental affiliations for authors, and enhancement of figure captions in the paper draft.
+
+
 Version 1.5.1
 -------------
 
