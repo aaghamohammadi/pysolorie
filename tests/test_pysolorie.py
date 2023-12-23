@@ -27,13 +27,13 @@ import pytest
 from pysolorie import (
     AtmosphericTransmission,
     HottelModel,
-    InvalidClimateTypeError,
     IrradiationCalculator,
     Observer,
     Plotter,
     ReportGenerator,
     SolarIrradiance,
     SunPosition,
+    exceptions,
 )
 
 
@@ -66,8 +66,8 @@ def test_invalid_climate_type() -> None:
 
 def test_invalid_climate_type_with_custom_message() -> None:
     custom_message = "Custom error message"
-    with pytest.raises(InvalidClimateTypeError, match=custom_message):
-        raise InvalidClimateTypeError("INVALID", custom_message)
+    with pytest.raises(exceptions.InvalidClimateTypeError, match=custom_message):
+        raise exceptions.InvalidClimateTypeError("INVALID", custom_message)
 
 
 @pytest.mark.parametrize(
