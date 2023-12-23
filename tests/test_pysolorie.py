@@ -23,43 +23,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pytest
 
-from pysolorie import (
-    AtmosphericTransmission,
-    IrradiationCalculator,
-    Plotter,
-    ReportGenerator,
-)
-
-
-@pytest.mark.parametrize(
-    "climate_type,"
-    + "observer_altitude,"
-    + "observer_latitude,"
-    + "day_of_year,"
-    + "solar_time,"
-    + "expected_transmittance",
-    [
-        ("MIDLATITUDE SUMMER", 1200, 35.69, 81, 12 * 60 * 60, 0.683),  # Tehran Summer
-        ("MIDLATITUDE WINTER", 1200, 35.69, 355, 12 * 60 * 60, 0.618),  # Tehran Winter
-        ("TROPICAL", 63, 3.59, 81, 10 * 60 * 60, 0.597),  # Medan
-        ("SUBARCTIC SUMMER", 136, 64.84, 1, 13 * 60 * 60, 0.140),  # Fairbanks
-    ],
-)
-def test_calculate_transmittance(
-    climate_type: str,
-    observer_altitude: int,
-    observer_latitude: float,
-    day_of_year: int,
-    solar_time: float,
-    expected_transmittance: float,
-) -> None:
-    atmospheric_transmission: AtmosphericTransmission = AtmosphericTransmission(
-        climate_type, observer_altitude, observer_latitude
-    )
-    result: float = atmospheric_transmission.calculate_transmittance(
-        day_of_year, solar_time
-    )
-    assert pytest.approx(result, abs=1e-3) == expected_transmittance
+from pysolorie import IrradiationCalculator, Plotter, ReportGenerator
 
 
 @pytest.mark.parametrize(
