@@ -14,7 +14,6 @@
 
 import csv
 import json
-import logging
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, List, Union
@@ -29,6 +28,7 @@ class ReportGenerator:
     of solar panels and the total direct irradiation.
     """
 
+    @logger_decorator
     def _calculate_optimal_orientation_and_irradiation(
         self,
         irradiation_calculator: IrradiationCalculator,
@@ -57,10 +57,8 @@ class ReportGenerator:
             total_direct_irradiation = (
                 irradiation_calculator.calculate_direct_irradiation(beta, day)
             )
-            logger = logging.getLogger(
-                self._calculate_optimal_orientation_and_irradiation.__name__
-            )
-            logger.info(
+
+            self.logger.info(  # type: ignore
                 f"On day {day}, the solar panel's optimal orientation is "
                 f"{beta} degrees, and the total direct irradiation is "
                 f"{total_direct_irradiation} Megajoules per square meter."

@@ -45,7 +45,7 @@ class SolarIrradiance:
         The formula used is:
 
         .. math::
-            I = SC
+            I(n) = SC
             \times (1 + 0.033 \times \cos (\frac{2\pi~n}{365}))
 
 
