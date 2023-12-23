@@ -24,11 +24,11 @@ logging.basicConfig(
 def logger_decorator(func):
     @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
-        logger = logging.getLogger(func.__name__)
-        logger.setLevel(logging.INFO)
-        logger.info(f"Running '{func.__name__}'")
+        self.logger = logging.getLogger(func.__name__)
+        self.logger.setLevel(logging.INFO)
+        self.logger.info(f"Running '{func.__name__}'")
         result = func(self, *args, **kwargs)
-        logger.info(f"Finished '{func.__name__}'")
+        self.logger.info(f"Finished '{func.__name__}'")
         return result
 
     return wrapper
