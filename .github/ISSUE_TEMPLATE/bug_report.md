@@ -1,5 +1,10 @@
 ---
 name: Bug report
+about: Please describe the bug in the following format
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 **Describe the bug**

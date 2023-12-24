@@ -1,5 +1,10 @@
 ---
 name: Feature request
+about: Please describe the feature request in the following format
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 **Is your feature request related to a problem? Please describe.**
