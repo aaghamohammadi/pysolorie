@@ -69,7 +69,7 @@ class ReportGenerator:
                 {
                     "Day": day,
                     "Beta (degrees)": beta,
-                    "Total Direct Irradiation "
+                    "Direct Irradiation "
                     "(Megajoules per square meter)": total_direct_irradiation,
                 }
             )
@@ -109,7 +109,7 @@ class ReportGenerator:
                 [
                     "Day",
                     "Beta (degrees)",
-                    "Total Direct Irradiation (Megajoules per square meter)",
+                    "Direct Irradiation (Megajoules per square meter)",
                 ]
             )
 
@@ -118,7 +118,7 @@ class ReportGenerator:
                     [
                         row["Day"],
                         row["Beta (degrees)"],
-                        row["Total Direct Irradiation (Megajoules per square meter)"],
+                        row["Direct Irradiation (Megajoules per square meter)"],
                     ]
                 )
 
@@ -189,12 +189,12 @@ class ReportGenerator:
             day_element = ET.SubElement(root, "Day")
             day_element.set("id", str(row["Day"]))
 
-            # Create 'Beta' and 'TotalDirectIrradiation' elements for each day
+            # Create 'Beta' and 'DirectIrradiation' elements for each day
             beta_element = ET.SubElement(day_element, "Beta")
             beta_element.text = str(row["Beta (degrees)"])
-            tdi_element = ET.SubElement(day_element, "TotalDirectIrradiation")
+            tdi_element = ET.SubElement(day_element, "DirectIrradiation")
             tdi_element.text = str(
-                row["Total Direct Irradiation (Megajoules per square meter)"]
+                row["Direct Irradiation (Megajoules per square meter)"]
             )
 
         # Write the XML data to the file

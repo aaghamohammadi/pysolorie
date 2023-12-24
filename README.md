@@ -1,8 +1,8 @@
 # pysolorie
 
-[![CodeQL](https://github.com/aaghamohammadi/pysolorie/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/aaghamohammadi/pysolorie/actions/workflows/github-code-scanning/codeql)
 [![Quality Checks](https://github.com/aaghamohammadi/pysolorie/actions/workflows/quality_checks.yml/badge.svg?branch=main)](https://github.com/aaghamohammadi/pysolorie/actions/workflows/quality_checks.yml)
 [![Publish](https://github.com/aaghamohammadi/pysolorie/actions/workflows/publish.yml/badge.svg?branch=main)](https://github.com/aaghamohammadi/pysolorie/actions/workflows/publish.yml)
+[![CodeQL](https://github.com/aaghamohammadi/pysolorie/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/aaghamohammadi/pysolorie/actions/workflows/github-code-scanning/codeql)
 ![GitHub License](https://img.shields.io/github/license/aaghamohammadi/pysolorie)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/pysolorie)
 [![Documentation Status](https://readthedocs.org/projects/pysolorie/badge/?version=latest)](https://pysolorie.readthedocs.io/en/latest/?badge=latest)
@@ -12,6 +12,9 @@
 [![codecov](https://codecov.io/gh/aaghamohammadi/pysolorie/graph/badge.svg?token=TF9E8Y3Q67)](https://codecov.io/gh/aaghamohammadi/pysolorie)
 ![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)
 ![code style: black](https://img.shields.io/badge/code%20style-black-black)
+
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=aaghamohammadi_pysolorie)
+
 
 
 **pysolorie** stands for **Py**thon **Sol**ar **Orie**ntation Analysis of Solar Panel. It is a Python library designed to help you analyze the orientation of solar panels.

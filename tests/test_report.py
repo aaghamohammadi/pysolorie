@@ -53,7 +53,7 @@ def test_generate_optimal_orientation_csv_report(caplog, tmpdir) -> None:
         assert header == [
             "Day",
             "Beta (degrees)",
-            "Total Direct Irradiation (Megajoules per square meter)",
+            "Direct Irradiation (Megajoules per square meter)",
         ]
         for i, row in enumerate(reader, start=from_day):
             day, beta, total_direct_irradiation = (
@@ -107,21 +107,21 @@ def test_generate_optimal_orientation_json_report(caplog, tmpdir) -> None:
     with open(json_path, "r") as file:
         data = json.load(file)
         for i, row in enumerate(data, start=from_day):
-            day, beta, total_direct_irradiation = (
+            day, beta, direct_irradiation = (
                 row["Day"],
                 row["Beta (degrees)"],
-                row["Total Direct Irradiation (Megajoules per square meter)"],
+                row["Direct Irradiation (Megajoules per square meter)"],
             )
 
             assert day == i
             expected_beta = irradiation_calculator.find_optimal_orientation(i)
-            expected_total_direct_irradiation = (
+            expected_direct_irradiation = (
                 irradiation_calculator.calculate_direct_irradiation(beta, i)
             )
             assert pytest.approx(beta, abs=1e-3) == expected_beta
             assert (
-                pytest.approx(total_direct_irradiation, abs=1e-3)
-                == expected_total_direct_irradiation
+                pytest.approx(direct_irradiation, abs=1e-3)
+                == expected_direct_irradiation
             )
     # Check the logs
     for day in range(from_day, to_day):
@@ -160,9 +160,7 @@ def test_generate_optimal_orientation_xml_report(caplog, tmpdir) -> None:
     for i, day_element in enumerate(root.findall("Day"), start=from_day):
         day = int(day_element.get("id"))
         beta = float(day_element.find("Beta").text)
-        total_direct_irradiation = float(
-            day_element.find("TotalDirectIrradiation").text
-        )
+        total_direct_irradiation = float(day_element.find("DirectIrradiation").text)
 
         assert day == i
         expected_beta = irradiation_calculator.find_optimal_orientation(i)
