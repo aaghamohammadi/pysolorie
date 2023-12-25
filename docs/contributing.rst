@@ -26,9 +26,9 @@ It is highly recommended to use ``virtualenv`` for the development. ``virtualenv
 
     .. code-block:: bash
 
-        $ python3 -m venv .venv
-        $ source .venv/bin/activate
-        $ pip install -r dev-requirements.txt
+        python3 -m venv .venv
+        source .venv/bin/activate
+        pip install -r dev-requirements.txt
 
 5. **Install pre-commit**:
 
@@ -37,7 +37,7 @@ remote repository. ``pre-commit`` is a tool that manages and maintains multi-lan
 
     .. code-block:: bash
 
-        $ pre-commit install
+        pre-commit install
 
 
 Running Tests
@@ -56,31 +56,31 @@ For example, to run the linter, you would use the following command:
 
     .. code-block:: bash
 
-        $ tox -e lint
+        tox -e lint
 
 If you want to reformat the source code. You can use the following command:
 
     .. code-block:: bash
 
-        $ tox -e format -- src tests
+        tox -e format -- src tests
 
 To verify the correctness of the formatting, execute the command below:
 
     .. code-block:: bash
 
-        $ tox -e format
+        tox -e format
 
 To check the types in the code with mypy, use this:
 
     .. code-block:: bash
 
-        $ tox -e typecheck
+        tox -e typecheck
 
 To run unit tests for the python, e.g., python 3.10, you can run this command:
 
     .. code-block:: bash
 
-        $ tox -e py310
+        tox -e py310
 
 Submitting Your Contributions
 -----------------------------
@@ -92,6 +92,7 @@ We welcome and appreciate your contributions to the pysolorie project! Here are 
 - **Adding New Features**: Contribute by introducing new features that can enhance the functionality of the project.
 
 After making your changes and ensuring all tests pass, you can submit your contributions by creating a pull request on GitHub.
+Please be informed that the pull request should be created for the **dev branch**. We do not accept pull requests for the main branch.
 
 Please note, we strive to keep our dependencies to a minimum. Any addition of a new dependency should be well justified and absolutely necessary.
 
