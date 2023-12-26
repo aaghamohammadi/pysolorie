@@ -28,6 +28,7 @@ It is highly recommended to use ``virtualenv`` for the development. ``virtualenv
 
         python3 -m venv .venv
         source .venv/bin/activate
+        pip install --upgrade pip
         pip install -r dev-requirements.txt
 
 5. **Install pre-commit**:
