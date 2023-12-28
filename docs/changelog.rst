@@ -1,6 +1,40 @@
 Changelog
 =========
 
+Version 1.5.3
+-------------
+
+Release date: 2023-12-28
+
+Changed
+^^^^^^^
+
+- Improved documentation and code comments to clarify the calculation and representation of direct irradiation, rather than total direct irradiation.
+- Standardized exception handling in the ``observer.py`` by decorating relevant methods, ensuring consistency in logging exceptions.
+- Made code improvements in ``tests/test_*`` files for comprehensive coverage and robust testing of the solar irradiation logic under different geographical and temporal conditions.
+
+Fixed
+^^^^^
+- Modified ``numerical_integration.py`` to return 0 for direct irradiation during the polar night when the sun does not rise.
+- Addressed improper handling of zero values for sunrise and sunset hour angles representing extreme latitude scenarios (Midnight Sun and Polar Night).
+- Enhanced the ``observer.py`` to handle cases of Midnight Sun and Polar Night with appropriate logging for exceptional circumstances.
+- Fixed issues with missing logger instances in ``plotter.py`` by correctly setting up decorators and ensuring log messages are adequately recorded.
+
+Documentation
+^^^^^^^^^^^^^
+- Refactored ``README.md`` for syntactical accuracy in the representation of solar irradiance and optimized the explanation of solar panel orientation.
+- Updated all instances in documentation where "total direct irradiation" was mentioned to "direct irradiation" to maintain consistency with the recent code updates.
+- Included explanation for Midnight Sun and Polar Night phenomena in solar irradiance context to educate users about edge cases in solar panel energy calculations.
+- Refined code examples and added clarifications on special cases where zero irradiation is expected, enhancing the user's understanding.
+
+Testing
+^^^^^^^
+
+- Expanded the test suite to cover new scenarios, like polar regions and edge calendar days where the sun's behavior significantly differs (e.g., Midnight Sun and Polar Night).
+- Implemented additional assertions in unit tests to cover the new edge cases introduced by the recent geographic and temporal scenarios handled in the update.
+
+
+
 Version 1.5.2
 -------------
 
