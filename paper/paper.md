@@ -31,13 +31,13 @@ How can one maximize the solar irradiation energy received by a fixed flat solar
 
 ![Orientational angles of a flat solar panel.\label{fig:opt}](solarpanel.svg)
 
-**pysolorie** stands for **Py**thon **Sol**ar **Orie**ntation Analysis of Solar Panels. It is a Python package designed to help you find the optimal tilt angle of solar panels, $\beta$, to maximize the energy received for a given day. The optimal azimuthal angle is zero.
+**pysolorie** stands for **Py**thon **Sol**ar **Orie**ntation Analysis of Solar Panels. It is a Python package designed to help you find the optimal tilt angle of solar panels, $\beta$, to maximize the beam energy received for a given day. The optimal azimuthal angle is zero.
 
 Its features include but are not limited to:
 
 - Finding the optimal tilt angle for a fixed solar panel, assuming a clear-sky condition.
 - Plotting the optimal tilt angle over a range of days.
-- Plotting the direct irradiation over a range of days.
+- Plotting the daily direct irradiation energy over a range of days.
 - Generating a CSV, JSON, or XML report detailing the optimal tilt angle over a range of days.
 - Utilizing Hottel's model to quantify clear-sky conditions and estimate the atmospheric transmission of clear-sky beam radiation [@Hottel1976;@Iqbal1983].
 
@@ -63,7 +63,7 @@ The energy collected by a solar panel can be calculated using the formula in Equ
 
 - $n$ is the day of the year,
 - $\phi$ is the latitude of the observer,
-- $I(n)$ is the amount of solar energy received per unit area per second [@Duffie2020;@Goswami2015]  on day number $n$ of the year,
+- $I(n)$ is the amount of extraterrestrial solar energy received per unit area per second [@Duffie2020;@Goswami2015]  on day number $n$ of the year,
 - $\Omega$ is the Earth angular velocity around its axis with the value `7.15 * 1e-5` rad/s,
 - $\theta$ is the angle between the position vector of the sun and the normal vector to the solar panel (incidence angle) [@Kalogirou2013],
 - $\omega_s$ is the sunrise hour angle,
