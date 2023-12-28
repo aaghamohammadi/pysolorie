@@ -1,6 +1,16 @@
 Changelog
 =========
 
+Version 1.5.4
+-------------
+
+Release date: 2023-12-28
+
+Fixed
+^^^^^
+- Removed the logs of unnecessary function calls.
+
+
 Version 1.5.3
 -------------
 
