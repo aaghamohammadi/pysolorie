@@ -16,6 +16,7 @@ import math
 from typing import Optional
 
 from .exceptions import MissingObserverLatitudeError
+from .logger import logger_decorator
 from .sun_position import SunPosition
 
 
@@ -76,6 +77,7 @@ class Observer:
             * math.cos(hour_angle)
         )
 
+    @logger_decorator
     def calculate_sunrise_sunset(self, day_of_year: int) -> tuple:
         r"""
         Calculate the hour angle at sunrise and sunset.
@@ -98,9 +100,22 @@ class Observer:
         observer_latitude = self._ensure_latitude_provided()
 
         solar_declination = self.sun_position.solar_declination(day_of_year)
-        hour_angle = math.acos(
-            -math.tan(observer_latitude) * math.tan(solar_declination)
-        )
+
+        tan_product = -math.tan(observer_latitude) * math.tan(solar_declination)
+
+        if tan_product > 1:
+            self.logger.info(  # type: ignore
+                "In winter, there is no sunrise or sunset (Polar Night)"
+            )
+            return 0, 0
+
+        if tan_product < -1:
+            self.logger.info(  # type: ignore
+                "In summer, the sun does not set (Midnight Sun)"
+            )
+            return -math.pi, math.pi
+
+        hour_angle = math.acos(tan_product)
 
         sunrise = -hour_angle
         sunset = hour_angle

@@ -158,6 +158,13 @@ class IrradiationCalculator:
             )
             for hour_angle in np.arange(sunrise_hour_angle, sunset_hour_angle, 0.01)
         ]
+
+        # During polar night, the sun doesn't rise and both hour angles are zero.
+        # This results in an empty irradiance_components list. In this case,
+        # we return 0 as there is no direct irradiation.
+        if not irradiance_components:
+            return 0
+
         return integrate.simpson(irradiance_components, dx=0.01)
 
     def find_optimal_orientation(self, day_of_year: int) -> float:
