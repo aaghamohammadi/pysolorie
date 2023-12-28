@@ -1,6 +1,16 @@
 Changelog
 =========
 
+Version 1.5.5
+-------------
+
+Release date: 2023-12-28
+
+Fixed
+^^^^^
+- Removed the logs of ``observer.py``
+
+
 Version 1.5.4
 -------------
 
