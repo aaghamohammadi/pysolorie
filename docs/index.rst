@@ -31,7 +31,7 @@ In our case, we are using Hottel's model to estimate the transmittance of direct
 
 - Finding the optimal tilt angle for a fixed solar panel, assuming a clear-sky condition.
 - Plotting the optimal tilt angle over a range of days.
-- Plotting the total direct irradiation over a range of days.
+- Plotting the daily direct irradiation energy over a range of days.
 - Generating a CSV, JSON, or XML report detailing the optimal tilt angle over a range of days.
 - Calculating the sunrise and sunset hour angles for a specific day.
 - Utilizing Hottel's model to quantify clear-sky conditions and estimate the atmospheric transmission of clear-sky beam radiation.

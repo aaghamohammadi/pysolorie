@@ -135,7 +135,7 @@ class Plotter:
         savefig_kwargs: Dict[str, str],
     ) -> None:
         figsize = plot_kwargs.get("figsize", (10, 6))
-        fig, ax = plt.subplots(figsize=figsize)
+        _, ax = plt.subplots(figsize=figsize)
         ax.plot(days, betas)
         ax.set_xlabel(plot_kwargs.get("xlabel", "X Axis Title"))
         ax.set_ylabel(plot_kwargs.get("ylabel", "Y Axis Title"))

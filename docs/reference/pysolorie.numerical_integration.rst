@@ -1,5 +1,5 @@
-Total Direct Irradiation
-========================
+Direct Irradiation
+==================
 
 .. automodule:: pysolorie.numerical_integration
    :members:

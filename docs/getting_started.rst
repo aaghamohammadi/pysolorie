@@ -13,17 +13,17 @@ The easiest way to install ``pysolorie``  is from PyPI.
 
     python3 -m pip install pysolorie
 
-Calculating Total Direct Irradiation for a Year
------------------------------------------------
+Calculating Direct Irradiation for a Year
+-----------------------------------------
 
-Suppose we aim to calculate the total direct irradiation for a specific location. The following code determines the total direct irradiation received by a solar panel, assuming an optimal tilt angle for each day of the year at a given location. In this scenario, the location is Tehran, Iran.
+Suppose we aim to calculate the direct irradiation for a specific location. The following code determines the direct irradiation received by a solar panel, assuming an optimal tilt angle for each day of the year at a given location. In this scenario, the location is Tehran, Iran.
 
 .. code-block:: python
 
    from pysolorie import IrradiationCalculator
 
    # Instantiate an IrradiationCalculator object for the city of Tehran
-   calculator = IrradiationCalculator(
+   irradiation_calculator = IrradiationCalculator(
        climate_type="MIDLATITUDE SUMMER",
        observer_altitude=1200,
        observer_latitude=35.6892
@@ -36,9 +36,9 @@ Suppose we aim to calculate the total direct irradiation for a specific location
    # Loop over each day of the year
    for day in range(from_day, to_day + 1):
        # Find the optimal tilt angle for the given day
-       optimal_tilt_angle = calculator.find_optimal_orientation(day)
+       optimal_tilt_angle = irradiation_calculator.find_optimal_orientation(day)
        # Calculate the direct irradiation for the given day and add it to the total
-       total_irradiation += calculator.calculate_direct_irradiation(
+       total_irradiation += irradiation_calculator.calculate_direct_irradiation(
            optimal_tilt_angle, day
        )
 
@@ -65,7 +65,7 @@ The ``climate_type`` can be one of the following:
     from pysolorie import IrradiationCalculator
 
     # Instantiate an IrradiationCalculator object for the city of Tehran
-    calculator = IrradiationCalculator(
+    irradiation_calculator = IrradiationCalculator(
         climate_type="MIDLATITUDE SUMMER",
         observer_altitude=1200,
         observer_latitude=35.6892
@@ -80,7 +80,7 @@ The ``climate_type`` can be one of the following:
 
 Calculating Direct Irradiation
 ------------------------------
-The ``calculate_direct_irradiation`` method calculates the total direct irradiation received by a solar panel for a specified tilt angle and day of the year.
+The ``calculate_direct_irradiation`` method calculates the direct irradiation received by a solar panel for a specified tilt angle and day of the year.
 
 The ``climate_type`` can be one of the following:
 
@@ -94,7 +94,7 @@ The ``climate_type`` can be one of the following:
     from pysolorie import IrradiationCalculator
 
     # Instantiate an IrradiationCalculator object for the city of Tehran
-    calculator = IrradiationCalculator(
+    irradiation_calculator = IrradiationCalculator(
         climate_type="MIDLATITUDE SUMMER",
         observer_altitude=1200,
         observer_latitude=35.6892
@@ -156,10 +156,10 @@ The plot will be saved to the specified path. The ``plot_kwargs`` and ``savefig_
 parameters can be used to customize the plot and the savefig function, respectively. If no path is provided, the plot will be displayed but not saved.
 If the path is provided, the plot will be saved to the specified path and not displayed. If you want to both display and save the plot, you should call ``plt.show()`` after this function.
 
-Plotting the Total Direct Irradiation
+Plotting the Direct Irradiation
 -------------------------------------
 
-The ``plot_total_direct_irradiation`` method plots the total direct irradiation for a range of days.
+The ``plot_total_direct_irradiation`` method plots the direct irradiation for a range of days.
 
 .. code-block:: python
 
@@ -175,7 +175,7 @@ The ``plot_total_direct_irradiation`` method plots the total direct irradiation 
         observer_latitude=35.6892
     )
 
-    # Plot the total direct irradiation for days 60 to 70
+    # Plot the direct irradiation for days 60 to 70
     plotter.plot_total_direct_irradiation(
        irradiation_calculator,
        from_day=60,
@@ -183,8 +183,8 @@ The ``plot_total_direct_irradiation`` method plots the total direct irradiation 
        path=Path("results.png"),
        plot_kwargs={
            "xlabel": "Day",
-           "ylabel": "Total Direct Irradiation (Megajoules per square meter)",
-           "title": "Total Direct Irradiation",
+           "ylabel": "Direct Irradiation (Megajoules per square meter)",
+           "title": "Direct Irradiation",
        },
        savefig_kwargs={"dpi": 300},
     )
@@ -346,10 +346,10 @@ and the ``hour_angle`` method calculates the hour angle given the solar time.
 This will print the solar declination and hour angle in radians.
 For example, on January 1st at 1pm, the solar declination is approximately ``-0.401`` radians and the hour angle is approximately ``0.262`` radians.
 
-Calculating Transmittance Components with the Hottel Model
-----------------------------------------------------------
+Calculating Transmittance Components with the Hottel's Model
+------------------------------------------------------------
 
-The Hottel Model is used for estimating clear-sky beam radiation transmittance based on climate type and observer altitude. The `calculate_transmittance_components` method of the `HottelModel` class calculates the components of clear-sky beam radiation transmittance :math:`a_0`, :math:`a_1`, and :math:`k` based on climate type and observer altitude.
+The Hottel's model  is used for estimating clear-sky beam radiation transmittance based on climate type and observer altitude. The `calculate_transmittance_components` method of the `HottelModel` class calculates the components of clear-sky beam radiation transmittance :math:`a_0`, :math:`a_1`, and :math:`k` based on climate type and observer altitude.
 
 .. code-block:: python
 

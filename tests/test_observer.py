@@ -89,19 +89,26 @@ def test_calculate_zenith_angle_without_latitude():
 
 
 @pytest.mark.parametrize(
-    "day_of_year, expected_sunrise_hour_angle, expected_sunset_hour_angle",
+    "observer_latitude,"
+    + "day_of_year,"
+    + "expected_sunrise_hour_angle,"
+    + "expected_sunset_hour_angle",
     [
-        (1, -1.261, 1.261),  # January 1st
-        (81, -math.pi / 2, math.pi / 2),  # March 22nd (equinox)
-        (172, -1.888, 1.888),  # June 21st (solstice)
+        (35.69, 1, -1.261, 1.261),  # January 1st, Tehran
+        (35.69, 81, -math.pi / 2, math.pi / 2),  # March 22nd (equinox), Tehran
+        (35.69, 172, -1.888, 1.888),  # June 21st (solstice), Tehran
+        (70.00, 1, 0, 0),  # January 1st, Finnmark
+        (70.00, 81, -math.pi / 2, math.pi / 2),  # March 22nd (equinox), Finnmark
+        (70.00, 172, -math.pi, math.pi),  # June 21st (solstice), Finnmark
     ],
 )
 def test_calculate_sunrise_sunset(
+    observer_latitude: float,
     day_of_year: int,
     expected_sunrise_hour_angle: float,
     expected_sunset_hour_angle: float,
 ) -> None:
-    observer: Observer = Observer(observer_latitude=35.69)  # Tehran
+    observer: Observer = Observer(observer_latitude=observer_latitude)
     sunrise_hour_angle, sunset_hour_angle = observer.calculate_sunrise_sunset(
         day_of_year
     )

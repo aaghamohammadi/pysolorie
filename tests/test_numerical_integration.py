@@ -57,6 +57,14 @@ from pysolorie import IrradiationCalculator
             45.0,
             21.371,  # Fairbanks Summer, day_of_year=200 (July 19)
         ),
+        (
+            "SUBARCTIC SUMMER",
+            356,
+            70.00,
+            355,
+            45.0,
+            0,  # Finnmark Winter, day_of_year=355 (December 21)
+        ),
     ],
 )
 def test_calculate_direct_irradiation(
@@ -107,6 +115,20 @@ def test_calculate_direct_irradiation(
             200,
             32.614,
         ),  # Fairbanks Summer, day_of_year=200 (July 19)
+        (
+            "SUBARCTIC SUMMER",
+            356,
+            70.00,
+            355,
+            90,  # Finnmark Winter, day_of_year=355 (December 21)
+        ),
+        (
+            "SUBARCTIC SUMMER",
+            356,
+            70.00,
+            172,
+            31.505,  # Finnmark Summer, day_of_year=172 (June 21)
+        ),
     ],
 )
 def test_find_optimal_orientation(

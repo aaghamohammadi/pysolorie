@@ -26,7 +26,7 @@ from .sun_position import SunPosition
 class IrradiationCalculator:
     r"""
     A class to find the optimal orientation and
-    calculate the total direct irradiation for a solar panel [1]_.
+    calculate the direct irradiation for a solar panel [1]_.
 
     References
     ----------
@@ -111,13 +111,13 @@ class IrradiationCalculator:
         self, panel_orientation: float, day_of_year: int
     ) -> float:
         r"""
-        Calculate the total direct irradiation
+        Calculate the direct irradiation
         for a given solar panel orientation (i.e., :math:`\beta`).
 
-        | The total direct irradiation is calculated using the formula:
+        | The direct irradiation is calculated using the formula:
 
         .. math::
-            E(n,\phi) = \frac{I}{\Omega} \int_{\omega_s}^{\omega_t}
+            E(n,\phi) = \frac{I(n)}{\Omega} \int_{\omega_s}^{\omega_t}
             \cos(\theta) \times H(\cos(\theta)) \times \tau_b~d\omega
 
 
@@ -125,8 +125,9 @@ class IrradiationCalculator:
 
         | - :math:`\phi` is the latitude of the observer
 
-        | - :math:`I`  is the amount of
-                solar energy received per unit area per second.
+        | - :math:`I(n)`  is the amount of
+                solar energy received per unit area per second
+                on day number :math:`n` of the year
 
         | - :math:`\Omega` = ``7.15 * 1e-5``
 
@@ -144,7 +145,7 @@ class IrradiationCalculator:
         :type panel_orientation: float
         :param day_of_year: The day of the year.
         :type day_of_year: int
-        :return: The total direct irradiation in Megajoules per square meter.
+        :return: The direct irradiation in Megajoules per square meter.
         :rtype: float
         """
         sunrise_hour_angle, sunset_hour_angle = self._observer.calculate_sunrise_sunset(
@@ -157,12 +158,19 @@ class IrradiationCalculator:
             )
             for hour_angle in np.arange(sunrise_hour_angle, sunset_hour_angle, 0.01)
         ]
+
+        # During polar night, the sun doesn't rise and both hour angles are zero.
+        # This results in an empty irradiance_components list. In this case,
+        # we return 0 as there is no direct irradiation.
+        if not irradiance_components:
+            return 0
+
         return integrate.simpson(irradiance_components, dx=0.01)
 
     def find_optimal_orientation(self, day_of_year: int) -> float:
         """
         Find the optimal orientation :math:`beta` that maximizes
-        the total direct irradiation.
+        the direct irradiation.
 
         :param day_of_year: The day of the year.
         :type day_of_year: int
