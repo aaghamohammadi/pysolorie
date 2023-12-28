@@ -23,7 +23,7 @@ Suppose we aim to calculate the direct irradiation for a specific location. The 
    from pysolorie import IrradiationCalculator
 
    # Instantiate an IrradiationCalculator object for the city of Tehran
-   calculator = IrradiationCalculator(
+   irradiation_calculator = IrradiationCalculator(
        climate_type="MIDLATITUDE SUMMER",
        observer_altitude=1200,
        observer_latitude=35.6892
@@ -36,9 +36,9 @@ Suppose we aim to calculate the direct irradiation for a specific location. The 
    # Loop over each day of the year
    for day in range(from_day, to_day + 1):
        # Find the optimal tilt angle for the given day
-       optimal_tilt_angle = calculator.find_optimal_orientation(day)
+       optimal_tilt_angle = irradiation_calculator.find_optimal_orientation(day)
        # Calculate the direct irradiation for the given day and add it to the total
-       total_irradiation += calculator.calculate_direct_irradiation(
+       total_irradiation += irradiation_calculator.calculate_direct_irradiation(
            optimal_tilt_angle, day
        )
 
@@ -65,7 +65,7 @@ The ``climate_type`` can be one of the following:
     from pysolorie import IrradiationCalculator
 
     # Instantiate an IrradiationCalculator object for the city of Tehran
-    calculator = IrradiationCalculator(
+    irradiation_calculator = IrradiationCalculator(
         climate_type="MIDLATITUDE SUMMER",
         observer_altitude=1200,
         observer_latitude=35.6892
@@ -94,7 +94,7 @@ The ``climate_type`` can be one of the following:
     from pysolorie import IrradiationCalculator
 
     # Instantiate an IrradiationCalculator object for the city of Tehran
-    calculator = IrradiationCalculator(
+    irradiation_calculator = IrradiationCalculator(
         climate_type="MIDLATITUDE SUMMER",
         observer_altitude=1200,
         observer_latitude=35.6892
