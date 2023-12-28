@@ -26,9 +26,7 @@ def logger_decorator(func):
     def wrapper(self, *args, **kwargs):
         self.logger = logging.getLogger(func.__name__)
         self.logger.setLevel(logging.INFO)
-        self.logger.info(f"Running '{func.__name__}'")
         result = func(self, *args, **kwargs)
-        self.logger.info(f"Finished '{func.__name__}'")
         return result
 
     return wrapper
