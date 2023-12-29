@@ -81,3 +81,34 @@ class MissingObserverLatitudeError(ValueError):
         :rtype: str
         """
         return f"{self.message}"
+
+
+class InvalidObserverLatitudeError(ValueError):
+    """
+    Exception raised when the observer's latitude is not within the valid range.
+
+    :param message: explanation of the error, defaults to
+                    "Invalid data: Observer latitude.
+                    Please ensure to provide a latitude between -88 and 88 degrees."
+    :type message: str, optional
+    """
+
+    def __init__(
+        self,
+        message: str = (
+            "Invalid data: Observer latitude. "
+            "Please ensure to provide a latitude between -88 and 88 degrees."
+        ),
+    ):
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self) -> str:
+        """
+        String representation of the exception.
+
+        :return: formatted string indicating the invalid
+                 latitude and the error message
+        :rtype: str
+        """
+        return f"{self.message}"

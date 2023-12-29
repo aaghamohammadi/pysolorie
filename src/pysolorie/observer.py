@@ -15,7 +15,7 @@
 import math
 from typing import Optional
 
-from .exceptions import MissingObserverLatitudeError
+from .exceptions import InvalidObserverLatitudeError, MissingObserverLatitudeError
 from .sun_position import SunPosition
 
 
@@ -117,6 +117,8 @@ class Observer:
     def _ensure_latitude_provided(self) -> float:
         if self.observer_latitude is None:
             raise MissingObserverLatitudeError()
+        if not math.radians(-88) <= self.observer_latitude <= math.radians(88):
+            raise InvalidObserverLatitudeError()
         return self.observer_latitude
 
     _observer_latitude: Optional[float]

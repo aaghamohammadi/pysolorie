@@ -54,7 +54,6 @@ from pysolorie import Observer
             13 * 60 * 60,
             1.547,
         ),  # Test at Fairbanks on the 1st day of the year at 1pm
-        (90, 0, 1, 13 * 60 * 60, 1.972),  # Test at North Pole on January 1st at 1pm
     ],
 )
 def test_calculate_zenith_angle(
@@ -114,3 +113,14 @@ def test_calculate_sunrise_sunset(
     )
     assert sunrise_hour_angle == pytest.approx(expected_sunrise_hour_angle, abs=1e-3)
     assert sunset_hour_angle == pytest.approx(expected_sunset_hour_angle, abs=1e-3)
+
+
+def test_calculate_sunrise_sunset_invalid_latitude():
+    invalid_latitudes = [89, -89]
+    for invalid_latitude in invalid_latitudes:
+        observer = Observer(invalid_latitude)
+        with pytest.raises(
+            ValueError,
+            match="Invalid data: Observer latitude. ",
+        ):
+            observer.calculate_sunrise_sunset(day_of_year=172)
