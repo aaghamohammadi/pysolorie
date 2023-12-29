@@ -1,6 +1,26 @@
 Changelog
 =========
 
+Version 1.5.6
+-------------
+
+Release date: 2023-12-29
+
+
+Fixed
+^^^^^
+- Introduced a new exception class ``InvalidObserverLatitudeError`` in ``exceptions.py`` for better error handling of invalid observer latitude values.
+- Updated ``IrradiationCalculator`` in ``numerical_integration.py`` to handle cases where the ``irradiance_components`` dictionary is empty, providing a meaningful return value based on observer latitude.
+- Fixed ``Observer`` class validation in ``observer.py`` to include a check for the observer's latitude being within the valid range.
+
+
+Testing
+^^^^^^^
+- Added test case ``test_calculate_sunrise_sunset_invalid_latitude`` to ensure exceptions are properly raised for invalid latitude inputs.
+- Added missing tests for invalid observer latitude in ``test_observer.py``.
+
+
+
 Version 1.5.5
 -------------
 

@@ -75,7 +75,8 @@ The energy collected by a solar panel can be calculated using the formula in Equ
 E(n,\phi) = \frac{I(n)}{\Omega} \int_{\omega_s}^{\omega_t}\cos(\theta) \times H(\cos(\theta)) \times \tau_b~d\omega
 \end{equation}
 
-
+# Acknowledgements
+ Amir Aghamohammadi would like to acknowledge the research council of the Alzahra University for the financial support.
 
 
 # References

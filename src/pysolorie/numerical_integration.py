@@ -186,4 +186,13 @@ class IrradiationCalculator:
             neg_irradiation, bounds=(-math.pi / 2, math.pi / 2), method="bounded"
         )
         optimal_beta = result.x
+
+        # Check if irradiance_components is empty
+        if not self.calculate_direct_irradiation(
+            math.degrees(optimal_beta), day_of_year
+        ):
+            observer_latitude = self._observer._ensure_latitude_provided()
+            # Return 90 or -90 based on observer_latitude
+            return 90 if observer_latitude >= 0 else -90
+
         return math.degrees(optimal_beta)
