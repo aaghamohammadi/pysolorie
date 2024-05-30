@@ -12,6 +12,8 @@
 [![codecov](https://codecov.io/gh/aaghamohammadi/pysolorie/graph/badge.svg?token=TF9E8Y3Q67)](https://codecov.io/gh/aaghamohammadi/pysolorie)
 ![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)
 ![code style: black](https://img.shields.io/badge/code%20style-black-black)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11396659.svg)](https://doi.org/10.5281/zenodo.11396659)
+
 
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=aaghamohammadi_pysolorie)
 
