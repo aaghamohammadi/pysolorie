@@ -36,6 +36,7 @@ class IrradiationCalculator:
 
 
     """
+
     OMEGA = 7.15 * 1e-5
 
     def __init__(
