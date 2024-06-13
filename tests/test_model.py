@@ -34,9 +34,9 @@ def test_calculate_transmittance_components(
     expected_result: Tuple[float, float, float],
 ) -> None:
     hottel_model: HottelModel = HottelModel()
-    result: Tuple[
-        float, float, float
-    ] = hottel_model.calculate_transmittance_components(climate_type, observer_altitude)
+    result: Tuple[float, float, float] = (
+        hottel_model.calculate_transmittance_components(climate_type, observer_altitude)
+    )
     assert pytest.approx(result, abs=1e-3) == expected_result
 
 
