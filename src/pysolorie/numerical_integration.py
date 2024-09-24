@@ -37,7 +37,7 @@ class IrradiationCalculator:
 
     """
 
-    OMEGA = 7.15 * 1e-5
+    OMEGA = 7.2722 * 1e-5
 
     def __init__(
         self, climate_type: str, observer_altitude: int, observer_latitude: float
@@ -130,7 +130,7 @@ class IrradiationCalculator:
                 solar energy received per unit area per second
                 on day number :math:`n` of the year
 
-        | - :math:`\Omega` = ``7.15 * 1e-5``
+        | - :math:`\Omega` = ``7.2722 * 1e-5``
 
         | - :math:`\theta` is incidence angle, the angle between the position vector
                 of the sun and the normal vector to the solar panel.

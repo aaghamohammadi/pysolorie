@@ -1,6 +1,16 @@
 Changelog
 =========
 
+Version 1.5.8
+-------------
+Release date: 2024-09-24
+
+Fixed
+^^^^^
+- Changed the parameter :math:`\Omega` from ``7.15 * 1e-5`` to ``7.2722 * 1e-5``
+
+
+
 Version 1.5.6
 -------------
 
