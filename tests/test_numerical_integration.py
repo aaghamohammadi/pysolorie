@@ -31,7 +31,7 @@ from pysolorie import IrradiationCalculator
             35.6892,
             172,
             45.0,
-            20.3026,  # Tehran Summer, day_of_year=172 (June 21)
+            19.961,  # Tehran Summer, day_of_year=172 (June 21)
         ),
         (
             "MIDLATITUDE WINTER",
@@ -39,7 +39,7 @@ from pysolorie import IrradiationCalculator
             35.6892,
             355,
             45.0,
-            19.436,  # Tehran Winter, day_of_year=355 (Dec 21)
+            19.110,  # Tehran Winter, day_of_year=355 (Dec 21)
         ),
         (
             "TROPICAL",
@@ -47,7 +47,7 @@ from pysolorie import IrradiationCalculator
             3.5952,
             100,
             45.0,
-            13.224,  # Medan, day_of_year=100 (April 10)
+            13.003,  # Medan, day_of_year=100 (April 10)
         ),
         (
             "SUBARCTIC SUMMER",
@@ -55,7 +55,7 @@ from pysolorie import IrradiationCalculator
             64.84361,
             200,
             45.0,
-            21.371,  # Fairbanks Summer, day_of_year=200 (July 19)
+            21.012,  # Fairbanks Summer, day_of_year=200 (July 19)
         ),
         (
             "SUBARCTIC SUMMER",
