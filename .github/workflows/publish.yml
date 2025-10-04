@@ -6,6 +6,10 @@ on:
       - 'main'
     tags:
       - 'v*'
+    paths-ignore:
+      - 'paper/**'
+      - 'README.md'
+      - 'tests/**'
 
 jobs:
   build_source_dist:

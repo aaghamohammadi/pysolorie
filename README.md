@@ -12,7 +12,7 @@
 [![codecov](https://codecov.io/gh/aaghamohammadi/pysolorie/graph/badge.svg?token=TF9E8Y3Q67)](https://codecov.io/gh/aaghamohammadi/pysolorie)
 ![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)
 ![code style: black](https://img.shields.io/badge/code%20style-black-black)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11396659.svg)](https://doi.org/10.5281/zenodo.11396659)
+[![DOI](https://img.shields.io/badge/DOI-10.5334/jors.520-blue)](https://doi.org/10.5334/jors.520)
 
 
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=aaghamohammadi_pysolorie)
@@ -97,3 +97,21 @@ You can find the complete documentation for pysolorie at our [Read the Docs page
 We welcome contributions to pysolorie! If you're interested in contributing, please take a look at our [contribution guidelines](https://pysolorie.readthedocs.io/en/latest/contributing.html) for detailed information on how you can help.
 
 Thank you for considering contributing to pysolorie!
+
+## Citation
+
+If you use pysolorie in your research, please cite our paper:
+
+```bibtex
+@article{Aghamohammadi2025,
+  title = {pysolorie: A Python Package for Optimal Orientation Analysis of Solar Panels},
+  volume = {13},
+  ISSN = {2049-9647},
+  url = {http://dx.doi.org/10.5334/jors.520},
+  DOI = {10.5334/jors.520},
+  journal = {Journal of Open Research Software},
+  publisher = {Ubiquity Press Ltd.},
+  author = {Aghamohammadi, Alireza and Aghamohammadi, Amir and Foulaadvand, M. Ebrahim},
+  year = {2025}
+}
+```

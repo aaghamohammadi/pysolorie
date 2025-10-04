@@ -1,8 +1,16 @@
 name: Quality Checks
 
 on:
-  - push
-  - pull_request
+  push:
+    paths-ignore:
+      - 'paper/**'
+      - 'README.md'
+      - 'tests/**'
+  pull_request:
+    paths-ignore:
+      - 'paper/**'
+      - 'README.md'
+      - 'tests/**'
 
 jobs:
   format:
